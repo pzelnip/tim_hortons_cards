@@ -25,5 +25,4 @@ Scripts, pages, and tools for tracking my Tim Hortons hockey card collection.
 - Check off cards as you collect them
 - Progress tracking per category and overall
 - Shareable collection link via URL encoding
-- Persistent state via localStorage
 - No dependencies — just open the HTML file in a browser
