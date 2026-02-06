@@ -123,6 +123,23 @@ body::before {
 #share-btn:hover {
     background: #b5161c;
 }
+#clear-btn {
+    display: block;
+    margin: 0 auto 2rem;
+    padding: 0.5rem 1.5rem;
+    background: #fff;
+    color: #d71920;
+    border: 2px solid #d71920;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+}
+#clear-btn:hover {
+    background: #d71920;
+    color: white;
+}
 
     </style>
 </head>
@@ -135,6 +152,7 @@ body::before {
     </div>
 </div>
 <button id="share-btn">Copy Share Link</button>
+<button id="clear-btn">Clear Selections</button>
 
     <h2>Base Cards (1–100) <span class="count"></span></h2>
     <ol>
@@ -441,6 +459,29 @@ document.getElementById("share-btn").addEventListener("click", () => {
         btn.textContent = "Copied!";
         setTimeout(() => { btn.textContent = "Copy Share Link"; }, 2000);
     });
+});
+
+// Clear all selections / Undo
+let previousHash = null;
+document.getElementById("clear-btn").addEventListener("click", () => {
+    const btn = document.getElementById("clear-btn");
+    if (previousHash !== null) {
+        // Undo: restore previous state
+        decodeState(previousHash);
+        saveState();
+        updateCounts();
+        previousHash = null;
+        btn.textContent = "Clear Selections";
+    } else {
+        // Clear: save current state, then clear
+        previousHash = encodeState();
+        document.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+            cb.checked = false;
+        });
+        saveState();
+        updateCounts();
+        btn.textContent = "Undo";
+    }
 });
 
 // Handle hash changes (e.g. user pastes a new hash in the address bar)
