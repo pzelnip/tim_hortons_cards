@@ -348,8 +348,6 @@ body::before {
 <!-- Counters automatically appear and update -->
 
 <script>
-const STORAGE_KEY = "tims-2026-checklist";
-
 function encodeState() {
     const checkboxes = document.querySelectorAll('input[type="checkbox"]');
     const bytes = new Uint8Array(Math.ceil(checkboxes.length / 8));
@@ -374,21 +372,7 @@ function loadState() {
     const hash = window.location.hash.slice(1);
     if (hash) {
         decodeState(hash);
-        saveToLocalStorage();
-    } else {
-        const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}");
-        document.querySelectorAll('input[type="checkbox"]').forEach(cb => {
-            if (cb.id && saved[cb.id]) cb.checked = true;
-        });
     }
-}
-
-function saveToLocalStorage() {
-    const state = {};
-    document.querySelectorAll('input[type="checkbox"]').forEach(cb => {
-        if (cb.id) state[cb.id] = cb.checked;
-    });
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
 }
 
 function updateHash() {
@@ -397,7 +381,6 @@ function updateHash() {
 }
 
 function saveState() {
-    saveToLocalStorage();
     updateHash();
 }
 
