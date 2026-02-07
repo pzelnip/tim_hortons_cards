@@ -26,3 +26,7 @@ Scripts, pages, and tools for tracking my Tim Hortons hockey card collection.
 - Progress tracking per category and overall
 - Shareable collection link via URL encoding
 - No dependencies — just open the HTML file in a browser
+
+This page is live at <https://tinyurl.com/timmyshockey>, or scan this QR Code:
+
+![QR Code for page](timmyshockey-qr.png)
