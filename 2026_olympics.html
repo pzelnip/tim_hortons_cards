@@ -169,22 +169,16 @@ body.show-checked li:has(input[type="checkbox"]:not(:checked)) {
 /* Category navigation tabs */
 #category-nav {
     display: flex;
+    flex-wrap: wrap;
     gap: 0.5rem;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
     padding: 0.75rem 1rem;
     background: #fff;
     border: 2px solid #d71920;
     border-radius: 12px;
     box-shadow: 0 3px 8px rgba(215, 25, 32, 0.15);
     margin-bottom: 2rem;
-    scrollbar-width: none;
-}
-#category-nav::-webkit-scrollbar {
-    display: none;
 }
 #category-nav button {
-    flex-shrink: 0;
     padding: 0.4rem 1rem;
     background: #fff;
     color: #d71920;
@@ -244,12 +238,12 @@ body.show-checked li:has(input[type="checkbox"]:not(:checked)) {
 
 <nav id="category-nav">
     <button class="active" data-target="tab-base">Base <span class="badge"></span></button>
-    <button data-target="tab-immortals">Immortals <span class="badge"></span></button>
+    <button data-target="tab-immortals">Maple Leaf Immortals <span class="badge"></span></button>
     <button data-target="tab-duos">Duos <span class="badge"></span></button>
-    <button data-target="tab-poe">Excellence <span class="badge"></span></button>
-    <button data-target="tab-prodigies">Prodigies <span class="badge"></span></button>
-    <button data-target="tab-stars">Stars <span class="badge"></span></button>
-    <button data-target="tab-medalists">Medalists <span class="badge"></span></button>
+    <button data-target="tab-poe">Program of Excellence <span class="badge"></span></button>
+    <button data-target="tab-prodigies">Celebrated Prodigies <span class="badge"></span></button>
+    <button data-target="tab-stars">Northern Stars <span class="badge"></span></button>
+    <button data-target="tab-medalists">Gold Medalists <span class="badge"></span></button>
 </nav>
 
 <div class="tab-content active" id="tab-base">
