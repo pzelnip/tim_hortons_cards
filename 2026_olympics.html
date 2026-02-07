@@ -138,6 +138,27 @@ body::before {
     background: #d71920;
     color: white;
 }
+#hide-checked-btn {
+    padding: 0.5rem 1.5rem;
+    background: #fff;
+    color: #d71920;
+    border: 2px solid #d71920;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+}
+#hide-checked-btn:hover {
+    background: #d71920;
+    color: white;
+}
+body.show-unchecked li:has(input[type="checkbox"]:checked) {
+    display: none;
+}
+body.show-checked li:has(input[type="checkbox"]:not(:checked)) {
+    display: none;
+}
 
     </style>
 </head>
@@ -152,6 +173,7 @@ body::before {
 <div class="button-row">
     <button id="share-btn">Copy Share Link</button>
     <button id="clear-btn">Clear Selections</button>
+    <button id="hide-checked-btn">Show Needed</button>
 </div>
 
     <h2>Base Cards (1–100) <span class="count"></span></h2>
@@ -343,7 +365,7 @@ body::before {
         <li><label><input type="checkbox" id="NS-15"> NS-15 Jennifer Gardiner</label></li>
     </ul>
 
-    <h2>Gold Medalists (GM-1–GM-15) 1:3 <span class="count"></span></h2></h2> 
+    <h2>Gold Medalists (GM-1–GM-15) 1:3 <span class="count"></span></h2></h2>
     <ul>
         <li><label><input type="checkbox" id="GM-1"> GM-1 Steve Yzerman</label></li>
         <li><label><input type="checkbox" id="GM-2"> GM-2 Mark Scheifele</label></li>
@@ -481,6 +503,19 @@ document.getElementById("clear-btn").addEventListener("click", () => {
         updateCounts();
         btn.textContent = "Undo";
     }
+});
+
+// Filter toggle: Show All → Show Unchecked → Show Checked
+const filterStates = ["all", "unchecked", "checked"];
+const filterLabels = { all: "Show Needed", unchecked: "Show Have", checked: "Show All" };
+let filterIndex = 0;
+
+document.getElementById("hide-checked-btn").addEventListener("click", () => {
+    document.body.classList.remove("show-unchecked", "show-checked");
+    filterIndex = (filterIndex + 1) % 3;
+    const state = filterStates[filterIndex];
+    if (state !== "all") document.body.classList.add("show-" + state);
+    document.getElementById("hide-checked-btn").textContent = filterLabels[state];
 });
 
 // Handle hash changes (e.g. user pastes a new hash in the address bar)
