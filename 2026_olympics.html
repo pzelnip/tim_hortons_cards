@@ -46,6 +46,7 @@ ul {
 /* List items — full-row clickable */
 ul li {
     padding: 0.25rem 0;
+    transition: color 0.2s;
 }
 
 /* Checkboxes */
@@ -73,6 +74,11 @@ ul li:hover {
 li:has(input[type="checkbox"]:checked) {
     color: #555;
     text-decoration: line-through;
+    text-decoration-color: #555;
+}
+li {
+    text-decoration-color: transparent;
+    transition: text-decoration-color 0.2s;
 }
 
 /* Overall progress styling */
@@ -190,10 +196,34 @@ body.show-checked li:has(input[type="checkbox"]:not(:checked)) {
     white-space: nowrap;
     transition: background 0.2s, color 0.2s;
 }
-#category-nav button:hover,
+#category-nav button:hover {
+    background: #d71920;
+    color: #fff;
+}
 #category-nav button.active {
     background: #d71920;
     color: #fff;
+}
+#category-nav button .badge {
+    font-size: 0.7rem;
+    opacity: 0.85;
+    margin-left: 0.15rem;
+}
+
+/* Tab content panels */
+.tab-content {
+    display: none;
+}
+.tab-content.active {
+    display: block;
+    animation: fadeIn 0.25s ease-in;
+}
+.tab-content h2 {
+    margin-top: 0.5rem;
+}
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
 }
 
     </style>
@@ -213,16 +243,16 @@ body.show-checked li:has(input[type="checkbox"]:not(:checked)) {
 </div>
 
 <nav id="category-nav">
-    <button class="active" data-target="tab-base">Base</button>
-    <button data-target="tab-immortals">Immortals</button>
-    <button data-target="tab-duos">Duos</button>
-    <button data-target="tab-poe">Excellence</button>
-    <button data-target="tab-prodigies">Prodigies</button>
-    <button data-target="tab-stars">Stars</button>
-    <button data-target="tab-medalists">Medalists</button>
+    <button class="active" data-target="tab-base">Base <span class="badge"></span></button>
+    <button data-target="tab-immortals">Immortals <span class="badge"></span></button>
+    <button data-target="tab-duos">Duos <span class="badge"></span></button>
+    <button data-target="tab-poe">Excellence <span class="badge"></span></button>
+    <button data-target="tab-prodigies">Prodigies <span class="badge"></span></button>
+    <button data-target="tab-stars">Stars <span class="badge"></span></button>
+    <button data-target="tab-medalists">Medalists <span class="badge"></span></button>
 </nav>
 
-<div class="tab-content" id="tab-base">
+<div class="tab-content active" id="tab-base">
     <h2>Base Cards (1–100) <span class="count"></span></h2>
     <ul>
         <li><label><input type="checkbox" id="base-1"> 1 - Sidney Crosby</label></li>
@@ -328,7 +358,7 @@ body.show-checked li:has(input[type="checkbox"]:not(:checked)) {
     </ul>
 </div>
 
-<div class="tab-content" id="tab-immortals" style="display:none">
+<div class="tab-content" id="tab-immortals">
     <h2>Maple Leaf Immortals (ML1–ML5) 1:100 <span class="count"></span></h2>
     <ul>
         <li><label><input type="checkbox" id="ML-1"> ML1 Sidney Crosby</label></li>
@@ -339,7 +369,7 @@ body.show-checked li:has(input[type="checkbox"]:not(:checked)) {
     </ul>
 </div>
 
-<div class="tab-content" id="tab-duos" style="display:none">
+<div class="tab-content" id="tab-duos">
     <h2>Duos (CO-1–CO-15) 1:24 <span class="count"></span></h2>
     <ul>
         <li><label><input type="checkbox" id="CO-1"> CO-1 Bedard / Fantilli</label></li>
@@ -360,7 +390,7 @@ body.show-checked li:has(input[type="checkbox"]:not(:checked)) {
     </ul>
 </div>
 
-<div class="tab-content" id="tab-poe" style="display:none">
+<div class="tab-content" id="tab-poe">
     <h2>Program of Excellence (POE-1–POE-15) 1:8 <span class="count"></span></h2>
     <ul>
         <li><label><input type="checkbox" id="POE-1"> POE-1 Nathan MacKinnon</label></li>
@@ -381,7 +411,7 @@ body.show-checked li:has(input[type="checkbox"]:not(:checked)) {
     </ul>
 </div>
 
-<div class="tab-content" id="tab-prodigies" style="display:none">
+<div class="tab-content" id="tab-prodigies">
     <h2>Celebrated Prodigies (CP-1–CP-15) 1:6 <span class="count"></span></h2>
     <ul>
         <li><label><input type="checkbox" id="CP-1"> CP-1 Connor McDavid</label></li>
@@ -402,7 +432,7 @@ body.show-checked li:has(input[type="checkbox"]:not(:checked)) {
     </ul>
 </div>
 
-<div class="tab-content" id="tab-stars" style="display:none">
+<div class="tab-content" id="tab-stars">
     <h2>Northern Stars (NS-1–NS-15) 1:4 <span class="count"></span></h2>
     <ul>
         <li><label><input type="checkbox" id="NS-1"> NS-1 Ray Bourque</label></li>
@@ -423,7 +453,7 @@ body.show-checked li:has(input[type="checkbox"]:not(:checked)) {
     </ul>
 </div>
 
-<div class="tab-content" id="tab-medalists" style="display:none">
+<div class="tab-content" id="tab-medalists">
     <h2>Gold Medalists (GM-1–GM-15) 1:3 <span class="count"></span></h2>
     <ul>
         <li><label><input type="checkbox" id="GM-1"> GM-1 Steve Yzerman</label></li>
@@ -509,6 +539,16 @@ function updateCounts() {
         }
 
         countSpan.textContent = `(${checkedCount}/${total} — ${percent}%)`;
+
+        // Update badge on corresponding tab button
+        const tabDiv = h2.closest('.tab-content');
+        if (tabDiv) {
+            const navBtn = document.querySelector(`#category-nav button[data-target="${tabDiv.id}"]`);
+            if (navBtn) {
+                const badge = navBtn.querySelector('.badge');
+                if (badge) badge.textContent = `${checkedCount}/${total}`;
+            }
+        }
     });
 
     // Update progress bar only
@@ -584,18 +624,32 @@ window.addEventListener("hashchange", () => {
     updateCounts();
 });
 
-// Category navigation tabs — show/hide content
+// Category navigation tabs — show/hide content with fade-in
 function openTab(tabId) {
-    document.querySelectorAll('.tab-content').forEach(el => el.style.display = 'none');
-    document.getElementById(tabId).style.display = 'block';
+    document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+    document.getElementById(tabId).classList.add('active');
     document.querySelectorAll('#category-nav button').forEach(btn => {
         btn.classList.toggle('active', btn.dataset.target === tabId);
     });
+    window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 document.getElementById('category-nav').addEventListener('click', (e) => {
     const btn = e.target.closest('button[data-target]');
     if (btn) openTab(btn.dataset.target);
+});
+
+// Keyboard navigation for tabs (arrow keys)
+document.getElementById('category-nav').addEventListener('keydown', (e) => {
+    if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
+    const buttons = Array.from(document.querySelectorAll('#category-nav button'));
+    const current = buttons.indexOf(document.activeElement);
+    if (current === -1) return;
+    const next = e.key === 'ArrowRight'
+        ? (current + 1) % buttons.length
+        : (current - 1 + buttons.length) % buttons.length;
+    buttons[next].focus();
+    openTab(buttons[next].dataset.target);
 });
 </script>
 
