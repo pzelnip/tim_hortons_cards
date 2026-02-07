@@ -35,7 +35,6 @@ h2 {
 }
 
 /* List containers */
-ol,
 ul {
     background: #fff;
     padding: 1rem 1.5rem;
@@ -44,12 +43,7 @@ ul {
     border: 2px solid #d71920;
 }
 
-ol {
-    padding-left: 3.5rem;
-}
-
 /* List items — full-row clickable */
-ol li,
 ul li {
     padding: 0.25rem 0;
 }
@@ -70,7 +64,6 @@ label {
 }
 
 /* Optional hover effect */
-ol li:hover,
 ul li:hover {
     background-color: #ffe6e6; /* light red highlight */
     border-radius: 6px;
@@ -155,109 +148,108 @@ body::before {
 <button id="clear-btn">Clear Selections</button>
 
     <h2>Base Cards (1–100) <span class="count"></span></h2>
-    <ol>
-        <!-- Base Set -->
-        <li><label><input type="checkbox" id="base-1"> Sidney Crosby</label></li>
-        <li><label><input type="checkbox" id="base-2"> Nathan MacKinnon</label></li>
-        <li><label><input type="checkbox" id="base-3"> Connor McDavid</label></li>
-        <li><label><input type="checkbox" id="base-4"> Aaron Ekblad</label></li>
-        <li><label><input type="checkbox" id="base-5"> Drew Doughty</label></li>
-        <li><label><input type="checkbox" id="base-6"> Patrick Roy</label></li>
-        <li><label><input type="checkbox" id="base-7"> Jonathan Toews</label></li>
-        <li><label><input type="checkbox" id="base-8"> Claude Giroux</label></li>
-        <li><label><input type="checkbox" id="base-9"> Brad Marchand</label></li>
-        <li><label><input type="checkbox" id="base-10"> Alex Pietrangelo</label></li>
-        <li><label><input type="checkbox" id="base-11"> Evan Bouchard</label></li>
-        <li><label><input type="checkbox" id="base-12"> Shea Theodore</label></li>
-        <li><label><input type="checkbox" id="base-13"> Thomas Harley</label></li>
-        <li><label><input type="checkbox" id="base-14"> Macklin Celebrini</label></li>
-        <li><label><input type="checkbox" id="base-15"> Sean Couturier</label></li>
-        <li><label><input type="checkbox" id="base-16"> Dylan Guenther</label></li>
-        <li><label><input type="checkbox" id="base-17"> Ryan O'Reilly</label></li>
-        <li><label><input type="checkbox" id="base-18"> Josh Morrissey</label></li>
-        <li><label><input type="checkbox" id="base-19"> Mason McTavish</label></li>
-        <li><label><input type="checkbox" id="base-20"> Owen Power</label></li>
-        <li><label><input type="checkbox" id="base-21"> Corey Perry</label></li>
-        <li><label><input type="checkbox" id="base-22"> Seth Jarvis</label></li>
-        <li><label><input type="checkbox" id="base-23"> Jamie Benn</label></li>
-        <li><label><input type="checkbox" id="base-24"> Adam Fantilli</label></li>
-        <li><label><input type="checkbox" id="base-25"> Adam Lowry</label></li>
-        <li><label><input type="checkbox" id="base-26"> Sam Reinhart</label></li>
-        <li><label><input type="checkbox" id="base-27"> Brayden Schenn</label></li>
-        <li><label><input type="checkbox" id="base-28"> Scott Niedermayer</label></li>
-        <li><label><input type="checkbox" id="base-29"> Brayden Point</label></li>
-        <li><label><input type="checkbox" id="base-30"> Wayne Gretzky</label></li>
-        <li><label><input type="checkbox" id="base-31"> Mark Scheifele</label></li>
-        <li><label><input type="checkbox" id="base-32"> Sean Monahan</label></li>
-        <li><label><input type="checkbox" id="base-33"> John Tavares</label></li>
-        <li><label><input type="checkbox" id="base-34"> Morgan Reilly</label></li>
-        <li><label><input type="checkbox" id="base-35"> Thomas Chabot</label></li>
-        <li><label><input type="checkbox" id="base-36"> Noah Dobson</label></li>
-        <li><label><input type="checkbox" id="base-37"> Brandon Hagel</label></li>
-        <li><label><input type="checkbox" id="base-38"> Mario Lemieux</label></li>
-        <li><label><input type="checkbox" id="base-39"> Kris Letang</label></li>
-        <li><label><input type="checkbox" id="base-40"> Alexis Lafreniere</label></li>
-        <li><label><input type="checkbox" id="base-41"> Martin St.Louis</label></li>
-        <li><label><input type="checkbox" id="base-42"> Joe Thornton</label></li>
-        <li><label><input type="checkbox" id="base-43"> Robert Thomas</label></li>
-        <li><label><input type="checkbox" id="base-44"> Mathew Barzal</label></li>
-        <li><label><input type="checkbox" id="base-45"> Brent Burns</label></li>
-        <li><label><input type="checkbox" id="base-46"> Jordan Binnington</label></li>
-        <li><label><input type="checkbox" id="base-47"> Ryan Nugent-Hopkins</label></li>
-        <li><label><input type="checkbox" id="base-48"> Samuel Montembeault</label></li>
-        <li><label><input type="checkbox" id="base-49"> Cole Perfetti</label></li>
-        <li><label><input type="checkbox" id="base-50"> Cale Makar</label></li>
-        <li><label><input type="checkbox" id="base-51"> Travis Sanhiem</label></li>
-        <li><label><input type="checkbox" id="base-52"> Mark Messier</label></li>
-        <li><label><input type="checkbox" id="base-53"> Wyatt Johnston</label></li>
-        <li><label><input type="checkbox" id="base-54"> Quinton Byfield</label></li>
-        <li><label><input type="checkbox" id="base-55"> Travis Konecny</label></li>
-        <li><label><input type="checkbox" id="base-56"> Dylan Strome</label></li>
-        <li><label><input type="checkbox" id="base-57"> Connor Bedard</label></li>
-        <li><label><input type="checkbox" id="base-58"> Nazem Kadri</label></li>
-        <li><label><input type="checkbox" id="base-59"> Carey Price</label></li>
-        <li><label><input type="checkbox" id="base-60"> Adin Hill</label></li>
-        <li><label><input type="checkbox" id="base-61"> Jordan Eberle</label></li>
-        <li><label><input type="checkbox" id="base-62"> Nick Suzuki</label></li>
-        <li><label><input type="checkbox" id="base-63"> Eric Lindros</label></li>
-        <li><label><input type="checkbox" id="base-64"> Ray Bourque</label></li>
-        <li><label><input type="checkbox" id="base-65"> Chris Pronger</label></li>
-        <li><label><input type="checkbox" id="base-66"> Colton Parayko</label></li>
-        <li><label><input type="checkbox" id="base-67"> Mitch Marner</label></li>
-        <li><label><input type="checkbox" id="base-68"> Logan Thompson</label></li>
-        <li><label><input type="checkbox" id="base-69"> Mark Stone</label></li>
-        <li><label><input type="checkbox" id="base-70"> MacKenzie Weegar</label></li>
-        <li><label><input type="checkbox" id="base-71"> Bo Horvat</label></li>
-        <li><label><input type="checkbox" id="base-72"> Matt Duchene</label></li>
-        <li><label><input type="checkbox" id="base-73"> Jordan Kyrou</label></li>
-        <li><label><input type="checkbox" id="base-74"> Anthony Cirelli</label></li>
-        <li><label><input type="checkbox" id="base-75"> Taylor Hall</label></li>
-        <li><label><input type="checkbox" id="base-76"> Dylan Cozens</label></li>
-        <li><label><input type="checkbox" id="base-77"> Steve Yzerman</label></li>
-        <li><label><input type="checkbox" id="base-78"> Luke Schenn</label></li>
-        <li><label><input type="checkbox" id="base-79"> Brandon Montour</label></li>
-        <li><label><input type="checkbox" id="base-80"> Steven Stamkos</label></li>
-        <li><label><input type="checkbox" id="base-81"> Joe Sakic</label></li>
-        <li><label><input type="checkbox" id="base-82"> Joe Nieuwendyk</label></li>
-        <li><label><input type="checkbox" id="base-83"> Sam Bennett</label></li>
-        <li><label><input type="checkbox" id="base-84"> Brendan Shanahan</label></li>
-        <li><label><input type="checkbox" id="base-85"> Logan Stankoven</label></li>
-        <li><label><input type="checkbox" id="base-86"> Sarah Fillier</label></li>
-        <li><label><input type="checkbox" id="base-87"> Brianne Jenner</label></li>
-        <li><label><input type="checkbox" id="base-88"> Sarah Nurse</label></li>
-        <li><label><input type="checkbox" id="base-89"> Natalie Spooner</label></li>
-        <li><label><input type="checkbox" id="base-90"> Emily Clark</label></li>
-        <li><label><input type="checkbox" id="base-91"> Ann-Renee Desbiens</label></li>
-        <li><label><input type="checkbox" id="base-92"> Renata Fast</label></li>
-        <li><label><input type="checkbox" id="base-93"> Danielle Serdachny</label></li>
-        <li><label><input type="checkbox" id="base-94"> Ella Shelton</label></li>
-        <li><label><input type="checkbox" id="base-95"> Emma Maltais</label></li>
-        <li><label><input type="checkbox" id="base-96"> Blayre Turnbull</label></li>
-        <li><label><input type="checkbox" id="base-97"> Jennifer Gardiner</label></li>
-        <li><label><input type="checkbox" id="base-98"> Erin Ambrose</label></li>
-        <li><label><input type="checkbox" id="base-99"> Laura Stacey</label></li>
-        <li><label><input type="checkbox" id="base-100"> Marie-Philip Poulin</label></li>
-    </ol>
+    <ul>
+        <li><label><input type="checkbox" id="base-1"> 1 - Sidney Crosby</label></li>
+        <li><label><input type="checkbox" id="base-2"> 2 - Nathan MacKinnon</label></li>
+        <li><label><input type="checkbox" id="base-3"> 3 - Connor McDavid</label></li>
+        <li><label><input type="checkbox" id="base-4"> 4 - Aaron Ekblad</label></li>
+        <li><label><input type="checkbox" id="base-5"> 5 - Drew Doughty</label></li>
+        <li><label><input type="checkbox" id="base-6"> 6 - Patrick Roy</label></li>
+        <li><label><input type="checkbox" id="base-7"> 7 - Jonathan Toews</label></li>
+        <li><label><input type="checkbox" id="base-8"> 8 - Claude Giroux</label></li>
+        <li><label><input type="checkbox" id="base-9"> 9 - Brad Marchand</label></li>
+        <li><label><input type="checkbox" id="base-10"> 10 - Alex Pietrangelo</label></li>
+        <li><label><input type="checkbox" id="base-11"> 11 - Evan Bouchard</label></li>
+        <li><label><input type="checkbox" id="base-12"> 12 - Shea Theodore</label></li>
+        <li><label><input type="checkbox" id="base-13"> 13 - Thomas Harley</label></li>
+        <li><label><input type="checkbox" id="base-14"> 14 - Macklin Celebrini</label></li>
+        <li><label><input type="checkbox" id="base-15"> 15 - Sean Couturier</label></li>
+        <li><label><input type="checkbox" id="base-16"> 16 - Dylan Guenther</label></li>
+        <li><label><input type="checkbox" id="base-17"> 17 - Ryan O'Reilly</label></li>
+        <li><label><input type="checkbox" id="base-18"> 18 - Josh Morrissey</label></li>
+        <li><label><input type="checkbox" id="base-19"> 19 - Mason McTavish</label></li>
+        <li><label><input type="checkbox" id="base-20"> 20 - Owen Power</label></li>
+        <li><label><input type="checkbox" id="base-21"> 21 - Corey Perry</label></li>
+        <li><label><input type="checkbox" id="base-22"> 22 - Seth Jarvis</label></li>
+        <li><label><input type="checkbox" id="base-23"> 23 - Jamie Benn</label></li>
+        <li><label><input type="checkbox" id="base-24"> 24 - Adam Fantilli</label></li>
+        <li><label><input type="checkbox" id="base-25"> 25 - Adam Lowry</label></li>
+        <li><label><input type="checkbox" id="base-26"> 26 - Sam Reinhart</label></li>
+        <li><label><input type="checkbox" id="base-27"> 27 - Brayden Schenn</label></li>
+        <li><label><input type="checkbox" id="base-28"> 28 - Scott Niedermayer</label></li>
+        <li><label><input type="checkbox" id="base-29"> 29 - Brayden Point</label></li>
+        <li><label><input type="checkbox" id="base-30"> 30 - Wayne Gretzky</label></li>
+        <li><label><input type="checkbox" id="base-31"> 31 - Mark Scheifele</label></li>
+        <li><label><input type="checkbox" id="base-32"> 32 - Sean Monahan</label></li>
+        <li><label><input type="checkbox" id="base-33"> 33 - John Tavares</label></li>
+        <li><label><input type="checkbox" id="base-34"> 34 - Morgan Reilly</label></li>
+        <li><label><input type="checkbox" id="base-35"> 35 - Thomas Chabot</label></li>
+        <li><label><input type="checkbox" id="base-36"> 36 - Noah Dobson</label></li>
+        <li><label><input type="checkbox" id="base-37"> 37 - Brandon Hagel</label></li>
+        <li><label><input type="checkbox" id="base-38"> 38 - Mario Lemieux</label></li>
+        <li><label><input type="checkbox" id="base-39"> 39 - Kris Letang</label></li>
+        <li><label><input type="checkbox" id="base-40"> 40 - Alexis Lafreniere</label></li>
+        <li><label><input type="checkbox" id="base-41"> 41 - Martin St.Louis</label></li>
+        <li><label><input type="checkbox" id="base-42"> 42 - Joe Thornton</label></li>
+        <li><label><input type="checkbox" id="base-43"> 43 - Robert Thomas</label></li>
+        <li><label><input type="checkbox" id="base-44"> 44 - Mathew Barzal</label></li>
+        <li><label><input type="checkbox" id="base-45"> 45 - Brent Burns</label></li>
+        <li><label><input type="checkbox" id="base-46"> 46 - Jordan Binnington</label></li>
+        <li><label><input type="checkbox" id="base-47"> 47 - Ryan Nugent-Hopkins</label></li>
+        <li><label><input type="checkbox" id="base-48"> 48 - Samuel Montembeault</label></li>
+        <li><label><input type="checkbox" id="base-49"> 49 - Cole Perfetti</label></li>
+        <li><label><input type="checkbox" id="base-50"> 50 - Cale Makar</label></li>
+        <li><label><input type="checkbox" id="base-51"> 51 - Travis Sanhiem</label></li>
+        <li><label><input type="checkbox" id="base-52"> 52 - Mark Messier</label></li>
+        <li><label><input type="checkbox" id="base-53"> 53 - Wyatt Johnston</label></li>
+        <li><label><input type="checkbox" id="base-54"> 54 - Quinton Byfield</label></li>
+        <li><label><input type="checkbox" id="base-55"> 55 - Travis Konecny</label></li>
+        <li><label><input type="checkbox" id="base-56"> 56 - Dylan Strome</label></li>
+        <li><label><input type="checkbox" id="base-57"> 57 - Connor Bedard</label></li>
+        <li><label><input type="checkbox" id="base-58"> 58 - Nazem Kadri</label></li>
+        <li><label><input type="checkbox" id="base-59"> 59 - Carey Price</label></li>
+        <li><label><input type="checkbox" id="base-60"> 60 - Adin Hill</label></li>
+        <li><label><input type="checkbox" id="base-61"> 61 - Jordan Eberle</label></li>
+        <li><label><input type="checkbox" id="base-62"> 62 - Nick Suzuki</label></li>
+        <li><label><input type="checkbox" id="base-63"> 63 - Eric Lindros</label></li>
+        <li><label><input type="checkbox" id="base-64"> 64 - Ray Bourque</label></li>
+        <li><label><input type="checkbox" id="base-65"> 65 - Chris Pronger</label></li>
+        <li><label><input type="checkbox" id="base-66"> 66 - Colton Parayko</label></li>
+        <li><label><input type="checkbox" id="base-67"> 67 - Mitch Marner</label></li>
+        <li><label><input type="checkbox" id="base-68"> 68 - Logan Thompson</label></li>
+        <li><label><input type="checkbox" id="base-69"> 69 - Mark Stone</label></li>
+        <li><label><input type="checkbox" id="base-70"> 70 - MacKenzie Weegar</label></li>
+        <li><label><input type="checkbox" id="base-71"> 71 - Bo Horvat</label></li>
+        <li><label><input type="checkbox" id="base-72"> 72 - Matt Duchene</label></li>
+        <li><label><input type="checkbox" id="base-73"> 73 - Jordan Kyrou</label></li>
+        <li><label><input type="checkbox" id="base-74"> 74 - Anthony Cirelli</label></li>
+        <li><label><input type="checkbox" id="base-75"> 75 - Taylor Hall</label></li>
+        <li><label><input type="checkbox" id="base-76"> 76 - Dylan Cozens</label></li>
+        <li><label><input type="checkbox" id="base-77"> 77 - Steve Yzerman</label></li>
+        <li><label><input type="checkbox" id="base-78"> 78 - Luke Schenn</label></li>
+        <li><label><input type="checkbox" id="base-79"> 79 - Brandon Montour</label></li>
+        <li><label><input type="checkbox" id="base-80"> 80 - Steven Stamkos</label></li>
+        <li><label><input type="checkbox" id="base-81"> 81 - Joe Sakic</label></li>
+        <li><label><input type="checkbox" id="base-82"> 82 - Joe Nieuwendyk</label></li>
+        <li><label><input type="checkbox" id="base-83"> 83 - Sam Bennett</label></li>
+        <li><label><input type="checkbox" id="base-84"> 84 - Brendan Shanahan</label></li>
+        <li><label><input type="checkbox" id="base-85"> 85 - Logan Stankoven</label></li>
+        <li><label><input type="checkbox" id="base-86"> 86 - Sarah Fillier</label></li>
+        <li><label><input type="checkbox" id="base-87"> 87 - Brianne Jenner</label></li>
+        <li><label><input type="checkbox" id="base-88"> 88 - Sarah Nurse</label></li>
+        <li><label><input type="checkbox" id="base-89"> 89 - Natalie Spooner</label></li>
+        <li><label><input type="checkbox" id="base-90"> 90 - Emily Clark</label></li>
+        <li><label><input type="checkbox" id="base-91"> 91 - Ann-Renee Desbiens</label></li>
+        <li><label><input type="checkbox" id="base-92"> 92 - Renata Fast</label></li>
+        <li><label><input type="checkbox" id="base-93"> 93 - Danielle Serdachny</label></li>
+        <li><label><input type="checkbox" id="base-94"> 94 - Ella Shelton</label></li>
+        <li><label><input type="checkbox" id="base-95"> 95 - Emma Maltais</label></li>
+        <li><label><input type="checkbox" id="base-96"> 96 - Blayre Turnbull</label></li>
+        <li><label><input type="checkbox" id="base-97"> 97 - Jennifer Gardiner</label></li>
+        <li><label><input type="checkbox" id="base-98"> 98 - Erin Ambrose</label></li>
+        <li><label><input type="checkbox" id="base-99"> 99 - Laura Stacey</label></li>
+        <li><label><input type="checkbox" id="base-100"> 100 - Marie-Philip Poulin</label></li>
+    </ul>
 
     <h2>Maple Leaf Immortals (ML1–ML5) 1:100 <span class="count"></span></h2></h2>
     <ul>
