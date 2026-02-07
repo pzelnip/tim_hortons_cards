@@ -226,10 +226,11 @@ body.show-checked li:has(input[type="checkbox"]:not(:checked)) {
 <body>
     <h1>2026 Tim Hortons Team Canada Olympics Hockey Cards Checklist</h1>
 
-<div id="progress-container" style="background:#eee; border-radius:12px; overflow:hidden; height:28px; max-width:600px; margin:0 auto 2rem;">
-    <div id="progress-bar" style="height:100%; width:0%; background:#d71920; text-align:center; color:white; font-weight:bold; line-height:28px; transition: width 0.3s;">
-        0%
+<div style="max-width:600px; margin:0 auto 2rem;">
+    <div id="progress-container" style="background:#eee; border-radius:12px; overflow:hidden; height:16px;">
+        <div id="progress-bar" style="height:100%; width:0%; background:#d71920; transition: width 0.3s;"></div>
     </div>
+    <div id="progress-label" style="text-align:center; color:#d71920; font-weight:bold; font-size:1rem; margin-top:0.35rem;">0/0 (0%)</div>
 </div>
 <div class="button-row">
     <button id="share-btn">Copy Share Link</button>
@@ -546,13 +547,12 @@ function updateCounts() {
         }
     });
 
-    // Update progress bar only
+    // Update progress bar and label
+    const overallPercent = grandTotal === 0 ? 0 : Math.round((grandChecked / grandTotal) * 100);
     const progressBar = document.getElementById("progress-bar");
-    if (progressBar) {
-        const overallPercent = grandTotal === 0 ? 0 : Math.round((grandChecked / grandTotal) * 100);
-        progressBar.style.width = overallPercent + "%";
-        progressBar.textContent = `${grandChecked}/${grandTotal} (${overallPercent}%)`;
-    }
+    if (progressBar) progressBar.style.width = overallPercent + "%";
+    const progressLabel = document.getElementById("progress-label");
+    if (progressLabel) progressLabel.textContent = `${grandChecked}/${grandTotal} (${overallPercent}%)`;
 }
 
 // Load saved state, update hash to reflect it, then update counts
