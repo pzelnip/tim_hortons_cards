@@ -98,7 +98,22 @@ function decodeState(hash) {
     });
 }
 
-function loadState() {
+async function loadState() {
+    const apiKey = localStorage.getItem(JSONSTORAGE_API_KEY_LS);
+    const blobUri = localStorage.getItem(JSONSTORAGE_BLOB_URI_LS);
+
+    if (apiKey && blobUri) {
+        try {
+            const res = await fetch(blobUri);
+            if (!res.ok) throw new Error('GET failed: ' + res.status);
+            const data = await res.json();
+            decodeState(data.state);
+            return;
+        } catch (err) {
+            console.warn('Cloud load failed, falling back to URL hash:', err.message);
+        }
+    }
+
     const hash = window.location.hash.slice(1);
     if (hash) {
         decodeState(hash);
@@ -222,7 +237,7 @@ function initCloudUI() {
         input.value = apiKey;
         syncBtn.disabled = false;
         loadBtn.disabled = !blobUri;
-        document.getElementById('remove-api-key-btn').style.display = '';
+        document.getElementById('clear-cloud-btn').style.display = '';
     }
 }
 
@@ -240,19 +255,67 @@ function saveApiKey() {
     localStorage.setItem(JSONSTORAGE_API_KEY_LS, key);
     document.getElementById('sync-btn').disabled = false;
     document.getElementById('load-btn').disabled = !localStorage.getItem(JSONSTORAGE_BLOB_URI_LS);
-    document.getElementById('remove-api-key-btn').style.display = '';
+    document.getElementById('clear-cloud-btn').style.display = '';
     status.textContent = 'API key saved.';
     status.style.color = '#2a7d2a';
 }
 
-function removeApiKey() {
+function showConfirmModal() {
+    return new Promise(resolve => {
+        const overlay = document.getElementById('confirm-modal');
+        overlay.style.display = '';
+        const yes = document.getElementById('confirm-yes');
+        const no = document.getElementById('confirm-no');
+
+        function cleanup(result) {
+            overlay.style.display = 'none';
+            yes.removeEventListener('click', onYes);
+            no.removeEventListener('click', onNo);
+            overlay.removeEventListener('click', onOverlay);
+            resolve(result);
+        }
+        function onYes() { cleanup(true); }
+        function onNo() { cleanup(false); }
+        function onOverlay(e) { if (e.target === overlay) cleanup(false); }
+
+        yes.addEventListener('click', onYes);
+        no.addEventListener('click', onNo);
+        overlay.addEventListener('click', onOverlay);
+    });
+}
+
+async function clearCloudSettings() {
+    if (!await showConfirmModal()) return;
+
+    const apiKey = localStorage.getItem(JSONSTORAGE_API_KEY_LS);
+    const blobUri = localStorage.getItem(JSONSTORAGE_BLOB_URI_LS);
+    const status = document.getElementById('cloud-status');
+    const btn = document.getElementById('clear-cloud-btn');
+
+    btn.disabled = true;
+    btn.textContent = 'Clearing...';
+
+    if (apiKey && blobUri) {
+        try {
+            const res = await fetch(
+                blobUri + '?apiKey=' + encodeURIComponent(apiKey),
+                { method: 'DELETE' }
+            );
+            if (!res.ok) throw new Error('DELETE failed: ' + res.status);
+        } catch (err) {
+            console.warn('Failed to delete remote blob:', err.message);
+        }
+    }
+
     localStorage.removeItem(JSONSTORAGE_API_KEY_LS);
+    localStorage.removeItem(JSONSTORAGE_BLOB_URI_LS);
     document.getElementById('api-key-input').value = '';
     document.getElementById('sync-btn').disabled = true;
     document.getElementById('load-btn').disabled = true;
-    document.getElementById('remove-api-key-btn').style.display = 'none';
-    const status = document.getElementById('cloud-status');
-    status.textContent = 'API key removed.';
+    btn.style.display = 'none';
+    btn.disabled = false;
+    btn.textContent = 'Clear Cloud Settings';
+    status.textContent = 'Cloud settings cleared.';
     status.style.color = '#2a7d2a';
 }
 
@@ -420,7 +483,7 @@ function attachEventListeners() {
 
     // Cloud sync buttons
     document.getElementById('save-api-key-btn').addEventListener('click', saveApiKey);
-    document.getElementById('remove-api-key-btn').addEventListener('click', removeApiKey);
+    document.getElementById('clear-cloud-btn').addEventListener('click', clearCloudSettings);
     document.getElementById('sync-btn').addEventListener('click', cloudSync);
     document.getElementById('load-btn').addEventListener('click', cloudLoad);
 
@@ -463,7 +526,7 @@ async function init() {
     const data = await response.json();
 
     renderSet(data);
-    loadState();
+    await loadState();
     updateHash();
     updateCounts();
     attachEventListeners();
