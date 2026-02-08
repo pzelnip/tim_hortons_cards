@@ -15,13 +15,15 @@ Replace the URL hash as the sole persistence mechanism for checkbox selections. 
 
 ## Services Evaluated
 
-### jsonstorage.net - BLOCKED: Requires API key
+### jsonstorage.net - SELECTED
 - Free tier: ~512 req/day, 32 KB/request
-- CORS support claimed
-- **Problem**: POST (create) and PUT (update) require an API key passed as `?apiKey=...`
-- Getting a key requires creating an account at app.jsonstorage.net
-- Embedding a key in client-side code would expose it to abuse
-- Each user would need their own key, which defeats the simplicity goal
+- CORS: **Working** — `Access-Control-Allow-Origin: *` present on actual GET/POST/PUT responses (verified Feb 2026)
+- API key passed as `?apiKey=...` query parameter; required for POST (create) and PUT (update), not needed for GET (read)
+- Keys generated at https://app.jsonstorage.net (no account signup, just generate from dashboard)
+- POST to `https://api.jsonstorage.net/v1/json?apiKey={key}` → returns `{"uri": ".../{userId}/{itemId}"}`
+- GET `/{userId}/{itemId}` → returns stored JSON (no key needed)
+- PUT `/{userId}/{itemId}?apiKey={key}` → updates blob
+- Approach: each user supplies their own API key via UI, stored in localStorage
 
 ### jsonblob.com - BLOCKED: CORS broken
 - No auth required for any operation (POST/GET/PUT/DELETE)
@@ -33,7 +35,6 @@ Replace the URL hash as the sole persistence mechanism for checkbox selections. 
 - **Problem**: CORS is broken. The OPTIONS preflight returns `Access-Control-Allow-Origin: *` but the actual GET/POST/PUT responses do NOT include the header. Browsers block the response.
 - Confirmed via `curl -H "Origin: http://localhost:9214"` — 201 response has no ACAO header
 - Works fine from curl/server-side, just not from browser JS
-
 ### npoint.io - NOT FULLY TESTED
 - Has `Access-Control-Allow-Origin: *` on responses
 - POST to `https://api.npoint.io` returned 500 during quick test

@@ -20,6 +20,34 @@
     <button id="clear-btn">Clear Selections</button>
 </div>
 
+<details id="cloud-settings">
+    <summary>Cloud Sync</summary>
+    <div class="cloud-settings-body">
+        <label for="api-key-input">
+            jsonstorage.net API Key
+            <span class="help-icon" tabindex="0" aria-label="What is this?">?</span>
+        </label>
+        <p class="help-text" id="api-key-help">
+            This is optional. You can use the checklist without it &mdash; just make your selections and use
+            "Copy Share Link" above to create a link you can open on another device or bookmark for later.
+            Cloud Sync uses <a href="https://jsonstorage.net" target="_blank" rel="noopener noreferrer">jsonstorage.net</a>,
+            a free JSON storage service, to save your selections online so they persist without needing to keep a link.
+            To get started, visit <a href="https://app.jsonstorage.net" target="_blank" rel="noopener noreferrer">app.jsonstorage.net</a>,
+            generate an API key, and paste it here. Your key is stored only in this browser's local storage and is never shared.
+        </p>
+        <div class="cloud-input-row">
+            <input type="password" id="api-key-input" placeholder="Paste your API key...">
+            <button id="save-api-key-btn">Save Key</button>
+            <button id="remove-api-key-btn" style="display:none">Remove Key</button>
+        </div>
+        <p id="cloud-status"></p>
+        <div class="cloud-btn-row">
+            <button id="sync-btn" disabled>Sync to Cloud</button>
+            <button id="load-btn" disabled>Load from Cloud</button>
+        </div>
+    </div>
+</details>
+
 <div class="filter-bar">
     <div class="filter-segmented" id="category-nav"></div>
     <div class="filter-segmented" id="status-filter">

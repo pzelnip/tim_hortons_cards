@@ -205,6 +205,140 @@ function openTab(tabId) {
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
+// --- Cloud Sync ---
+
+const JSONSTORAGE_API_KEY_LS = 'jsonstorage_api_key';
+const JSONSTORAGE_BLOB_URI_LS = 'jsonstorage_blob_uri';
+const JSONSTORAGE_BASE = 'https://api.jsonstorage.net/v1/json';
+
+function initCloudUI() {
+    const apiKey = localStorage.getItem(JSONSTORAGE_API_KEY_LS);
+    const blobUri = localStorage.getItem(JSONSTORAGE_BLOB_URI_LS);
+    const input = document.getElementById('api-key-input');
+    const syncBtn = document.getElementById('sync-btn');
+    const loadBtn = document.getElementById('load-btn');
+
+    if (apiKey) {
+        input.value = apiKey;
+        syncBtn.disabled = false;
+        loadBtn.disabled = !blobUri;
+        document.getElementById('remove-api-key-btn').style.display = '';
+    }
+}
+
+function saveApiKey() {
+    const input = document.getElementById('api-key-input');
+    const key = input.value.trim();
+    const status = document.getElementById('cloud-status');
+
+    if (!key) {
+        status.textContent = 'Please enter an API key.';
+        status.style.color = '#d71920';
+        return;
+    }
+
+    localStorage.setItem(JSONSTORAGE_API_KEY_LS, key);
+    document.getElementById('sync-btn').disabled = false;
+    document.getElementById('load-btn').disabled = !localStorage.getItem(JSONSTORAGE_BLOB_URI_LS);
+    document.getElementById('remove-api-key-btn').style.display = '';
+    status.textContent = 'API key saved.';
+    status.style.color = '#2a7d2a';
+}
+
+function removeApiKey() {
+    localStorage.removeItem(JSONSTORAGE_API_KEY_LS);
+    document.getElementById('api-key-input').value = '';
+    document.getElementById('sync-btn').disabled = true;
+    document.getElementById('load-btn').disabled = true;
+    document.getElementById('remove-api-key-btn').style.display = 'none';
+    const status = document.getElementById('cloud-status');
+    status.textContent = 'API key removed.';
+    status.style.color = '#2a7d2a';
+}
+
+async function cloudSync() {
+    const apiKey = localStorage.getItem(JSONSTORAGE_API_KEY_LS);
+    const status = document.getElementById('cloud-status');
+    const syncBtn = document.getElementById('sync-btn');
+
+    if (!apiKey) {
+        status.textContent = 'No API key set.';
+        status.style.color = '#d71920';
+        return;
+    }
+
+    syncBtn.disabled = true;
+    syncBtn.textContent = 'Syncing...';
+    status.textContent = '';
+
+    const state = encodeState();
+    const blobUri = localStorage.getItem(JSONSTORAGE_BLOB_URI_LS);
+
+    try {
+        if (blobUri) {
+            const res = await fetch(blobUri + '?apiKey=' + encodeURIComponent(apiKey), {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ state: state }),
+            });
+            if (!res.ok) throw new Error('PUT failed: ' + res.status);
+            status.textContent = 'Synced to cloud.';
+            status.style.color = '#2a7d2a';
+        } else {
+            const res = await fetch(JSONSTORAGE_BASE + '?apiKey=' + encodeURIComponent(apiKey), {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ state: state }),
+            });
+            if (!res.ok) throw new Error('POST failed: ' + res.status);
+            const data = await res.json();
+            localStorage.setItem(JSONSTORAGE_BLOB_URI_LS, data.uri);
+            document.getElementById('load-btn').disabled = false;
+            status.textContent = 'Synced to cloud.';
+            status.style.color = '#2a7d2a';
+        }
+    } catch (err) {
+        status.textContent = 'Sync failed: ' + err.message;
+        status.style.color = '#d71920';
+    } finally {
+        syncBtn.disabled = false;
+        syncBtn.textContent = 'Sync to Cloud';
+    }
+}
+
+async function cloudLoad() {
+    const blobUri = localStorage.getItem(JSONSTORAGE_BLOB_URI_LS);
+    const status = document.getElementById('cloud-status');
+    const loadBtn = document.getElementById('load-btn');
+
+    if (!blobUri) {
+        status.textContent = 'No cloud data found. Sync first.';
+        status.style.color = '#d71920';
+        return;
+    }
+
+    loadBtn.disabled = true;
+    loadBtn.textContent = 'Loading...';
+    status.textContent = '';
+
+    try {
+        const res = await fetch(blobUri);
+        if (!res.ok) throw new Error('GET failed: ' + res.status);
+        const data = await res.json();
+        decodeState(data.state);
+        saveState();
+        updateCounts();
+        status.textContent = 'Loaded from cloud.';
+        status.style.color = '#2a7d2a';
+    } catch (err) {
+        status.textContent = 'Load failed: ' + err.message;
+        status.style.color = '#d71920';
+    } finally {
+        loadBtn.disabled = false;
+        loadBtn.textContent = 'Load from Cloud';
+    }
+}
+
 // --- Event listeners ---
 
 function attachEventListeners() {
@@ -273,6 +407,23 @@ function attachEventListeners() {
         document.getElementById('search-input').focus();
     });
 
+    // Help icon toggle
+    document.querySelector('.help-icon').addEventListener('click', () => {
+        document.getElementById('api-key-help').classList.toggle('visible');
+    });
+    document.querySelector('.help-icon').addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            document.getElementById('api-key-help').classList.toggle('visible');
+        }
+    });
+
+    // Cloud sync buttons
+    document.getElementById('save-api-key-btn').addEventListener('click', saveApiKey);
+    document.getElementById('remove-api-key-btn').addEventListener('click', removeApiKey);
+    document.getElementById('sync-btn').addEventListener('click', cloudSync);
+    document.getElementById('load-btn').addEventListener('click', cloudLoad);
+
     // Handle hash changes (e.g. user pastes a new hash in the address bar)
     window.addEventListener("hashchange", () => {
         loadState();
@@ -316,6 +467,7 @@ async function init() {
     updateHash();
     updateCounts();
     attachEventListeners();
+    initCloudUI();
 }
 
 init();

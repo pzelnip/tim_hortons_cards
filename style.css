@@ -287,6 +287,171 @@ li.search-hidden {
     display: none;
 }
 
+/* Cloud Sync settings */
+#cloud-settings {
+    max-width: 500px;
+    margin: 0 auto 2rem;
+    border: 2px solid #d71920;
+    border-radius: 12px;
+    overflow: hidden;
+}
+#cloud-settings summary {
+    padding: 0.5rem 1rem;
+    background: #fff;
+    color: #d71920;
+    font-weight: bold;
+    font-size: 1rem;
+    cursor: pointer;
+    list-style: none;
+}
+#cloud-settings summary::-webkit-details-marker {
+    display: none;
+}
+#cloud-settings summary::before {
+    content: '\25b6';
+    display: inline-block;
+    margin-right: 0.5rem;
+    transition: transform 0.2s;
+    font-size: 0.75rem;
+}
+#cloud-settings[open] summary::before {
+    transform: rotate(90deg);
+}
+.cloud-settings-body {
+    padding: 1rem;
+    background: #fff;
+    border-top: 1px solid #eee;
+}
+.cloud-settings-body label {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: bold;
+    color: #555;
+    margin-bottom: 0.35rem;
+}
+.help-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.1rem;
+    height: 1.1rem;
+    border: 1.5px solid #d71920;
+    border-radius: 50%;
+    color: #d71920;
+    font-size: 0.7rem;
+    font-weight: bold;
+    cursor: pointer;
+    vertical-align: middle;
+    margin-left: 0.25rem;
+    line-height: 1;
+}
+.help-icon:hover, .help-icon:focus {
+    background: #d71920;
+    color: #fff;
+    outline: none;
+}
+.help-text {
+    display: none;
+    font-size: 0.8rem;
+    font-weight: normal;
+    color: #555;
+    border-left: 3px solid #d71920;
+    padding: 0.5rem 0.75rem;
+    margin: 0.35rem 0 0.75rem;
+    line-height: 1.5;
+}
+.help-text.visible {
+    display: block;
+}
+.help-text a {
+    color: #d71920;
+    text-decoration: underline;
+}
+.cloud-input-row {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 0.75rem;
+}
+#api-key-input {
+    flex: 1;
+    padding: 0.4rem 0.75rem;
+    font-size: 0.9rem;
+    border: 2px solid #d71920;
+    border-radius: 8px;
+    outline: none;
+    box-sizing: border-box;
+}
+#api-key-input:focus {
+    box-shadow: 0 0 0 3px rgba(215, 25, 32, 0.25);
+}
+#save-api-key-btn {
+    padding: 0.4rem 1rem;
+    background: #d71920;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    cursor: pointer;
+    white-space: nowrap;
+}
+#save-api-key-btn:hover {
+    background: #b5161c;
+}
+#remove-api-key-btn {
+    padding: 0.4rem 1rem;
+    background: #fff;
+    color: #888;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    cursor: pointer;
+    white-space: nowrap;
+}
+#remove-api-key-btn:hover {
+    background: #d71920;
+    color: white;
+    border-color: #d71920;
+}
+#cloud-status {
+    font-size: 0.85rem;
+    margin: 0 0 0.75rem;
+    min-height: 1.2em;
+}
+.cloud-btn-row {
+    display: flex;
+    gap: 0.5rem;
+}
+#sync-btn, #load-btn {
+    padding: 0.5rem 1.5rem;
+    background: #d71920;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+#sync-btn:hover:not(:disabled), #load-btn:hover:not(:disabled) {
+    background: #b5161c;
+}
+#sync-btn:disabled, #load-btn:disabled {
+    background: #ccc;
+    color: #888;
+    cursor: not-allowed;
+}
+#load-btn {
+    background: #fff;
+    color: #d71920;
+    border: 2px solid #d71920;
+}
+#load-btn:hover:not(:disabled) {
+    background: #d71920;
+    color: white;
+}
+
 /* Filter bar */
 .filter-bar {
     display: flex;
