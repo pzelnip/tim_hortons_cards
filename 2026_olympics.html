@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>2026 Tim Hortons Team Canada Checklist</title>
+    <title>Loading...</title>
     <style>
 /* Base reset & typography */
 body {
@@ -224,7 +224,7 @@ body.show-checked li:has(input[type="checkbox"]:not(:checked)) {
     </style>
 </head>
 <body>
-    <h1>2026 Tim Hortons Team Canada Olympics Hockey Cards Checklist</h1>
+    <h1 id="page-title"></h1>
 
 <div style="max-width:600px; margin:0 auto 2rem;">
     <div id="progress-container" style="background:#eee; border-radius:12px; overflow:hidden; height:16px;">
@@ -238,241 +238,83 @@ body.show-checked li:has(input[type="checkbox"]:not(:checked)) {
     <button id="hide-checked-btn">Show Needed</button>
 </div>
 
-<nav id="category-nav">
-    <button class="active" data-target="tab-base">Base <span class="badge"></span></button>
-    <button data-target="tab-immortals">Maple Leaf Immortals <span class="badge"></span></button>
-    <button data-target="tab-duos">Duos <span class="badge"></span></button>
-    <button data-target="tab-poe">Program of Excellence <span class="badge"></span></button>
-    <button data-target="tab-prodigies">Celebrated Prodigies <span class="badge"></span></button>
-    <button data-target="tab-stars">Northern Stars <span class="badge"></span></button>
-    <button data-target="tab-medalists">Gold Medalists <span class="badge"></span></button>
-</nav>
+<nav id="category-nav"></nav>
 
-<div class="tab-content active" id="tab-base">
-    <h2>Base Cards (1–100) <span class="count"></span></h2>
-    <ul>
-        <li><label><input type="checkbox" id="base-1"> 1 - Sidney Crosby</label></li>
-        <li><label><input type="checkbox" id="base-2"> 2 - Nathan MacKinnon</label></li>
-        <li><label><input type="checkbox" id="base-3"> 3 - Connor McDavid</label></li>
-        <li><label><input type="checkbox" id="base-4"> 4 - Aaron Ekblad</label></li>
-        <li><label><input type="checkbox" id="base-5"> 5 - Drew Doughty</label></li>
-        <li><label><input type="checkbox" id="base-6"> 6 - Patrick Roy</label></li>
-        <li><label><input type="checkbox" id="base-7"> 7 - Jonathan Toews</label></li>
-        <li><label><input type="checkbox" id="base-8"> 8 - Claude Giroux</label></li>
-        <li><label><input type="checkbox" id="base-9"> 9 - Brad Marchand</label></li>
-        <li><label><input type="checkbox" id="base-10"> 10 - Alex Pietrangelo</label></li>
-        <li><label><input type="checkbox" id="base-11"> 11 - Evan Bouchard</label></li>
-        <li><label><input type="checkbox" id="base-12"> 12 - Shea Theodore</label></li>
-        <li><label><input type="checkbox" id="base-13"> 13 - Thomas Harley</label></li>
-        <li><label><input type="checkbox" id="base-14"> 14 - Macklin Celebrini</label></li>
-        <li><label><input type="checkbox" id="base-15"> 15 - Sean Couturier</label></li>
-        <li><label><input type="checkbox" id="base-16"> 16 - Dylan Guenther</label></li>
-        <li><label><input type="checkbox" id="base-17"> 17 - Ryan O'Reilly</label></li>
-        <li><label><input type="checkbox" id="base-18"> 18 - Josh Morrissey</label></li>
-        <li><label><input type="checkbox" id="base-19"> 19 - Mason McTavish</label></li>
-        <li><label><input type="checkbox" id="base-20"> 20 - Owen Power</label></li>
-        <li><label><input type="checkbox" id="base-21"> 21 - Corey Perry</label></li>
-        <li><label><input type="checkbox" id="base-22"> 22 - Seth Jarvis</label></li>
-        <li><label><input type="checkbox" id="base-23"> 23 - Jamie Benn</label></li>
-        <li><label><input type="checkbox" id="base-24"> 24 - Adam Fantilli</label></li>
-        <li><label><input type="checkbox" id="base-25"> 25 - Adam Lowry</label></li>
-        <li><label><input type="checkbox" id="base-26"> 26 - Sam Reinhart</label></li>
-        <li><label><input type="checkbox" id="base-27"> 27 - Brayden Schenn</label></li>
-        <li><label><input type="checkbox" id="base-28"> 28 - Scott Niedermayer</label></li>
-        <li><label><input type="checkbox" id="base-29"> 29 - Brayden Point</label></li>
-        <li><label><input type="checkbox" id="base-30"> 30 - Wayne Gretzky</label></li>
-        <li><label><input type="checkbox" id="base-31"> 31 - Mark Scheifele</label></li>
-        <li><label><input type="checkbox" id="base-32"> 32 - Sean Monahan</label></li>
-        <li><label><input type="checkbox" id="base-33"> 33 - John Tavares</label></li>
-        <li><label><input type="checkbox" id="base-34"> 34 - Morgan Reilly</label></li>
-        <li><label><input type="checkbox" id="base-35"> 35 - Thomas Chabot</label></li>
-        <li><label><input type="checkbox" id="base-36"> 36 - Noah Dobson</label></li>
-        <li><label><input type="checkbox" id="base-37"> 37 - Brandon Hagel</label></li>
-        <li><label><input type="checkbox" id="base-38"> 38 - Mario Lemieux</label></li>
-        <li><label><input type="checkbox" id="base-39"> 39 - Kris Letang</label></li>
-        <li><label><input type="checkbox" id="base-40"> 40 - Alexis Lafreniere</label></li>
-        <li><label><input type="checkbox" id="base-41"> 41 - Martin St.Louis</label></li>
-        <li><label><input type="checkbox" id="base-42"> 42 - Joe Thornton</label></li>
-        <li><label><input type="checkbox" id="base-43"> 43 - Robert Thomas</label></li>
-        <li><label><input type="checkbox" id="base-44"> 44 - Mathew Barzal</label></li>
-        <li><label><input type="checkbox" id="base-45"> 45 - Brent Burns</label></li>
-        <li><label><input type="checkbox" id="base-46"> 46 - Jordan Binnington</label></li>
-        <li><label><input type="checkbox" id="base-47"> 47 - Ryan Nugent-Hopkins</label></li>
-        <li><label><input type="checkbox" id="base-48"> 48 - Samuel Montembeault</label></li>
-        <li><label><input type="checkbox" id="base-49"> 49 - Cole Perfetti</label></li>
-        <li><label><input type="checkbox" id="base-50"> 50 - Cale Makar</label></li>
-        <li><label><input type="checkbox" id="base-51"> 51 - Travis Sanhiem</label></li>
-        <li><label><input type="checkbox" id="base-52"> 52 - Mark Messier</label></li>
-        <li><label><input type="checkbox" id="base-53"> 53 - Wyatt Johnston</label></li>
-        <li><label><input type="checkbox" id="base-54"> 54 - Quinton Byfield</label></li>
-        <li><label><input type="checkbox" id="base-55"> 55 - Travis Konecny</label></li>
-        <li><label><input type="checkbox" id="base-56"> 56 - Dylan Strome</label></li>
-        <li><label><input type="checkbox" id="base-57"> 57 - Connor Bedard</label></li>
-        <li><label><input type="checkbox" id="base-58"> 58 - Nazem Kadri</label></li>
-        <li><label><input type="checkbox" id="base-59"> 59 - Carey Price</label></li>
-        <li><label><input type="checkbox" id="base-60"> 60 - Adin Hill</label></li>
-        <li><label><input type="checkbox" id="base-61"> 61 - Jordan Eberle</label></li>
-        <li><label><input type="checkbox" id="base-62"> 62 - Nick Suzuki</label></li>
-        <li><label><input type="checkbox" id="base-63"> 63 - Eric Lindros</label></li>
-        <li><label><input type="checkbox" id="base-64"> 64 - Ray Bourque</label></li>
-        <li><label><input type="checkbox" id="base-65"> 65 - Chris Pronger</label></li>
-        <li><label><input type="checkbox" id="base-66"> 66 - Colton Parayko</label></li>
-        <li><label><input type="checkbox" id="base-67"> 67 - Mitch Marner</label></li>
-        <li><label><input type="checkbox" id="base-68"> 68 - Logan Thompson</label></li>
-        <li><label><input type="checkbox" id="base-69"> 69 - Mark Stone</label></li>
-        <li><label><input type="checkbox" id="base-70"> 70 - MacKenzie Weegar</label></li>
-        <li><label><input type="checkbox" id="base-71"> 71 - Bo Horvat</label></li>
-        <li><label><input type="checkbox" id="base-72"> 72 - Matt Duchene</label></li>
-        <li><label><input type="checkbox" id="base-73"> 73 - Jordan Kyrou</label></li>
-        <li><label><input type="checkbox" id="base-74"> 74 - Anthony Cirelli</label></li>
-        <li><label><input type="checkbox" id="base-75"> 75 - Taylor Hall</label></li>
-        <li><label><input type="checkbox" id="base-76"> 76 - Dylan Cozens</label></li>
-        <li><label><input type="checkbox" id="base-77"> 77 - Steve Yzerman</label></li>
-        <li><label><input type="checkbox" id="base-78"> 78 - Luke Schenn</label></li>
-        <li><label><input type="checkbox" id="base-79"> 79 - Brandon Montour</label></li>
-        <li><label><input type="checkbox" id="base-80"> 80 - Steven Stamkos</label></li>
-        <li><label><input type="checkbox" id="base-81"> 81 - Joe Sakic</label></li>
-        <li><label><input type="checkbox" id="base-82"> 82 - Joe Nieuwendyk</label></li>
-        <li><label><input type="checkbox" id="base-83"> 83 - Sam Bennett</label></li>
-        <li><label><input type="checkbox" id="base-84"> 84 - Brendan Shanahan</label></li>
-        <li><label><input type="checkbox" id="base-85"> 85 - Logan Stankoven</label></li>
-        <li><label><input type="checkbox" id="base-86"> 86 - Sarah Fillier</label></li>
-        <li><label><input type="checkbox" id="base-87"> 87 - Brianne Jenner</label></li>
-        <li><label><input type="checkbox" id="base-88"> 88 - Sarah Nurse</label></li>
-        <li><label><input type="checkbox" id="base-89"> 89 - Natalie Spooner</label></li>
-        <li><label><input type="checkbox" id="base-90"> 90 - Emily Clark</label></li>
-        <li><label><input type="checkbox" id="base-91"> 91 - Ann-Renee Desbiens</label></li>
-        <li><label><input type="checkbox" id="base-92"> 92 - Renata Fast</label></li>
-        <li><label><input type="checkbox" id="base-93"> 93 - Danielle Serdachny</label></li>
-        <li><label><input type="checkbox" id="base-94"> 94 - Ella Shelton</label></li>
-        <li><label><input type="checkbox" id="base-95"> 95 - Emma Maltais</label></li>
-        <li><label><input type="checkbox" id="base-96"> 96 - Blayre Turnbull</label></li>
-        <li><label><input type="checkbox" id="base-97"> 97 - Jennifer Gardiner</label></li>
-        <li><label><input type="checkbox" id="base-98"> 98 - Erin Ambrose</label></li>
-        <li><label><input type="checkbox" id="base-99"> 99 - Laura Stacey</label></li>
-        <li><label><input type="checkbox" id="base-100"> 100 - Marie-Philip Poulin</label></li>
-    </ul>
-</div>
-
-<div class="tab-content" id="tab-immortals">
-    <h2>Maple Leaf Immortals (ML1–ML5) 1:100 <span class="count"></span></h2>
-    <ul>
-        <li><label><input type="checkbox" id="ML-1"> ML1 Sidney Crosby</label></li>
-        <li><label><input type="checkbox" id="ML-2"> ML2 Nathan MacKinnon</label></li>
-        <li><label><input type="checkbox" id="ML-3"> ML3 Mario Lemieux</label></li>
-        <li><label><input type="checkbox" id="ML-4"> ML4 Marie-Philip Poulin</label></li>
-        <li><label><input type="checkbox" id="ML-5"> ML5 Connor McDavid</label></li>
-    </ul>
-</div>
-
-<div class="tab-content" id="tab-duos">
-    <h2>Duos (CO-1–CO-15) 1:24 <span class="count"></span></h2>
-    <ul>
-        <li><label><input type="checkbox" id="CO-1"> CO-1 Bedard / Fantilli</label></li>
-        <li><label><input type="checkbox" id="CO-2"> CO-2 McDavid / Nurse</label></li>
-        <li><label><input type="checkbox" id="CO-3"> CO-3 Crosby / MacKinnon</label></li>
-        <li><label><input type="checkbox" id="CO-4"> CO-4 Doughty / Toews</label></li>
-        <li><label><input type="checkbox" id="CO-5"> CO-5 Scheifele / Morrissey</label></li>
-        <li><label><input type="checkbox" id="CO-6"> CO-6 Gretzky / Roy</label></li>
-        <li><label><input type="checkbox" id="CO-7"> CO-7 Marchand / Reinhart</label></li>
-        <li><label><input type="checkbox" id="CO-8"> CO-8 Kuemper / Hill</label></li>
-        <li><label><input type="checkbox" id="CO-9"> CO-9 Stone / Marchessault</label></li>
-        <li><label><input type="checkbox" id="CO-10"> CO-10 Horvat / Barzal</label></li>
-        <li><label><input type="checkbox" id="CO-11"> CO-11 Yzerman / Shanahan</label></li>
-        <li><label><input type="checkbox" id="CO-12"> CO-12 Bouchard / Dobson</label></li>
-        <li><label><input type="checkbox" id="CO-13"> CO-13 Marner / Point</label></li>
-        <li><label><input type="checkbox" id="CO-14"> CO-14 Poulin / Stacey</label></li>
-        <li><label><input type="checkbox" id="CO-15"> CO-15 Nurse / Spooner</label></li>
-    </ul>
-</div>
-
-<div class="tab-content" id="tab-poe">
-    <h2>Program of Excellence (POE-1–POE-15) 1:8 <span class="count"></span></h2>
-    <ul>
-        <li><label><input type="checkbox" id="POE-1"> POE-1 Nathan MacKinnon</label></li>
-        <li><label><input type="checkbox" id="POE-2"> POE-2 Brad Marchand</label></li>
-        <li><label><input type="checkbox" id="POE-3"> POE-3 Mark Stone</label></li>
-        <li><label><input type="checkbox" id="POE-4"> POE-4 Claude Giroux</label></li>
-        <li><label><input type="checkbox" id="POE-5"> POE-5 Sidney Crosby</label></li>
-        <li><label><input type="checkbox" id="POE-6"> POE-6 Brayden Point</label></li>
-        <li><label><input type="checkbox" id="POE-7"> POE-7 Matt Duchene</label></li>
-        <li><label><input type="checkbox" id="POE-8"> POE-8 Robert Thomas</label></li>
-        <li><label><input type="checkbox" id="POE-9"> POE-9 Travis Konecny</label></li>
-        <li><label><input type="checkbox" id="POE-10"> POE-10 Evan Bouchard</label></li>
-        <li><label><input type="checkbox" id="POE-11"> POE-11 Brendan Shanahan</label></li>
-        <li><label><input type="checkbox" id="POE-12"> POE-12 Wayne Gretzky</label></li>
-        <li><label><input type="checkbox" id="POE-13"> POE-13 Samuel Montembeault</label></li>
-        <li><label><input type="checkbox" id="POE-14"> POE-14 Blayre Turnbull</label></li>
-        <li><label><input type="checkbox" id="POE-15"> POE-15 Brianne Jenner</label></li>
-    </ul>
-</div>
-
-<div class="tab-content" id="tab-prodigies">
-    <h2>Celebrated Prodigies (CP-1–CP-15) 1:6 <span class="count"></span></h2>
-    <ul>
-        <li><label><input type="checkbox" id="CP-1"> CP-1 Connor McDavid</label></li>
-        <li><label><input type="checkbox" id="CP-2"> CP-2 Cale Makar</label></li>
-        <li><label><input type="checkbox" id="CP-3"> CP-3 Mitch Marner</label></li>
-        <li><label><input type="checkbox" id="CP-4"> CP-4 Sam Reinhart</label></li>
-        <li><label><input type="checkbox" id="CP-5"> CP-5 Macklin Celebrini</label></li>
-        <li><label><input type="checkbox" id="CP-6"> CP-6 Eric Lindros</label></li>
-        <li><label><input type="checkbox" id="CP-7"> CP-7 Connor Bedard</label></li>
-        <li><label><input type="checkbox" id="CP-8"> CP-8 Chris Pronger</label></li>
-        <li><label><input type="checkbox" id="CP-9"> CP-9 Ryan Nugent-Hopkins</label></li>
-        <li><label><input type="checkbox" id="CP-10"> CP-10 Drew Doughty</label></li>
-        <li><label><input type="checkbox" id="CP-11"> CP-11 John Tavares</label></li>
-        <li><label><input type="checkbox" id="CP-12"> CP-12 Adam Fantilli</label></li>
-        <li><label><input type="checkbox" id="CP-13"> CP-13 Aaron Ekblad</label></li>
-        <li><label><input type="checkbox" id="CP-14"> CP-14 Sarah Fillier</label></li>
-        <li><label><input type="checkbox" id="CP-15"> CP-15 Erin Ambrose</label></li>
-    </ul>
-</div>
-
-<div class="tab-content" id="tab-stars">
-    <h2>Northern Stars (NS-1–NS-15) 1:4 <span class="count"></span></h2>
-    <ul>
-        <li><label><input type="checkbox" id="NS-1"> NS-1 Ray Bourque</label></li>
-        <li><label><input type="checkbox" id="NS-2"> NS-2 Jordan Binnington</label></li>
-        <li><label><input type="checkbox" id="NS-3"> NS-3 Jamie Benn</label></li>
-        <li><label><input type="checkbox" id="NS-4"> NS-4 Nick Suzuki</label></li>
-        <li><label><input type="checkbox" id="NS-5"> NS-5 Patrick Roy</label></li>
-        <li><label><input type="checkbox" id="NS-6"> NS-6 Brandon Hagel</label></li>
-        <li><label><input type="checkbox" id="NS-7"> NS-7 Dylan Strome</label></li>
-        <li><label><input type="checkbox" id="NS-8"> NS-8 Wayne Gretzky</label></li>
-        <li><label><input type="checkbox" id="NS-9"> NS-9 Kris Letang</label></li>
-        <li><label><input type="checkbox" id="NS-10"> NS-10 Mathew Barzal</label></li>
-        <li><label><input type="checkbox" id="NS-11"> NS-11 Logan Thompson</label></li>
-        <li><label><input type="checkbox" id="NS-12"> NS-12 Sam Reinhart</label></li>
-        <li><label><input type="checkbox" id="NS-13"> NS-13 Joe Thornton</label></li>
-        <li><label><input type="checkbox" id="NS-14"> NS-14 Renata Fast</label></li>
-        <li><label><input type="checkbox" id="NS-15"> NS-15 Jennifer Gardiner</label></li>
-    </ul>
-</div>
-
-<div class="tab-content" id="tab-medalists">
-    <h2>Gold Medalists (GM-1–GM-15) 1:3 <span class="count"></span></h2>
-    <ul>
-        <li><label><input type="checkbox" id="GM-1"> GM-1 Steve Yzerman</label></li>
-        <li><label><input type="checkbox" id="GM-2"> GM-2 Mark Scheifele</label></li>
-        <li><label><input type="checkbox" id="GM-3"> GM-3 Eric Lindros</label></li>
-        <li><label><input type="checkbox" id="GM-4"> GM-4 Joe Sakic</label></li>
-        <li><label><input type="checkbox" id="GM-5"> GM-5 Logan Stankoven</label></li>
-        <li><label><input type="checkbox" id="GM-6"> GM-6 Sidney Crosby</label></li>
-        <li><label><input type="checkbox" id="GM-7"> GM-7 Brent Burns</label></li>
-        <li><label><input type="checkbox" id="GM-8"> GM-8 Mason McTavish</label></li>
-        <li><label><input type="checkbox" id="GM-9"> GM-9 Martin St.Louis</label></li>
-        <li><label><input type="checkbox" id="GM-10"> GM-10 Josh Morrissey</label></li>
-        <li><label><input type="checkbox" id="GM-11"> GM-11 Carey Price</label></li>
-        <li><label><input type="checkbox" id="GM-12"> GM-12 Brandt Clarke</label></li>
-        <li><label><input type="checkbox" id="GM-13"> GM-13 Mario Lemieux</label></li>
-        <li><label><input type="checkbox" id="GM-14"> GM-14 Emily Clark</label></li>
-        <li><label><input type="checkbox" id="GM-15"> GM-15 Ann-Rene Desbiens</label></li>
-    </ul>
-</div>
-
-<!-- Counters automatically appear and update -->
+<div id="card-content"></div>
 
 <script>
+// --- Rendering ---
+
+function renderSet(data) {
+    document.getElementById('page-title').textContent = data.title;
+    document.title = data.title;
+
+    // Build nav tabs
+    const nav = document.getElementById('category-nav');
+    data.categories.forEach((cat, i) => {
+        const btn = document.createElement('button');
+        btn.dataset.target = cat.tabId;
+        if (i === 0) btn.classList.add('active');
+        const badge = document.createElement('span');
+        badge.className = 'badge';
+        btn.appendChild(document.createTextNode(cat.tabLabel + ' '));
+        btn.appendChild(badge);
+        nav.appendChild(btn);
+    });
+
+    // Build tab content panels
+    const content = document.getElementById('card-content');
+    data.categories.forEach((cat, i) => {
+        const div = document.createElement('div');
+        div.className = 'tab-content' + (i === 0 ? ' active' : '');
+        div.id = cat.tabId;
+
+        // Section heading
+        const h2 = document.createElement('h2');
+        const endNum = cat.cards.length;
+        let rangeStr;
+        if (cat.showPrefix) {
+            rangeStr = cat.prefix + '-1\u2013' + cat.prefix + '-' + endNum;
+        } else {
+            rangeStr = '1\u2013' + endNum;
+        }
+        let headingText = cat.name + ' (' + rangeStr + ')';
+        if (cat.odds) headingText += ' ' + cat.odds;
+        h2.appendChild(document.createTextNode(headingText + ' '));
+        const countSpan = document.createElement('span');
+        countSpan.className = 'count';
+        h2.appendChild(countSpan);
+        div.appendChild(h2);
+
+        // Card list
+        const ul = document.createElement('ul');
+        cat.cards.forEach((name, idx) => {
+            const num = idx + 1;
+            const checkboxId = cat.prefix + '-' + num;
+            let labelText;
+            if (cat.showPrefix) {
+                labelText = cat.prefix + '-' + num + ' ' + name;
+            } else {
+                labelText = num + ' - ' + name;
+            }
+
+            const li = document.createElement('li');
+            const label = document.createElement('label');
+            const checkbox = document.createElement('input');
+            checkbox.type = 'checkbox';
+            checkbox.id = checkboxId;
+            label.appendChild(checkbox);
+            label.appendChild(document.createTextNode(' ' + labelText));
+            li.appendChild(label);
+            ul.appendChild(li);
+        });
+        div.appendChild(ul);
+        content.appendChild(div);
+    });
+}
+
+// --- State encode/decode ---
+
 function encodeState() {
     const checkboxes = document.querySelectorAll('input[type="checkbox"]');
     const bytes = new Uint8Array(Math.ceil(checkboxes.length / 8));
@@ -502,7 +344,7 @@ function loadState() {
 
 function updateHash() {
     const encoded = encodeState();
-    history.replaceState(null, "", window.location.pathname + "#" + encoded);
+    history.replaceState(null, "", window.location.pathname + window.location.search + "#" + encoded);
 }
 
 function saveState() {
@@ -555,71 +397,8 @@ function updateCounts() {
     if (progressLabel) progressLabel.textContent = `${grandChecked}/${grandTotal} (${overallPercent}%)`;
 }
 
-// Load saved state, update hash to reflect it, then update counts
-loadState();
-updateHash();
-updateCounts();
+// --- Tab navigation ---
 
-// Save state and update counts on checkbox changes
-document.addEventListener("change", e => {
-    if (e.target.matches('input[type="checkbox"]')) {
-        saveState();
-        updateCounts();
-    }
-});
-
-// Copy share link button
-document.getElementById("share-btn").addEventListener("click", () => {
-    const btn = document.getElementById("share-btn");
-    navigator.clipboard.writeText(window.location.href).then(() => {
-        btn.textContent = "Copied!";
-        setTimeout(() => { btn.textContent = "Copy Share Link"; }, 2000);
-    });
-});
-
-// Clear all selections / Undo
-let previousHash = null;
-document.getElementById("clear-btn").addEventListener("click", () => {
-    const btn = document.getElementById("clear-btn");
-    if (previousHash !== null) {
-        // Undo: restore previous state
-        decodeState(previousHash);
-        saveState();
-        updateCounts();
-        previousHash = null;
-        btn.textContent = "Clear Selections";
-    } else {
-        // Clear: save current state, then clear
-        previousHash = encodeState();
-        document.querySelectorAll('input[type="checkbox"]').forEach(cb => {
-            cb.checked = false;
-        });
-        saveState();
-        updateCounts();
-        btn.textContent = "Undo";
-    }
-});
-
-// Filter toggle: Show All → Show Unchecked → Show Checked
-const filterStates = ["all", "unchecked", "checked"];
-const filterLabels = { all: "Show Needed", unchecked: "Show Have", checked: "Show All" };
-let filterIndex = 0;
-
-document.getElementById("hide-checked-btn").addEventListener("click", () => {
-    document.body.classList.remove("show-unchecked", "show-checked");
-    filterIndex = (filterIndex + 1) % 3;
-    const state = filterStates[filterIndex];
-    if (state !== "all") document.body.classList.add("show-" + state);
-    document.getElementById("hide-checked-btn").textContent = filterLabels[state];
-});
-
-// Handle hash changes (e.g. user pastes a new hash in the address bar)
-window.addEventListener("hashchange", () => {
-    loadState();
-    updateCounts();
-});
-
-// Category navigation tabs — show/hide content with fade-in
 function openTab(tabId) {
     document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
     document.getElementById(tabId).classList.add('active');
@@ -629,23 +408,107 @@ function openTab(tabId) {
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-document.getElementById('category-nav').addEventListener('click', (e) => {
-    const btn = e.target.closest('button[data-target]');
-    if (btn) openTab(btn.dataset.target);
-});
+// --- Event listeners ---
 
-// Keyboard navigation for tabs (arrow keys)
-document.getElementById('category-nav').addEventListener('keydown', (e) => {
-    if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
-    const buttons = Array.from(document.querySelectorAll('#category-nav button'));
-    const current = buttons.indexOf(document.activeElement);
-    if (current === -1) return;
-    const next = e.key === 'ArrowRight'
-        ? (current + 1) % buttons.length
-        : (current - 1 + buttons.length) % buttons.length;
-    buttons[next].focus();
-    openTab(buttons[next].dataset.target);
-});
+function attachEventListeners() {
+    // Save state and update counts on checkbox changes
+    document.addEventListener("change", e => {
+        if (e.target.matches('input[type="checkbox"]')) {
+            saveState();
+            updateCounts();
+        }
+    });
+
+    // Copy share link button
+    document.getElementById("share-btn").addEventListener("click", () => {
+        const btn = document.getElementById("share-btn");
+        navigator.clipboard.writeText(window.location.href).then(() => {
+            btn.textContent = "Copied!";
+            setTimeout(() => { btn.textContent = "Copy Share Link"; }, 2000);
+        });
+    });
+
+    // Clear all selections / Undo
+    let previousHash = null;
+    document.getElementById("clear-btn").addEventListener("click", () => {
+        const btn = document.getElementById("clear-btn");
+        if (previousHash !== null) {
+            decodeState(previousHash);
+            saveState();
+            updateCounts();
+            previousHash = null;
+            btn.textContent = "Clear Selections";
+        } else {
+            previousHash = encodeState();
+            document.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+                cb.checked = false;
+            });
+            saveState();
+            updateCounts();
+            btn.textContent = "Undo";
+        }
+    });
+
+    // Filter toggle: Show All → Show Unchecked → Show Checked
+    const filterStates = ["all", "unchecked", "checked"];
+    const filterLabels = { all: "Show Needed", unchecked: "Show Have", checked: "Show All" };
+    let filterIndex = 0;
+
+    document.getElementById("hide-checked-btn").addEventListener("click", () => {
+        document.body.classList.remove("show-unchecked", "show-checked");
+        filterIndex = (filterIndex + 1) % 3;
+        const state = filterStates[filterIndex];
+        if (state !== "all") document.body.classList.add("show-" + state);
+        document.getElementById("hide-checked-btn").textContent = filterLabels[state];
+    });
+
+    // Handle hash changes (e.g. user pastes a new hash in the address bar)
+    window.addEventListener("hashchange", () => {
+        loadState();
+        updateCounts();
+    });
+
+    // Category navigation tabs
+    document.getElementById('category-nav').addEventListener('click', (e) => {
+        const btn = e.target.closest('button[data-target]');
+        if (btn) openTab(btn.dataset.target);
+    });
+
+    // Keyboard navigation for tabs (arrow keys)
+    document.getElementById('category-nav').addEventListener('keydown', (e) => {
+        if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
+        const buttons = Array.from(document.querySelectorAll('#category-nav button'));
+        const current = buttons.indexOf(document.activeElement);
+        if (current === -1) return;
+        const next = e.key === 'ArrowRight'
+            ? (current + 1) % buttons.length
+            : (current - 1 + buttons.length) % buttons.length;
+        buttons[next].focus();
+        openTab(buttons[next].dataset.target);
+    });
+}
+
+// --- Init ---
+
+async function init() {
+    const params = new URLSearchParams(window.location.search);
+    const setName = params.get('set') || '2026_olympics';
+
+    const response = await fetch('data/' + setName + '.json');
+    if (!response.ok) {
+        document.getElementById('page-title').textContent = 'Error: Card set not found';
+        return;
+    }
+    const data = await response.json();
+
+    renderSet(data);
+    loadState();
+    updateHash();
+    updateCounts();
+    attachEventListeners();
+}
+
+init();
 </script>
 
 
