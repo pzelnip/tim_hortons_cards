@@ -56,7 +56,7 @@ function renderSet(data) {
             }
 
             const li = document.createElement('li');
-            li.dataset.name = name.toLowerCase();
+            li.dataset.name = labelText.toLowerCase();
             const label = document.createElement('label');
             const checkbox = document.createElement('input');
             checkbox.type = 'checkbox';
