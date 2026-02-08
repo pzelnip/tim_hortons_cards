@@ -174,12 +174,23 @@ function applySearch() {
         }
     });
 
-    // Show/hide "no matches" message and card list per tab
+    updateNoResults();
+}
+
+function updateNoResults() {
+    const filterState = document.body.classList.contains('show-unchecked') ? 'unchecked'
+        : document.body.classList.contains('show-checked') ? 'checked' : 'all';
+
     document.querySelectorAll('.tab-content').forEach(tab => {
-        const hasVisible = tab.querySelector('li:not(.search-hidden)');
-        const noMatch = query && !hasVisible;
-        tab.querySelector('ul').style.display = noMatch ? 'none' : '';
-        tab.querySelector('.no-results').style.display = noMatch ? 'block' : 'none';
+        const items = tab.querySelectorAll('li');
+        const hasVisible = Array.from(items).some(li => {
+            if (li.classList.contains('search-hidden')) return false;
+            if (filterState === 'unchecked' && li.querySelector('input[type="checkbox"]:checked')) return false;
+            if (filterState === 'checked' && li.querySelector('input[type="checkbox"]:not(:checked)')) return false;
+            return true;
+        });
+        tab.querySelector('ul').style.display = hasVisible ? '' : 'none';
+        tab.querySelector('.no-results').style.display = hasVisible ? 'none' : 'block';
     });
 }
 
@@ -202,6 +213,7 @@ function attachEventListeners() {
         if (e.target.matches('input[type="checkbox"]')) {
             saveState();
             updateCounts();
+            updateNoResults();
         }
     });
 
@@ -243,6 +255,7 @@ function attachEventListeners() {
             document.body.classList.remove('show-unchecked', 'show-checked');
             const filter = btn.dataset.filter;
             if (filter !== 'all') document.body.classList.add('show-' + filter);
+            updateNoResults();
             const activeUl = document.querySelector('.tab-content.active ul');
             if (activeUl) {
                 activeUl.classList.remove('fade-in');
