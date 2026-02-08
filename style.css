@@ -154,6 +154,7 @@ body::before {
     padding: 0.4rem;
 }
 .filter-seg {
+    position: relative;
     padding: 0.4rem 1rem;
     background: #fff;
     color: #d71920;
@@ -163,6 +164,43 @@ body::before {
     font-weight: bold;
     cursor: pointer;
     transition: background 0.2s, color 0.2s;
+}
+.filter-seg[data-tooltip]::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: calc(100% + 8px);
+    left: 50%;
+    transform: translateX(-50%) scale(0.9);
+    background: #d71920;
+    color: #fff;
+    padding: 0.35rem 0.75rem;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    font-weight: normal;
+    white-space: nowrap;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.2s, transform 0.2s;
+    box-shadow: 0 2px 8px rgba(215, 25, 32, 0.3);
+}
+.filter-seg[data-tooltip]::before {
+    content: '';
+    position: absolute;
+    bottom: calc(100% + 2px);
+    left: 50%;
+    transform: translateX(-50%);
+    border: 5px solid transparent;
+    border-top-color: #d71920;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+.filter-seg[data-tooltip]:hover::after {
+    opacity: 1;
+    transform: translateX(-50%) scale(1);
+}
+.filter-seg[data-tooltip]:hover::before {
+    opacity: 1;
 }
 .filter-seg.active {
     background: #d71920;

@@ -10,7 +10,7 @@ function renderSet(data) {
         const btn = document.createElement('button');
         btn.className = 'filter-seg' + (i === 0 ? ' active' : '');
         btn.dataset.target = cat.tabId;
-        btn.title = `Show ${cat.name} cards`;
+        btn.dataset.tooltip = `Show ${cat.name} cards`;
         const badge = document.createElement('span');
         badge.className = 'badge';
         btn.appendChild(document.createTextNode(cat.name + ' '));
