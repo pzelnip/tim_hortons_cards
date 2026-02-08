@@ -35,7 +35,9 @@ function renderSet(data) {
         }
         let headingText = cat.name + ' Cards (' + rangeStr + ')';
         if (cat.odds) headingText += ' ' + cat.odds;
-        h2.appendChild(document.createTextNode(headingText + ' '));
+        const titleSpan = document.createElement('span');
+        titleSpan.textContent = headingText;
+        h2.appendChild(titleSpan);
         const countSpan = document.createElement('span');
         countSpan.className = 'count';
         h2.appendChild(countSpan);
