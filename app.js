@@ -56,6 +56,7 @@ function renderSet(data) {
             }
 
             const li = document.createElement('li');
+            li.dataset.name = name.toLowerCase();
             const label = document.createElement('label');
             const checkbox = document.createElement('input');
             checkbox.type = 'checkbox';
@@ -154,6 +155,21 @@ function updateCounts() {
     if (progressLabel) progressLabel.textContent = `${grandChecked}/${grandTotal} (${overallPercent}%)`;
 }
 
+// --- Search ---
+
+function applySearch() {
+    const query = document.getElementById('search-input').value.toLowerCase().trim();
+    document.getElementById('search-clear').style.display = query ? 'block' : 'none';
+
+    document.querySelectorAll('#card-content li').forEach(li => {
+        if (!query || li.dataset.name.includes(query)) {
+            li.classList.remove('search-hidden');
+        } else {
+            li.classList.add('search-hidden');
+        }
+    });
+}
+
 // --- Tab navigation ---
 
 function openTab(tabId) {
@@ -223,6 +239,14 @@ function attachEventListeners() {
             void activeUl.offsetWidth;
             activeUl.classList.add('fade-in');
         }
+    });
+
+    // Search input
+    document.getElementById('search-input').addEventListener('input', applySearch);
+    document.getElementById('search-clear').addEventListener('click', () => {
+        document.getElementById('search-input').value = '';
+        applySearch();
+        document.getElementById('search-input').focus();
     });
 
     // Handle hash changes (e.g. user pastes a new hash in the address bar)

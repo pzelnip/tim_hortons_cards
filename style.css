@@ -165,6 +165,9 @@ body.show-unchecked li:has(input[type="checkbox"]:checked) {
 body.show-checked li:has(input[type="checkbox"]:not(:checked)) {
     display: none;
 }
+li.search-hidden {
+    display: none;
+}
 
 /* Category navigation tabs */
 #category-nav {
@@ -203,6 +206,46 @@ body.show-checked li:has(input[type="checkbox"]:not(:checked)) {
     font-size: 0.7rem;
     opacity: 0.85;
     margin-left: 0.15rem;
+}
+
+/* Search input */
+#search-container {
+    position: relative;
+    max-width: 400px;
+    margin: 0 auto 1.5rem;
+}
+#search-input {
+    width: 100%;
+    padding: 0.5rem 2.5rem 0.5rem 1rem;
+    font-size: 1rem;
+    border: 2px solid #d71920;
+    border-radius: 8px;
+    outline: none;
+    box-sizing: border-box;
+    transition: box-shadow 0.2s;
+}
+#search-input:focus {
+    box-shadow: 0 0 0 3px rgba(215, 25, 32, 0.25);
+}
+#search-input::placeholder {
+    color: #aaa;
+}
+#search-clear {
+    position: absolute;
+    right: 0.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    font-size: 1.25rem;
+    color: #999;
+    cursor: pointer;
+    display: none;
+    padding: 0.25rem;
+    line-height: 1;
+}
+#search-clear:hover {
+    color: #d71920;
 }
 
 /* Tab content panels */
