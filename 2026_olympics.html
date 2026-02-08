@@ -18,14 +18,19 @@
 <div class="button-row">
     <button id="share-btn">Copy Share Link</button>
     <button id="clear-btn">Clear Selections</button>
-    <button id="hide-checked-btn">Show Needed</button>
 </div>
 
-<nav id="category-nav"></nav>
-
-<div id="search-container">
-    <input type="text" id="search-input" placeholder="Search cards..." autocomplete="off">
-    <button id="search-clear" type="button" aria-label="Clear search">&times;</button>
+<div class="filter-bar">
+    <div class="filter-segmented" id="category-nav"></div>
+    <div class="filter-segmented" id="status-filter">
+        <button class="filter-seg active" data-filter="all">All</button>
+        <button class="filter-seg" data-filter="unchecked">Need</button>
+        <button class="filter-seg" data-filter="checked">Have</button>
+    </div>
+    <div id="search-container">
+        <input type="text" id="search-input" placeholder="Search cards..." autocomplete="off">
+        <button id="search-clear" type="button" aria-label="Clear search">&times;</button>
+    </div>
 </div>
 
 <div id="card-content"></div>

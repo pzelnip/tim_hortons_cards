@@ -8,8 +8,8 @@ function renderSet(data) {
     const nav = document.getElementById('category-nav');
     data.categories.forEach((cat, i) => {
         const btn = document.createElement('button');
+        btn.className = 'filter-seg' + (i === 0 ? ' active' : '');
         btn.dataset.target = cat.tabId;
-        if (i === 0) btn.classList.add('active');
         const badge = document.createElement('span');
         badge.className = 'badge';
         btn.appendChild(document.createTextNode(cat.name + ' '));
@@ -143,7 +143,7 @@ function updateCounts() {
         // Update badge on corresponding tab button
         const tabDiv = h2.closest('.tab-content');
         if (tabDiv) {
-            const navBtn = document.querySelector(`#category-nav button[data-target="${tabDiv.id}"]`);
+            const navBtn = document.querySelector(`#category-nav .filter-seg[data-target="${tabDiv.id}"]`);
             if (navBtn) {
                 const badge = navBtn.querySelector('.badge');
                 if (badge) badge.textContent = `${checkedCount}/${total}`;
@@ -187,7 +187,7 @@ function applySearch() {
 function openTab(tabId) {
     document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
     document.getElementById(tabId).classList.add('active');
-    document.querySelectorAll('#category-nav button').forEach(btn => {
+    document.querySelectorAll('#category-nav .filter-seg').forEach(btn => {
         btn.classList.toggle('active', btn.dataset.target === tabId);
     });
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -234,23 +234,21 @@ function attachEventListeners() {
         }
     });
 
-    // Filter toggle: Show All → Show Unchecked → Show Checked
-    const filterStates = ["all", "unchecked", "checked"];
-    const filterLabels = { all: "Show Needed", unchecked: "Show Have", checked: "Show All" };
-    let filterIndex = 0;
-
-    document.getElementById("hide-checked-btn").addEventListener("click", () => {
-        document.body.classList.remove("show-unchecked", "show-checked");
-        filterIndex = (filterIndex + 1) % 3;
-        const state = filterStates[filterIndex];
-        if (state !== "all") document.body.classList.add("show-" + state);
-        document.getElementById("hide-checked-btn").textContent = filterLabels[state];
-        const activeUl = document.querySelector('.tab-content.active ul');
-        if (activeUl) {
-            activeUl.classList.remove('fade-in');
-            void activeUl.offsetWidth;
-            activeUl.classList.add('fade-in');
-        }
+    // Filter segmented control
+    document.querySelectorAll('#status-filter .filter-seg').forEach(btn => {
+        btn.addEventListener('click', () => {
+            document.querySelectorAll('#status-filter .filter-seg').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            document.body.classList.remove('show-unchecked', 'show-checked');
+            const filter = btn.dataset.filter;
+            if (filter !== 'all') document.body.classList.add('show-' + filter);
+            const activeUl = document.querySelector('.tab-content.active ul');
+            if (activeUl) {
+                activeUl.classList.remove('fade-in');
+                void activeUl.offsetWidth;
+                activeUl.classList.add('fade-in');
+            }
+        });
     });
 
     // Search input
@@ -276,7 +274,7 @@ function attachEventListeners() {
     // Keyboard navigation for tabs (arrow keys)
     document.getElementById('category-nav').addEventListener('keydown', (e) => {
         if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
-        const buttons = Array.from(document.querySelectorAll('#category-nav button'));
+        const buttons = Array.from(document.querySelectorAll('#category-nav .filter-seg'));
         const current = buttons.indexOf(document.activeElement);
         if (current === -1) return;
         const next = e.key === 'ArrowRight'

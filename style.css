@@ -144,20 +144,29 @@ body::before {
     background: #d71920;
     color: white;
 }
-#hide-checked-btn {
-    padding: 0.5rem 1.5rem;
+.filter-segmented {
+    display: inline-flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 4px;
+    border: 2px solid #d71920;
+    border-radius: 12px;
+    padding: 0.4rem;
+}
+.filter-seg {
+    padding: 0.4rem 1rem;
     background: #fff;
     color: #d71920;
-    border: 2px solid #d71920;
+    border: none;
     border-radius: 8px;
     font-size: 1rem;
     font-weight: bold;
     cursor: pointer;
     transition: background 0.2s, color 0.2s;
 }
-#hide-checked-btn:hover {
+.filter-seg.active {
     background: #d71920;
-    color: white;
+    color: #fff;
 }
 body.show-unchecked li:has(input[type="checkbox"]:checked) {
     display: none;
@@ -176,50 +185,30 @@ li.search-hidden {
     display: none;
 }
 
-/* Category navigation tabs */
-#category-nav {
+/* Filter bar */
+.filter-bar {
     display: flex;
     flex-wrap: wrap;
+    align-items: center;
     justify-content: center;
-    gap: 0.5rem;
-    padding: 0.75rem 1rem;
-    background: #fff;
-    border: 2px solid #d71920;
-    border-radius: 12px;
-    box-shadow: 0 3px 8px rgba(215, 25, 32, 0.15);
-    margin-bottom: 2rem;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    padding: 0 1rem;
 }
-#category-nav button {
-    padding: 0.4rem 1rem;
-    background: #fff;
-    color: #d71920;
-    border: 2px solid #d71920;
-    border-radius: 8px;
+#category-nav .filter-seg {
     font-size: 0.85rem;
-    font-weight: bold;
-    cursor: pointer;
-    white-space: nowrap;
-    transition: background 0.2s, color 0.2s;
 }
-#category-nav button:hover {
-    background: #d71920;
-    color: #fff;
-}
-#category-nav button.active {
-    background: #d71920;
-    color: #fff;
-}
-#category-nav button .badge {
+#category-nav .badge {
     font-size: 0.7rem;
     opacity: 0.85;
     margin-left: 0.15rem;
 }
-
-/* Search input */
+.filter-bar #search-container {
+    flex-basis: 100%;
+    max-width: 400px;
+}
 #search-container {
     position: relative;
-    max-width: 400px;
-    margin: 0 auto 1.5rem;
 }
 #search-input {
     width: 100%;
