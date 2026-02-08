@@ -255,6 +255,56 @@ li.search-hidden {
     color: #d71920;
 }
 
+/* Login screen */
+#login-screen {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 60vh;
+    text-align: center;
+}
+#login-screen h1 {
+    margin-bottom: 0.5rem;
+}
+#login-screen p {
+    color: #555;
+    margin-bottom: 2rem;
+    font-size: 1.1rem;
+}
+
+/* User bar */
+#user-bar {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+    color: #555;
+}
+#user-avatar {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+}
+#signout-btn {
+    padding: 0.25rem 0.75rem;
+    background: #fff;
+    color: #d71920;
+    border: 2px solid #d71920;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+}
+#signout-btn:hover {
+    background: #d71920;
+    color: #fff;
+}
+
 /* Tab content panels */
 .tab-content {
     display: none;

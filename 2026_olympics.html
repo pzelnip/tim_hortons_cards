@@ -5,30 +5,46 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Loading...</title>
     <link rel="stylesheet" href="style.css">
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
 </head>
 <body>
+
+<div id="login-screen">
+    <h1>Tim Hortons Hockey Cards</h1>
+    <p>Sign in with your Google account to view the checklist.</p>
+    <div id="google-signin-btn"></div>
+</div>
+
+<div id="app-content" style="display: none;">
+    <div id="user-bar">
+        <img id="user-avatar" src="" alt="" />
+        <span id="user-name"></span>
+        <button id="signout-btn">Sign Out</button>
+    </div>
+
     <h1 id="page-title"></h1>
 
-<div style="max-width:600px; margin:0 auto 2rem;">
-    <div id="progress-container" style="background:#eee; border-radius:12px; overflow:hidden; height:16px;">
-        <div id="progress-bar" style="height:100%; width:0%; background:#d71920; transition: width 0.3s;"></div>
+    <div style="max-width:600px; margin:0 auto 2rem;">
+        <div id="progress-container" style="background:#eee; border-radius:12px; overflow:hidden; height:16px;">
+            <div id="progress-bar" style="height:100%; width:0%; background:#d71920; transition: width 0.3s;"></div>
+        </div>
+        <div id="progress-label" style="text-align:center; color:#d71920; font-weight:bold; font-size:1rem; margin-top:0.35rem;">0/0 (0%)</div>
     </div>
-    <div id="progress-label" style="text-align:center; color:#d71920; font-weight:bold; font-size:1rem; margin-top:0.35rem;">0/0 (0%)</div>
-</div>
-<div class="button-row">
-    <button id="share-btn">Copy Share Link</button>
-    <button id="clear-btn">Clear Selections</button>
-    <button id="hide-checked-btn">Show Needed</button>
-</div>
+    <div class="button-row">
+        <button id="share-btn">Copy Share Link</button>
+        <button id="clear-btn">Clear Selections</button>
+        <button id="hide-checked-btn">Show Needed</button>
+    </div>
 
-<nav id="category-nav"></nav>
+    <nav id="category-nav"></nav>
 
-<div id="search-container">
-    <input type="text" id="search-input" placeholder="Search cards..." autocomplete="off">
-    <button id="search-clear" type="button" aria-label="Clear search">&times;</button>
+    <div id="search-container">
+        <input type="text" id="search-input" placeholder="Search cards..." autocomplete="off">
+        <button id="search-clear" type="button" aria-label="Clear search">&times;</button>
+    </div>
+
+    <div id="card-content"></div>
 </div>
-
-<div id="card-content"></div>
 
 <script src="app.js"></script>
 

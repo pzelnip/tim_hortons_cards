@@ -1,3 +1,75 @@
+// --- Auth ---
+
+const GOOGLE_CLIENT_ID = '272318825458-2dbua82d96vmeiotmu1l838vb7kmtb5q.apps.googleusercontent.com';
+const AUTH_TOKEN_KEY = 'th_auth_token';
+let appInitialized = false;
+
+function decodeJwtPayload(jwt) {
+    const parts = jwt.split('.');
+    if (parts.length !== 3) return null;
+    const payload = parts[1].replace(/-/g, '+').replace(/_/g, '/');
+    try {
+        return JSON.parse(atob(payload));
+    } catch (e) {
+        return null;
+    }
+}
+
+function isTokenValid(jwt) {
+    const payload = decodeJwtPayload(jwt);
+    if (!payload) return false;
+    const now = Math.floor(Date.now() / 1000);
+    if (payload.exp && payload.exp < now) return false;
+    if (payload.aud !== GOOGLE_CLIENT_ID) return false;
+    if (payload.iss !== 'https://accounts.google.com' && payload.iss !== 'accounts.google.com') return false;
+    return true;
+}
+
+function showApp(jwt) {
+    const payload = decodeJwtPayload(jwt);
+    document.getElementById('user-avatar').src = payload.picture || '';
+    document.getElementById('user-name').textContent = payload.name || payload.email;
+    document.getElementById('login-screen').style.display = 'none';
+    document.getElementById('app-content').style.display = 'block';
+}
+
+function showLogin() {
+    document.getElementById('login-screen').style.display = '';
+    document.getElementById('app-content').style.display = 'none';
+    localStorage.removeItem(AUTH_TOKEN_KEY);
+}
+
+function handleCredentialResponse(response) {
+    const jwt = response.credential;
+    if (!isTokenValid(jwt)) {
+        console.error('Invalid token received');
+        return;
+    }
+    localStorage.setItem(AUTH_TOKEN_KEY, jwt);
+    showApp(jwt);
+    if (!appInitialized) {
+        appInitialized = true;
+        initApp();
+    }
+}
+
+function handleSignOut() {
+    google.accounts.id.disableAutoSelect();
+    showLogin();
+}
+
+function initAuth() {
+    google.accounts.id.initialize({
+        client_id: GOOGLE_CLIENT_ID,
+        callback: handleCredentialResponse,
+        auto_select: true,
+    });
+    google.accounts.id.renderButton(
+        document.getElementById('google-signin-btn'),
+        { theme: 'outline', size: 'large', text: 'signin_with', shape: 'rectangular' }
+    );
+}
+
 // --- Rendering ---
 
 function renderSet(data) {
@@ -289,7 +361,7 @@ function attachEventListeners() {
 
 // --- Init ---
 
-async function init() {
+async function initApp() {
     const params = new URLSearchParams(window.location.search);
     const setName = params.get('set') || '2026_olympics';
 
@@ -305,6 +377,21 @@ async function init() {
     updateHash();
     updateCounts();
     attachEventListeners();
+
+    document.getElementById('signout-btn').addEventListener('click', handleSignOut);
 }
 
-init();
+function init() {
+    initAuth();
+
+    const cachedToken = localStorage.getItem(AUTH_TOKEN_KEY);
+    if (cachedToken && isTokenValid(cachedToken)) {
+        showApp(cachedToken);
+        appInitialized = true;
+        initApp();
+    } else {
+        showLogin();
+    }
+}
+
+window.addEventListener('load', init);
