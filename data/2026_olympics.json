@@ -2,9 +2,8 @@
   "title": "2026 Tim Hortons Team Canada Olympics Hockey Cards Checklist",
   "categories": [
     {
-      "name": "Base Cards",
+      "name": "Base",
       "tabId": "tab-base",
-      "tabLabel": "Base",
       "prefix": "base",
       "showPrefix": false,
       "odds": null,
@@ -114,7 +113,7 @@
     {
       "name": "Maple Leaf Immortals",
       "tabId": "tab-immortals",
-      "tabLabel": "Maple Leaf Immortals",
+
       "prefix": "ML",
       "showPrefix": true,
       "odds": "1:100",
@@ -129,7 +128,7 @@
     {
       "name": "Duos",
       "tabId": "tab-duos",
-      "tabLabel": "Duos",
+
       "prefix": "CO",
       "showPrefix": true,
       "odds": "1:24",
@@ -154,7 +153,7 @@
     {
       "name": "Program of Excellence",
       "tabId": "tab-poe",
-      "tabLabel": "Program of Excellence",
+
       "prefix": "POE",
       "showPrefix": true,
       "odds": "1:8",
@@ -179,7 +178,7 @@
     {
       "name": "Celebrated Prodigies",
       "tabId": "tab-prodigies",
-      "tabLabel": "Celebrated Prodigies",
+
       "prefix": "CP",
       "showPrefix": true,
       "odds": "1:6",
@@ -204,7 +203,7 @@
     {
       "name": "Northern Stars",
       "tabId": "tab-stars",
-      "tabLabel": "Northern Stars",
+
       "prefix": "NS",
       "showPrefix": true,
       "odds": "1:4",
@@ -229,7 +228,7 @@
     {
       "name": "Gold Medalists",
       "tabId": "tab-medalists",
-      "tabLabel": "Gold Medalists",
+
       "prefix": "GM",
       "showPrefix": true,
       "odds": "1:3",

@@ -257,7 +257,7 @@ function renderSet(data) {
         if (i === 0) btn.classList.add('active');
         const badge = document.createElement('span');
         badge.className = 'badge';
-        btn.appendChild(document.createTextNode(cat.tabLabel + ' '));
+        btn.appendChild(document.createTextNode(cat.name + ' '));
         btn.appendChild(badge);
         nav.appendChild(btn);
     });
@@ -278,7 +278,7 @@ function renderSet(data) {
         } else {
             rangeStr = '1\u2013' + endNum;
         }
-        let headingText = cat.name + ' (' + rangeStr + ')';
+        let headingText = cat.name + ' Cards (' + rangeStr + ')';
         if (cat.odds) headingText += ' ' + cat.odds;
         h2.appendChild(document.createTextNode(headingText + ' '));
         const countSpan = document.createElement('span');
