@@ -1,0 +1,73 @@
+{
+  "title": "Test Cards Checklist",
+  "categories": [
+    {
+      "name": "Base",
+      "tabId": "tab-base",
+      "prefix": "base",
+      "showPrefix": false,
+      "odds": null,
+      "cards": [
+        "Mark Messier",
+        "Adam Parkin",
+        "John Doe",
+        "Marcus Webb",
+        "Elena Kowalski",
+        "Terrence Okafor",
+        "Simone Delacroix",
+        "Raj Patel",
+        "Ingrid Halvorsen",
+        "Darius Flemming",
+        "Yuki Tanaka",
+        "Catalina Reyes",
+        "Owen Gallagher",
+        "Priya Nair",
+        "Liam Schneider",
+        "Fatima Al-Rashid",
+        "Javier Moreno",
+        "Tessa Lindqvist",
+        "Kofi Mensah",
+        "Audrey Charpentier",
+        "Declan O'Sullivan",
+        "Mei-Ling Chen",
+        "Viktor Novak"
+      ]
+    },
+    {
+      "name": "Uber Duber Rare Sell On eBay for $500",
+      "tabId": "tab-uber-rare",
+      "prefix": "UR",
+      "showPrefix": true,
+      "odds": "1:1000",
+      "cards": [
+        "God",
+        "Satan",
+        "Bob Barker"
+      ]
+    },
+    {
+      "name": "Old Time Hockey Legends",
+      "tabId": "tab-old-time-hockey",
+      "prefix": "OTHL",
+      "showPrefix": true,
+      "odds": "1:10",
+      "cards": [
+        "Wayne Gretzky",
+        "Mario Lemieux",
+        "Bobby Orr",
+        "Gordie Howe",
+        "Jean Beliveau",
+        "Phil Esposito",
+        "Stan Mikita",
+        "Yvan Cournoyer",
+        "Gilbert Perreault",
+        "Darryl Sittler",
+        "Ken Dryden",
+        "Bernie Parent",
+        "Jacques Plante",
+        "Glenn Hall",
+        "Tony Esposito"
+      ]
+    }
+  ]
+}

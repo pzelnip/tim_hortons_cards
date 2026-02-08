@@ -302,8 +302,7 @@ function attachEventListeners() {
 // --- Init ---
 
 async function init() {
-    const params = new URLSearchParams(window.location.search);
-    const setName = params.get('set') || '2026_olympics';
+    const setName = window.location.pathname.split('/').pop().replace(/\.html$/, '');
 
     const response = await fetch('data/' + setName + '.json');
     if (!response.ok) {

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loading...</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1 id="page-title"></h1>
+
+<div class="progress-wrapper">
+    <div id="progress-container">
+        <div id="progress-bar"></div>
+    </div>
+    <div id="progress-label">0/0 (0%)</div>
+</div>
+<div class="button-row">
+    <button id="share-btn">Copy Share Link</button>
+    <button id="clear-btn">Clear Selections</button>
+</div>
+
+<div class="filter-bar">
+    <div class="filter-segmented" id="category-nav"></div>
+    <div class="filter-segmented" id="status-filter">
+        <button class="filter-seg active" data-filter="all" data-tooltip="Show all cards">All</button>
+        <button class="filter-seg" data-filter="unchecked" data-tooltip="Show cards still needed">Need</button>
+        <button class="filter-seg" data-filter="checked" data-tooltip="Show owned cards only">Have</button>
+    </div>
+    <div id="search-container">
+        <input type="text" id="search-input" placeholder="Search cards..." autocomplete="off">
+        <button id="search-clear" type="button" aria-label="Clear search">&times;</button>
+    </div>
+</div>
+
+<div id="card-content"></div>
+
+<footer class="site-footer">
+    <a href="https://github.com/pzelnip/tim_hortons_cards/" target="_blank" rel="noopener noreferrer">View Source on GitHub</a>
+</footer>
+
+<script src="app.js"></script>
+
+</body>
+</html>
