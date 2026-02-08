@@ -1,0 +1,215 @@
+/* Base reset & typography */
+body {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+    line-height: 1.5;
+    margin: 0;
+    padding: 2rem;
+    background: linear-gradient(135deg, #fff 0%, #f7f7f7 100%);
+    color: #1a1a1a;
+}
+
+/* Page title */
+h1 {
+    text-align: center;
+    margin-bottom: 2rem;
+    color: #d71920; /* Canada red */
+    text-shadow: 1px 1px 2px #aaa;
+    font-weight: bold;
+}
+
+/* Section headings */
+h2 {
+    margin-top: 2.5rem;
+    margin-bottom: 0.75rem;
+    padding-bottom: 0.25rem;
+    border-bottom: 2px solid #d71920; /* red underline */
+    font-size: 1.25rem;
+    color: #d71920;
+}
+
+/* List containers */
+ul {
+    background: #fff;
+    padding: 1rem 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 3px 8px rgba(215, 25, 32, 0.15); /* red-tinted shadow */
+    border: 2px solid #d71920;
+}
+
+/* List items — full-row clickable */
+ul li {
+    padding: 0.25rem 0;
+    transition: color 0.2s;
+}
+
+/* Checkboxes */
+input[type="checkbox"] {
+    transform: scale(1.2);
+    cursor: pointer;
+    accent-color: #d71920; /* checkbox in Canadian red */
+}
+
+/* Labels — full-row clickable area */
+label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+}
+
+/* Optional hover effect */
+ul li:hover {
+    background-color: #ffe6e6; /* light red highlight */
+    border-radius: 6px;
+}
+
+/* Strikethrough text when checkbox is checked (CSS-only) */
+li:has(input[type="checkbox"]:checked) {
+    color: #555;
+    text-decoration: line-through;
+    text-decoration-color: #555;
+}
+li {
+    text-decoration-color: transparent;
+    transition: text-decoration-color 0.2s;
+}
+
+/* Overall progress styling */
+#overall-count {
+    font-size: 1.15rem;
+    color: #d71920;
+    font-weight: bold;
+}
+
+/* Add subtle maple leaf icons before section headings */
+h2::before {
+    content: "🍁 ";
+    margin-right: 0.25rem;
+}
+
+/* Add a maple leaf background accent for fun */
+body::before {
+    content: "🍁";
+    position: fixed;
+    font-size: 200px;
+    opacity: 0.05;
+    top: 20%;
+    left: 75%;
+    pointer-events: none;
+}
+
+/* Button row */
+.button-row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+/* Share button */
+#share-btn {
+    padding: 0.5rem 1.5rem;
+    background: #d71920;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+#share-btn:hover {
+    background: #b5161c;
+}
+#clear-btn {
+    padding: 0.5rem 1.5rem;
+    background: #fff;
+    color: #d71920;
+    border: 2px solid #d71920;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+}
+#clear-btn:hover {
+    background: #d71920;
+    color: white;
+}
+#hide-checked-btn {
+    padding: 0.5rem 1.5rem;
+    background: #fff;
+    color: #d71920;
+    border: 2px solid #d71920;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+}
+#hide-checked-btn:hover {
+    background: #d71920;
+    color: white;
+}
+body.show-unchecked li:has(input[type="checkbox"]:checked) {
+    display: none;
+}
+body.show-checked li:has(input[type="checkbox"]:not(:checked)) {
+    display: none;
+}
+
+/* Category navigation tabs */
+#category-nav {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1rem;
+    background: #fff;
+    border: 2px solid #d71920;
+    border-radius: 12px;
+    box-shadow: 0 3px 8px rgba(215, 25, 32, 0.15);
+    margin-bottom: 2rem;
+}
+#category-nav button {
+    padding: 0.4rem 1rem;
+    background: #fff;
+    color: #d71920;
+    border: 2px solid #d71920;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: bold;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background 0.2s, color 0.2s;
+}
+#category-nav button:hover {
+    background: #d71920;
+    color: #fff;
+}
+#category-nav button.active {
+    background: #d71920;
+    color: #fff;
+}
+#category-nav button .badge {
+    font-size: 0.7rem;
+    opacity: 0.85;
+    margin-left: 0.15rem;
+}
+
+/* Tab content panels */
+.tab-content {
+    display: none;
+}
+.tab-content.active {
+    display: block;
+    animation: fadeIn 0.25s ease-in;
+}
+.tab-content h2 {
+    margin-top: 0.5rem;
+}
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
