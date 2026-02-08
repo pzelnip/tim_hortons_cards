@@ -217,6 +217,12 @@ function attachEventListeners() {
         const state = filterStates[filterIndex];
         if (state !== "all") document.body.classList.add("show-" + state);
         document.getElementById("hide-checked-btn").textContent = filterLabels[state];
+        const activeUl = document.querySelector('.tab-content.active ul');
+        if (activeUl) {
+            activeUl.classList.remove('fade-in');
+            void activeUl.offsetWidth;
+            activeUl.classList.add('fade-in');
+        }
     });
 
     // Handle hash changes (e.g. user pastes a new hash in the address bar)

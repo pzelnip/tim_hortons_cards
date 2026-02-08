@@ -216,6 +216,9 @@ body.show-checked li:has(input[type="checkbox"]:not(:checked)) {
 .tab-content h2 {
     margin-top: 0.5rem;
 }
+ul.fade-in {
+    animation: fadeIn 0.25s ease-in;
+}
 @keyframes fadeIn {
     from { opacity: 0; }
     to { opacity: 1; }
