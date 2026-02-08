@@ -67,6 +67,10 @@ function renderSet(data) {
             ul.appendChild(li);
         });
         div.appendChild(ul);
+        const noResults = document.createElement('p');
+        noResults.className = 'no-results';
+        noResults.textContent = 'No matches found.';
+        div.appendChild(noResults);
         content.appendChild(div);
     });
 }
@@ -167,6 +171,14 @@ function applySearch() {
         } else {
             li.classList.add('search-hidden');
         }
+    });
+
+    // Show/hide "no matches" message and card list per tab
+    document.querySelectorAll('.tab-content').forEach(tab => {
+        const hasVisible = tab.querySelector('li:not(.search-hidden)');
+        const noMatch = query && !hasVisible;
+        tab.querySelector('ul').style.display = noMatch ? 'none' : '';
+        tab.querySelector('.no-results').style.display = noMatch ? 'block' : 'none';
     });
 }
 

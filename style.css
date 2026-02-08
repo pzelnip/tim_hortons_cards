@@ -168,6 +168,13 @@ body.show-checked li:has(input[type="checkbox"]:not(:checked)) {
 li.search-hidden {
     display: none;
 }
+.no-results {
+    text-align: center;
+    color: #999;
+    padding: 2rem 1rem;
+    font-style: italic;
+    display: none;
+}
 
 /* Category navigation tabs */
 #category-nav {
