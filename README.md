@@ -2,11 +2,13 @@
 
 Scripts, pages, and tools for tracking my Tim Hortons hockey card collection.
 
-**Repository:** [https://github.com/pzelnip/tim_hortons_cards](https://github.com/pzelnip/tim_hortons_cards)
+**Repository:**
+[https://github.com/pzelnip/tim_hortons_cards](https://github.com/pzelnip/tim_hortons_cards)
 
 ## 2026 Olympics Checklist
 
-[2026_olympics.html](docs/2026_olympics.html) — An interactive single-page checklist for the 2026 Tim Hortons Team Canada Olympics set (200 cards total).
+[2026_olympics.html](docs/2026_olympics.html) — An interactive single-page
+checklist for the 2026 Tim Hortons Team Canada Olympics set (200 cards total).
 
 **Card categories:**
 
@@ -29,11 +31,16 @@ Scripts, pages, and tools for tracking my Tim Hortons hockey card collection.
 
 ## Adding a new card set
 
-1. Create a new JSON data file in `data/` (e.g. `data/new_set.json`) — see existing files for the format.
-2. Run `./generate.sh` to generate the corresponding HTML file.
-3. Commit both the JSON file and the generated HTML file.
+1. Run `python3 new_series.py` to scaffold a new card set. It will prompt for
+   the series name, slug, and category details, then write a skeleton JSON file
+   to `docs/data/<slug>.json` with empty `cards` arrays.
+2. Edit the generated JSON to add card names to each category's `cards` array.
+3. Run `./generate.sh` to generate the corresponding HTML file.
+4. Commit both the JSON file and the generated HTML file.
 
-The per-set HTML files (`2026_olympics.html`, `test.html`, etc.) are auto-generated from `template.html`. To change the shared page layout, edit `template.html` and re-run `./generate.sh`.
+The per-set HTML files (`2026_olympics.html`, `test.html`, etc.) are
+auto-generated from `template.html`. To change the shared page layout, edit
+`template.html` and re-run `./generate.sh`.
 
 This page is live at <https://tinyurl.com/timmyshockey>, or scan this QR Code:
 

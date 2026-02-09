@@ -15,6 +15,7 @@ docs/
   2026_olympics.html   # GENERATED - do not edit directly
   test.html            # GENERATED - do not edit directly
 generate.sh            # Copies template.html -> <setname>.html for each data/*.json
+new_series.py          # Interactive script to scaffold a new card set JSON file
 dev_server.sh          # Starts local server on port 9214
 ```
 
@@ -24,9 +25,10 @@ dev_server.sh          # Starts local server on port 9214
 `docs/app.js:init()` extracts the set name from the URL filename (e.g. `2026_olympics.html` -> `2026_olympics`) and fetches `data/<setname>.json`. The per-set HTML files are identical copies of `docs/template.html` — they exist solely for GitHub Pages URL routing.
 
 ### Adding a New Card Set
-1. Create `docs/data/<setname>.json`
-2. Run `./generate.sh`
-3. Commit the JSON and generated HTML
+1. Run `python3 new_series.py` — prompts for series name, slug, and category details, then writes a skeleton `docs/data/<slug>.json` with empty `cards` arrays. For the base category, answer "y" to the base prompt and all fields are auto-filled.
+2. Edit the generated JSON to add card names to each category's `cards` array
+3. Run `./generate.sh` to create the HTML page
+4. Commit the JSON and generated HTML
 
 ### Data Format (JSON)
 ```json
