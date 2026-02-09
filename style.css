@@ -458,6 +458,34 @@ li.search-hidden {
     color: white;
 }
 
+/* Unsaved changes banner */
+.cloud-dirty-banner {
+    max-width: 600px;
+    margin: 0 auto 1.5rem;
+    padding: 0.5rem 1rem;
+    background: #fff8e1;
+    border: 2px solid #d71920;
+    border-radius: 8px;
+    text-align: center;
+    font-size: 0.9rem;
+    font-weight: bold;
+    color: #d71920;
+}
+.cloud-dirty-banner button {
+    background: #d71920;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 0.25rem 0.75rem;
+    font-size: 0.85rem;
+    font-weight: bold;
+    cursor: pointer;
+    margin-left: 0.25rem;
+}
+.cloud-dirty-banner button:hover {
+    background: #b5161c;
+}
+
 /* Filter bar */
 .filter-bar {
     display: flex;

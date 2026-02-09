@@ -225,6 +225,24 @@ function openTab(tabId) {
 const JSONSTORAGE_API_KEY_LS = 'jsonstorage_api_key';
 const JSONSTORAGE_BLOB_URI_LS = 'jsonstorage_blob_uri';
 const JSONSTORAGE_BASE = 'https://api.jsonstorage.net/v1/json';
+let cloudDirty = false;
+
+function markCloudDirty() {
+    const apiKey = localStorage.getItem(JSONSTORAGE_API_KEY_LS);
+    const blobUri = localStorage.getItem(JSONSTORAGE_BLOB_URI_LS);
+    if (!apiKey || !blobUri) return;
+
+    cloudDirty = true;
+    updateSyncIndicator();
+}
+
+function updateSyncIndicator() {
+    const syncBtn = document.getElementById('sync-btn');
+    if (!syncBtn.disabled) {
+        syncBtn.textContent = cloudDirty ? 'Sync to Cloud \u2022' : 'Sync to Cloud';
+    }
+    document.getElementById('cloud-dirty-banner').style.display = cloudDirty ? '' : 'none';
+}
 
 function initCloudUI() {
     const apiKey = localStorage.getItem(JSONSTORAGE_API_KEY_LS);
@@ -345,6 +363,7 @@ async function cloudSync() {
                 body: JSON.stringify({ state: state }),
             });
             if (!res.ok) throw new Error('PUT failed: ' + res.status);
+            cloudDirty = false;
             status.textContent = 'Synced to cloud.';
             status.style.color = '#2a7d2a';
         } else {
@@ -357,6 +376,7 @@ async function cloudSync() {
             const data = await res.json();
             localStorage.setItem(JSONSTORAGE_BLOB_URI_LS, data.uri);
             document.getElementById('load-btn').disabled = false;
+            cloudDirty = false;
             status.textContent = 'Synced to cloud.';
             status.style.color = '#2a7d2a';
         }
@@ -365,7 +385,7 @@ async function cloudSync() {
         status.style.color = '#d71920';
     } finally {
         syncBtn.disabled = false;
-        syncBtn.textContent = 'Sync to Cloud';
+        updateSyncIndicator();
     }
 }
 
@@ -411,6 +431,7 @@ function attachEventListeners() {
             saveState();
             updateCounts();
             updateNoResults();
+            markCloudDirty();
         }
     });
 
@@ -485,7 +506,15 @@ function attachEventListeners() {
     document.getElementById('save-api-key-btn').addEventListener('click', saveApiKey);
     document.getElementById('clear-cloud-btn').addEventListener('click', clearCloudSettings);
     document.getElementById('sync-btn').addEventListener('click', cloudSync);
+    document.getElementById('banner-sync-btn').addEventListener('click', cloudSync);
     document.getElementById('load-btn').addEventListener('click', cloudLoad);
+
+    // Warn before leaving with unsynced cloud changes
+    window.addEventListener('beforeunload', (e) => {
+        if (cloudDirty) {
+            e.preventDefault();
+        }
+    });
 
     // Handle hash changes (e.g. user pastes a new hash in the address bar)
     window.addEventListener("hashchange", () => {
