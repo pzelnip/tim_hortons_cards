@@ -126,17 +126,14 @@ function updateHash() {
     history.replaceState(null, "", window.location.pathname + window.location.search + "#" + encoded);
 }
 
-function saveState() {
-    updateHash();
-}
-
 function updateCounts() {
     let grandTotal = 0;
     let grandChecked = 0;
 
-    document.querySelectorAll("h2").forEach(h2 => {
-        const list = h2.nextElementSibling;
-        if (!list || !["UL", "OL"].includes(list.tagName)) return;
+    document.querySelectorAll('.tab-content').forEach(tab => {
+        const list = tab.querySelector('ul');
+        const h2 = tab.querySelector('h2');
+        if (!list || !h2) return;
 
         const checkboxes = list.querySelectorAll('input[type="checkbox"]');
         const checked = list.querySelectorAll('input[type="checkbox"]:checked');
@@ -148,23 +145,16 @@ function updateCounts() {
         grandTotal += total;
         grandChecked += checkedCount;
 
-        let countSpan = h2.querySelector(".count");
-        if (!countSpan) {
-            countSpan = document.createElement("span");
-            countSpan.className = "count";
-            h2.appendChild(countSpan);
+        const countSpan = h2.querySelector(".count");
+        if (countSpan) {
+            countSpan.textContent = `(${checkedCount}/${total} — ${percent}%)`;
         }
 
-        countSpan.textContent = `(${checkedCount}/${total} — ${percent}%)`;
-
         // Update badge on corresponding tab button
-        const tabDiv = h2.closest('.tab-content');
-        if (tabDiv) {
-            const navBtn = document.querySelector(`#category-nav .filter-seg[data-target="${tabDiv.id}"]`);
-            if (navBtn) {
-                const badge = navBtn.querySelector('.badge');
-                if (badge) badge.textContent = `${checkedCount}/${total}`;
-            }
+        const navBtn = document.querySelector(`#category-nav .filter-seg[data-target="${tab.id}"]`);
+        if (navBtn) {
+            const badge = navBtn.querySelector('.badge');
+            if (badge) badge.textContent = `${checkedCount}/${total}`;
         }
     });
 
@@ -232,6 +222,12 @@ function pantryBasketUrl(pantryId) {
     return PANTRY_BASE + '/' + pantryId + '/basket/' + PANTRY_BASKET_NAME;
 }
 
+function setCloudStatus(message, isError = false) {
+    const el = document.getElementById('cloud-status');
+    el.textContent = message;
+    el.style.color = isError ? 'var(--red)' : 'var(--green)';
+}
+
 function isCloudDirty() {
     if (lastSyncedState === null) return false;
     return encodeState() !== lastSyncedState;
@@ -261,13 +257,10 @@ function initCloudUI() {
 }
 
 function savePantryId() {
-    const input = document.getElementById('pantry-id-input');
-    const id = input.value.trim();
-    const status = document.getElementById('cloud-status');
+    const id = document.getElementById('pantry-id-input').value.trim();
 
     if (!id) {
-        status.textContent = 'Please enter a Pantry ID.';
-        status.style.color = '#d71920';
+        setCloudStatus('Please enter a Pantry ID.', true);
         return;
     }
 
@@ -275,8 +268,7 @@ function savePantryId() {
     document.getElementById('sync-btn').disabled = false;
     document.getElementById('load-btn').disabled = false;
     document.getElementById('clear-cloud-btn').style.display = '';
-    status.textContent = 'Pantry ID saved.';
-    status.style.color = '#2a7d2a';
+    setCloudStatus('Pantry ID saved.');
 }
 
 function showConfirmModal() {
@@ -311,7 +303,6 @@ async function clearCloudSettings() {
     if (!await showConfirmModal()) return;
 
     const pantryId = localStorage.getItem(PANTRY_ID_LS);
-    const status = document.getElementById('cloud-status');
     const btn = document.getElementById('clear-cloud-btn');
 
     btn.disabled = true;
@@ -337,24 +328,21 @@ async function clearCloudSettings() {
     btn.disabled = false;
     btn.textContent = 'Clear Cloud Settings';
     updateSyncIndicator();
-    status.textContent = 'Cloud settings cleared.';
-    status.style.color = '#2a7d2a';
+    setCloudStatus('Cloud settings cleared.');
 }
 
 async function cloudSync() {
     const pantryId = localStorage.getItem(PANTRY_ID_LS);
-    const status = document.getElementById('cloud-status');
     const syncBtn = document.getElementById('sync-btn');
 
     if (!pantryId) {
-        status.textContent = 'No Pantry ID set.';
-        status.style.color = '#d71920';
+        setCloudStatus('No Pantry ID set.', true);
         return;
     }
 
     syncBtn.disabled = true;
     syncBtn.textContent = 'Syncing...';
-    status.textContent = '';
+    setCloudStatus('');
 
     const state = encodeState();
 
@@ -366,11 +354,9 @@ async function cloudSync() {
         });
         if (!res.ok) throw new Error('POST failed: ' + res.status);
         lastSyncedState = state;
-        status.textContent = 'Synced to cloud.';
-        status.style.color = '#2a7d2a';
+        setCloudStatus('Synced to cloud.');
     } catch (err) {
-        status.textContent = 'Sync failed: ' + err.message;
-        status.style.color = '#d71920';
+        setCloudStatus('Sync failed: ' + err.message, true);
     } finally {
         syncBtn.disabled = false;
         updateSyncIndicator();
@@ -379,18 +365,16 @@ async function cloudSync() {
 
 async function cloudLoad() {
     const pantryId = localStorage.getItem(PANTRY_ID_LS);
-    const status = document.getElementById('cloud-status');
     const loadBtn = document.getElementById('load-btn');
 
     if (!pantryId) {
-        status.textContent = 'No Pantry ID set.';
-        status.style.color = '#d71920';
+        setCloudStatus('No Pantry ID set.', true);
         return;
     }
 
     loadBtn.disabled = true;
     loadBtn.textContent = 'Loading...';
-    status.textContent = '';
+    setCloudStatus('');
 
     try {
         const res = await fetch(pantryBasketUrl(pantryId));
@@ -398,14 +382,12 @@ async function cloudLoad() {
         const data = await res.json();
         decodeState(data.state);
         lastSyncedState = data.state;
-        saveState();
+        updateHash();
         updateCounts();
         updateSyncIndicator();
-        status.textContent = 'Loaded from cloud.';
-        status.style.color = '#2a7d2a';
+        setCloudStatus('Loaded from cloud.');
     } catch (err) {
-        status.textContent = 'Load failed: ' + err.message;
-        status.style.color = '#d71920';
+        setCloudStatus('Load failed: ' + err.message, true);
     } finally {
         loadBtn.disabled = false;
         loadBtn.textContent = 'Load from Cloud';
@@ -418,7 +400,7 @@ function attachEventListeners() {
     // Save state and update counts on checkbox changes
     document.addEventListener("change", e => {
         if (e.target.matches('input[type="checkbox"]')) {
-            saveState();
+            updateHash();
             updateCounts();
             updateNoResults();
             updateSyncIndicator();
@@ -426,32 +408,32 @@ function attachEventListeners() {
     });
 
     // Copy share link button
-    document.getElementById("share-btn").addEventListener("click", () => {
-        const btn = document.getElementById("share-btn");
+    const shareBtn = document.getElementById("share-btn");
+    shareBtn.addEventListener("click", () => {
         navigator.clipboard.writeText(window.location.href).then(() => {
-            btn.textContent = "Copied!";
-            setTimeout(() => { btn.textContent = "Copy Share Link"; }, 2000);
+            shareBtn.textContent = "Copied!";
+            setTimeout(() => { shareBtn.textContent = "Copy Share Link"; }, 2000);
         });
     });
 
     // Clear all selections / Undo
     let previousHash = null;
-    document.getElementById("clear-btn").addEventListener("click", () => {
-        const btn = document.getElementById("clear-btn");
+    const clearBtn = document.getElementById("clear-btn");
+    clearBtn.addEventListener("click", () => {
         if (previousHash !== null) {
             decodeState(previousHash);
-            saveState();
+            updateHash();
             updateCounts();
             previousHash = null;
-            btn.textContent = "Clear Selections";
+            clearBtn.textContent = "Clear Selections";
         } else {
             previousHash = encodeState();
             document.querySelectorAll('input[type="checkbox"]').forEach(cb => {
                 cb.checked = false;
             });
-            saveState();
+            updateHash();
             updateCounts();
-            btn.textContent = "Undo";
+            clearBtn.textContent = "Undo";
         }
     });
 
@@ -494,13 +476,15 @@ function attachEventListeners() {
     document.getElementById('settings-backdrop').addEventListener('click', closeSettings);
 
     // Help icon toggle
-    document.querySelector('.help-icon').addEventListener('click', () => {
+    const helpIcon = document.querySelector('.help-icon');
+    function toggleHelp() {
         document.getElementById('pantry-id-help').classList.toggle('visible');
-    });
-    document.querySelector('.help-icon').addEventListener('keydown', (e) => {
+    }
+    helpIcon.addEventListener('click', toggleHelp);
+    helpIcon.addEventListener('keydown', (e) => {
         if (e.key === 'Enter' || e.key === ' ') {
             e.preventDefault();
-            document.getElementById('pantry-id-help').classList.toggle('visible');
+            toggleHelp();
         }
     });
 

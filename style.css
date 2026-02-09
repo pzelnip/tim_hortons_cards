@@ -1,3 +1,13 @@
+/* Theme colors */
+:root {
+    --red: #d71920;
+    --red-dark: #b5161c;
+    --red-shadow: rgba(215, 25, 32, 0.15);
+    --red-focus: rgba(215, 25, 32, 0.25);
+    --red-glow: rgba(215, 25, 32, 0.30);
+    --green: #2a7d2a;
+}
+
 /* Base reset & typography */
 body {
     font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
@@ -12,7 +22,7 @@ body {
 h1 {
     text-align: center;
     margin-bottom: 2rem;
-    color: #d71920; /* Canada red */
+    color: var(--red);
     text-shadow: 1px 1px 2px #aaa;
     font-weight: bold;
 }
@@ -24,7 +34,7 @@ h1 {
 }
 #progress-container {
     background: #fff;
-    border: 2px solid #d71920;
+    border: 2px solid var(--red);
     border-radius: 12px;
     overflow: hidden;
     height: 22px;
@@ -33,7 +43,7 @@ h1 {
 #progress-bar {
     height: 100%;
     width: 0%;
-    background: linear-gradient(90deg, #d71920, #b5161c);
+    background: linear-gradient(90deg, var(--red), var(--red-dark));
     background-size: 100% 100%;
     transition: width 0.3s;
     position: relative;
@@ -75,7 +85,7 @@ h1 {
 }
 #progress-label {
     text-align: center;
-    color: #d71920;
+    color: var(--red);
     font-weight: bold;
     font-size: 1rem;
     margin-top: 0.35rem;
@@ -88,9 +98,9 @@ h2 {
     margin-top: 2.5rem;
     margin-bottom: 0.75rem;
     padding-bottom: 0.25rem;
-    border-bottom: 2px solid #d71920; /* red underline */
+    border-bottom: 2px solid var(--red);
     font-size: 1.25rem;
-    color: #d71920;
+    color: var(--red);
 }
 
 /* List containers */
@@ -98,8 +108,8 @@ ul {
     background: #fff;
     padding: 1rem 1.5rem;
     border-radius: 12px;
-    box-shadow: 0 3px 8px rgba(215, 25, 32, 0.15); /* red-tinted shadow */
-    border: 2px solid #d71920;
+    box-shadow: 0 3px 8px var(--red-shadow);
+    border: 2px solid var(--red);
 }
 
 /* List items — full-row clickable */
@@ -112,7 +122,7 @@ ul li {
 input[type="checkbox"] {
     transform: scale(1.2);
     cursor: pointer;
-    accent-color: #d71920; /* checkbox in Canadian red */
+    accent-color: var(--red);
 }
 
 /* Labels — full-row clickable area */
@@ -148,7 +158,7 @@ h2 .count {
 /* Overall progress styling */
 #overall-count {
     font-size: 1.15rem;
-    color: #d71920;
+    color: var(--red);
     font-weight: bold;
 }
 
@@ -181,7 +191,7 @@ body::before {
 /* Share button */
 #share-btn {
     padding: 0.5rem 1.5rem;
-    background: #d71920;
+    background: var(--red);
     color: white;
     border: none;
     border-radius: 8px;
@@ -191,13 +201,13 @@ body::before {
     transition: background 0.2s;
 }
 #share-btn:hover {
-    background: #b5161c;
+    background: var(--red-dark);
 }
 #clear-btn {
     padding: 0.5rem 1.5rem;
     background: #fff;
-    color: #d71920;
-    border: 2px solid #d71920;
+    color: var(--red);
+    border: 2px solid var(--red);
     border-radius: 8px;
     font-size: 1rem;
     font-weight: bold;
@@ -205,7 +215,7 @@ body::before {
     transition: background 0.2s, color 0.2s;
 }
 #clear-btn:hover {
-    background: #d71920;
+    background: var(--red);
     color: white;
 }
 .filter-segmented {
@@ -213,7 +223,7 @@ body::before {
     flex-wrap: wrap;
     justify-content: center;
     gap: 4px;
-    border: 2px solid #d71920;
+    border: 2px solid var(--red);
     border-radius: 12px;
     padding: 0.4rem;
 }
@@ -221,7 +231,7 @@ body::before {
     position: relative;
     padding: 0.4rem 1rem;
     background: #fff;
-    color: #d71920;
+    color: var(--red);
     border: none;
     border-radius: 8px;
     font-size: 1rem;
@@ -235,7 +245,7 @@ body::before {
     bottom: calc(100% + 8px);
     left: 50%;
     transform: translateX(-50%) scale(0.9);
-    background: #d71920;
+    background: var(--red);
     color: #fff;
     padding: 0.35rem 0.75rem;
     border-radius: 6px;
@@ -245,7 +255,7 @@ body::before {
     pointer-events: none;
     opacity: 0;
     transition: opacity 0.2s, transform 0.2s;
-    box-shadow: 0 2px 8px rgba(215, 25, 32, 0.3);
+    box-shadow: 0 2px 8px var(--red-glow);
 }
 .filter-seg[data-tooltip]::before {
     content: '';
@@ -254,7 +264,7 @@ body::before {
     left: 50%;
     transform: translateX(-50%);
     border: 5px solid transparent;
-    border-top-color: #d71920;
+    border-top-color: var(--red);
     pointer-events: none;
     opacity: 0;
     transition: opacity 0.2s;
@@ -267,7 +277,7 @@ body::before {
     opacity: 1;
 }
 .filter-seg.active {
-    background: #d71920;
+    background: var(--red);
     color: #fff;
 }
 body.show-unchecked li:has(input[type="checkbox"]:checked) {
@@ -293,7 +303,7 @@ li.search-hidden {
     top: 1rem;
     left: 1rem;
     z-index: 1001;
-    background: #d71920;
+    background: var(--red);
     color: #fff;
     border: none;
     border-radius: 50%;
@@ -305,7 +315,7 @@ li.search-hidden {
     transition: background 0.2s;
 }
 #settings-btn:hover {
-    background: #b5161c;
+    background: var(--red-dark);
 }
 
 /* Settings slide-out panel */
@@ -356,11 +366,11 @@ li.search-hidden {
     content: none;
 }
 .settings-panel h3 {
-    color: #d71920;
+    color: var(--red);
     font-size: 1rem;
     margin: 0 0 0.75rem;
     padding-bottom: 0.25rem;
-    border-bottom: 2px solid #d71920;
+    border-bottom: 2px solid var(--red);
 }
 #settings-close {
     background: none;
@@ -372,7 +382,7 @@ li.search-hidden {
     line-height: 1;
 }
 #settings-close:hover {
-    color: #d71920;
+    color: var(--red);
 }
 .cloud-settings-body {
     padding: 0;
@@ -391,9 +401,9 @@ li.search-hidden {
     justify-content: center;
     width: 1.1rem;
     height: 1.1rem;
-    border: 1.5px solid #d71920;
+    border: 1.5px solid var(--red);
     border-radius: 50%;
-    color: #d71920;
+    color: var(--red);
     font-size: 0.7rem;
     font-weight: bold;
     cursor: pointer;
@@ -402,7 +412,7 @@ li.search-hidden {
     line-height: 1;
 }
 .help-icon:hover, .help-icon:focus {
-    background: #d71920;
+    background: var(--red);
     color: #fff;
     outline: none;
 }
@@ -411,7 +421,7 @@ li.search-hidden {
     font-size: 0.8rem;
     font-weight: normal;
     color: #555;
-    border-left: 3px solid #d71920;
+    border-left: 3px solid var(--red);
     padding: 0.5rem 0.75rem;
     margin: 0.35rem 0 0.75rem;
     line-height: 1.5;
@@ -420,7 +430,7 @@ li.search-hidden {
     display: block;
 }
 .help-text a {
-    color: #d71920;
+    color: var(--red);
     text-decoration: underline;
 }
 .cloud-input-row {
@@ -429,21 +439,23 @@ li.search-hidden {
     gap: 0.5rem;
     margin-bottom: 0.75rem;
 }
-#pantry-id-input {
-    flex: 1;
-    padding: 0.4rem 0.75rem;
-    font-size: 0.9rem;
-    border: 2px solid #d71920;
+#pantry-id-input, #search-input {
+    border: 2px solid var(--red);
     border-radius: 8px;
     outline: none;
     box-sizing: border-box;
 }
-#pantry-id-input:focus {
-    box-shadow: 0 0 0 3px rgba(215, 25, 32, 0.25);
+#pantry-id-input:focus, #search-input:focus {
+    box-shadow: 0 0 0 3px var(--red-focus);
+}
+#pantry-id-input {
+    flex: 1;
+    padding: 0.4rem 0.75rem;
+    font-size: 0.9rem;
 }
 #save-pantry-id-btn {
     padding: 0.4rem 1rem;
-    background: #d71920;
+    background: var(--red);
     color: white;
     border: none;
     border-radius: 8px;
@@ -453,13 +465,13 @@ li.search-hidden {
     white-space: nowrap;
 }
 #save-pantry-id-btn:hover {
-    background: #b5161c;
+    background: var(--red-dark);
 }
 #clear-cloud-btn {
     padding: 0.4rem 1rem;
     background: #fff;
-    color: #d71920;
-    border: 2px solid #d71920;
+    color: var(--red);
+    border: 2px solid var(--red);
     border-radius: 8px;
     font-size: 0.9rem;
     font-weight: bold;
@@ -468,14 +480,16 @@ li.search-hidden {
     transition: background 0.2s, color 0.2s;
 }
 #clear-cloud-btn:hover:not(:disabled) {
-    background: #d71920;
+    background: var(--red);
     color: white;
 }
-#clear-cloud-btn:disabled {
+#clear-cloud-btn:disabled, #sync-btn:disabled, #load-btn:disabled {
     background: #ccc;
     color: #888;
-    border-color: #ccc;
     cursor: not-allowed;
+}
+#clear-cloud-btn:disabled {
+    border-color: #ccc;
 }
 #cloud-status {
     font-size: 0.85rem;
@@ -489,7 +503,7 @@ li.search-hidden {
 }
 #sync-btn, #load-btn {
     padding: 0.4rem 1rem;
-    background: #d71920;
+    background: var(--red);
     color: white;
     border: none;
     border-radius: 8px;
@@ -499,20 +513,15 @@ li.search-hidden {
     transition: background 0.2s;
 }
 #sync-btn:hover:not(:disabled), #load-btn:hover:not(:disabled) {
-    background: #b5161c;
-}
-#sync-btn:disabled, #load-btn:disabled {
-    background: #ccc;
-    color: #888;
-    cursor: not-allowed;
+    background: var(--red-dark);
 }
 #load-btn {
     background: #fff;
-    color: #d71920;
-    border: 2px solid #d71920;
+    color: var(--red);
+    border: 2px solid var(--red);
 }
 #load-btn:hover:not(:disabled) {
-    background: #d71920;
+    background: var(--red);
     color: white;
 }
 
@@ -522,15 +531,15 @@ li.search-hidden {
     margin: 0 auto 1.5rem;
     padding: 0.5rem 1rem;
     background: #fff8e1;
-    border: 2px solid #d71920;
+    border: 2px solid var(--red);
     border-radius: 8px;
     text-align: center;
     font-size: 0.9rem;
     font-weight: bold;
-    color: #d71920;
+    color: var(--red);
 }
 .cloud-dirty-banner button {
-    background: #d71920;
+    background: var(--red);
     color: #fff;
     border: none;
     border-radius: 6px;
@@ -541,7 +550,7 @@ li.search-hidden {
     margin-left: 0.25rem;
 }
 .cloud-dirty-banner button:hover {
-    background: #b5161c;
+    background: var(--red-dark);
 }
 
 /* Filter bar */
@@ -573,14 +582,7 @@ li.search-hidden {
     width: 100%;
     padding: 0.5rem 2.5rem 0.5rem 1rem;
     font-size: 1rem;
-    border: 2px solid #d71920;
-    border-radius: 8px;
-    outline: none;
-    box-sizing: border-box;
     transition: box-shadow 0.2s;
-}
-#search-input:focus {
-    box-shadow: 0 0 0 3px rgba(215, 25, 32, 0.25);
 }
 #search-input::placeholder {
     color: #aaa;
@@ -600,7 +602,7 @@ li.search-hidden {
     line-height: 1;
 }
 #search-clear:hover {
-    color: #d71920;
+    color: var(--red);
 }
 
 /* Tab content panels */
@@ -630,7 +632,7 @@ ul.fade-in {
     font-size: 0.85rem;
 }
 .site-footer a {
-    color: #d71920;
+    color: var(--red);
     text-decoration: none;
     font-weight: bold;
 }
@@ -651,12 +653,12 @@ ul.fade-in {
 }
 .modal-box {
     background: #fff;
-    border: 2px solid #d71920;
+    border: 2px solid var(--red);
     border-radius: 12px;
     padding: 1.5rem 2rem;
     max-width: 360px;
     width: 90%;
-    box-shadow: 0 6px 24px rgba(215, 25, 32, 0.25);
+    box-shadow: 0 6px 24px var(--red-focus);
     text-align: center;
 }
 .modal-message {
@@ -679,20 +681,20 @@ ul.fade-in {
     transition: background 0.2s, color 0.2s;
 }
 .modal-btn-danger {
-    background: #d71920;
+    background: var(--red);
     color: #fff;
-    border: 2px solid #d71920;
+    border: 2px solid var(--red);
 }
 .modal-btn-danger:hover {
-    background: #b5161c;
-    border-color: #b5161c;
+    background: var(--red-dark);
+    border-color: var(--red-dark);
 }
 .modal-btn-cancel {
     background: #fff;
-    color: #d71920;
-    border: 2px solid #d71920;
+    color: var(--red);
+    border: 2px solid var(--red);
 }
 .modal-btn-cancel:hover {
-    background: #d71920;
+    background: var(--red);
     color: #fff;
 }
