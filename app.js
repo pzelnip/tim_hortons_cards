@@ -224,7 +224,7 @@ function openTab(tabId) {
 // --- Cloud Sync ---
 
 const JSONSTORAGE_API_KEY_LS = 'jsonstorage_api_key';
-const JSONSTORAGE_BLOB_URI_LS = 'jsonstorage_blob_uri';
+let JSONSTORAGE_BLOB_URI_LS = 'jsonstorage_blob_uri';
 const JSONSTORAGE_BASE = 'https://api.jsonstorage.net/v1/json';
 let lastSyncedState = null;
 
@@ -564,6 +564,16 @@ function attachEventListeners() {
 
 async function init() {
     const setName = window.location.pathname.split('/').pop().replace(/\.html$/, '');
+    JSONSTORAGE_BLOB_URI_LS = 'jsonstorage_blob_uri_' + setName;
+
+    // Migrate legacy unscoped blob URI
+    if (!localStorage.getItem(JSONSTORAGE_BLOB_URI_LS)) {
+        const legacy = localStorage.getItem('jsonstorage_blob_uri');
+        if (legacy) {
+            localStorage.setItem(JSONSTORAGE_BLOB_URI_LS, legacy);
+            localStorage.removeItem('jsonstorage_blob_uri');
+        }
+    }
 
     const response = await fetch('data/' + setName + '.json');
     if (!response.ok) {
