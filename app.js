@@ -561,7 +561,11 @@ function attachEventListeners() {
 
 async function init() {
     const setName = window.location.pathname.split('/').pop().replace(/\.html$/, '');
-    PANTRY_BASKET_NAME = setName;
+    PANTRY_BASKET_NAME = (window.location.host + window.location.pathname)
+        .replace(/\.html$/, '')
+        .replace(/\//g, '_')
+        .replace(/:/g, '-')
+        .replace(/\./g, '_');
 
     const response = await fetch('data/' + setName + '.json');
     if (!response.ok) {
