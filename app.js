@@ -277,6 +277,10 @@ function saveApiKey() {
 }
 
 function showConfirmModal() {
+    // Close settings panel so modal gets focus
+    document.getElementById('settings-panel').classList.remove('open');
+    document.getElementById('settings-backdrop').classList.remove('open');
+
     return new Promise(resolve => {
         const overlay = document.getElementById('confirm-modal');
         overlay.style.display = '';
