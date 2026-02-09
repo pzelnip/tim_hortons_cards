@@ -103,11 +103,10 @@ async function loadState() {
     if (hash) {
         decodeState(hash);
         // Still fetch cloud state to set lastSyncedState for dirty tracking
-        const apiKey = localStorage.getItem(JSONSTORAGE_API_KEY_LS);
-        const blobUri = localStorage.getItem(JSONSTORAGE_BLOB_URI_LS);
-        if (apiKey && blobUri) {
+        const pantryId = localStorage.getItem(PANTRY_ID_LS);
+        if (pantryId) {
             try {
-                const res = await fetch(blobUri);
+                const res = await fetch(pantryBasketUrl(pantryId));
                 if (res.ok) {
                     const data = await res.json();
                     lastSyncedState = data.state;
@@ -120,11 +119,10 @@ async function loadState() {
     }
 
     // No hash — try cloud
-    const apiKey = localStorage.getItem(JSONSTORAGE_API_KEY_LS);
-    const blobUri = localStorage.getItem(JSONSTORAGE_BLOB_URI_LS);
-    if (apiKey && blobUri) {
+    const pantryId = localStorage.getItem(PANTRY_ID_LS);
+    if (pantryId) {
         try {
-            const res = await fetch(blobUri);
+            const res = await fetch(pantryBasketUrl(pantryId));
             if (!res.ok) throw new Error('GET failed: ' + res.status);
             const data = await res.json();
             decodeState(data.state);
@@ -238,10 +236,14 @@ function openTab(tabId) {
 
 // --- Cloud Sync ---
 
-const JSONSTORAGE_API_KEY_LS = 'jsonstorage_api_key';
-let JSONSTORAGE_BLOB_URI_LS = 'jsonstorage_blob_uri';
-const JSONSTORAGE_BASE = 'https://api.jsonstorage.net/v1/json';
+const PANTRY_ID_LS = 'pantry_id';
+const PANTRY_BASE = 'https://getpantry.cloud/apiv1/pantry';
+let PANTRY_BASKET_NAME = null;
 let lastSyncedState = null;
+
+function pantryBasketUrl(pantryId) {
+    return PANTRY_BASE + '/' + pantryId + '/basket/' + PANTRY_BASKET_NAME;
+}
 
 function isCloudDirty() {
     if (lastSyncedState === null) return false;
@@ -258,36 +260,35 @@ function updateSyncIndicator() {
 }
 
 function initCloudUI() {
-    const apiKey = localStorage.getItem(JSONSTORAGE_API_KEY_LS);
-    const blobUri = localStorage.getItem(JSONSTORAGE_BLOB_URI_LS);
+    const pantryId = localStorage.getItem(PANTRY_ID_LS);
     const input = document.getElementById('api-key-input');
     const syncBtn = document.getElementById('sync-btn');
     const loadBtn = document.getElementById('load-btn');
 
-    if (apiKey) {
-        input.value = apiKey;
+    if (pantryId) {
+        input.value = pantryId;
         syncBtn.disabled = false;
-        loadBtn.disabled = !blobUri;
+        loadBtn.disabled = false;
         document.getElementById('clear-cloud-btn').style.display = '';
     }
 }
 
-function saveApiKey() {
+function savePantryId() {
     const input = document.getElementById('api-key-input');
-    const key = input.value.trim();
+    const id = input.value.trim();
     const status = document.getElementById('cloud-status');
 
-    if (!key) {
-        status.textContent = 'Please enter an API key.';
+    if (!id) {
+        status.textContent = 'Please enter a Pantry ID.';
         status.style.color = '#d71920';
         return;
     }
 
-    localStorage.setItem(JSONSTORAGE_API_KEY_LS, key);
+    localStorage.setItem(PANTRY_ID_LS, id);
     document.getElementById('sync-btn').disabled = false;
-    document.getElementById('load-btn').disabled = !localStorage.getItem(JSONSTORAGE_BLOB_URI_LS);
+    document.getElementById('load-btn').disabled = false;
     document.getElementById('clear-cloud-btn').style.display = '';
-    status.textContent = 'API key saved.';
+    status.textContent = 'Pantry ID saved.';
     status.style.color = '#2a7d2a';
 }
 
@@ -322,28 +323,25 @@ function showConfirmModal() {
 async function clearCloudSettings() {
     if (!await showConfirmModal()) return;
 
-    const apiKey = localStorage.getItem(JSONSTORAGE_API_KEY_LS);
-    const blobUri = localStorage.getItem(JSONSTORAGE_BLOB_URI_LS);
+    const pantryId = localStorage.getItem(PANTRY_ID_LS);
     const status = document.getElementById('cloud-status');
     const btn = document.getElementById('clear-cloud-btn');
 
     btn.disabled = true;
     btn.textContent = 'Clearing...';
 
-    if (apiKey && blobUri) {
+    if (pantryId) {
         try {
-            const res = await fetch(
-                blobUri + '?apiKey=' + encodeURIComponent(apiKey),
-                { method: 'DELETE' }
-            );
+            const res = await fetch(pantryBasketUrl(pantryId), {
+                method: 'DELETE',
+            });
             if (!res.ok) throw new Error('DELETE failed: ' + res.status);
         } catch (err) {
-            console.warn('Failed to delete remote blob:', err.message);
+            console.warn('Failed to delete remote basket:', err.message);
         }
     }
 
-    localStorage.removeItem(JSONSTORAGE_API_KEY_LS);
-    localStorage.removeItem(JSONSTORAGE_BLOB_URI_LS);
+    localStorage.removeItem(PANTRY_ID_LS);
     lastSyncedState = null;
     document.getElementById('api-key-input').value = '';
     document.getElementById('sync-btn').disabled = true;
@@ -357,12 +355,12 @@ async function clearCloudSettings() {
 }
 
 async function cloudSync() {
-    const apiKey = localStorage.getItem(JSONSTORAGE_API_KEY_LS);
+    const pantryId = localStorage.getItem(PANTRY_ID_LS);
     const status = document.getElementById('cloud-status');
     const syncBtn = document.getElementById('sync-btn');
 
-    if (!apiKey) {
-        status.textContent = 'No API key set.';
+    if (!pantryId) {
+        status.textContent = 'No Pantry ID set.';
         status.style.color = '#d71920';
         return;
     }
@@ -372,33 +370,17 @@ async function cloudSync() {
     status.textContent = '';
 
     const state = encodeState();
-    const blobUri = localStorage.getItem(JSONSTORAGE_BLOB_URI_LS);
 
     try {
-        if (blobUri) {
-            const res = await fetch(blobUri + '?apiKey=' + encodeURIComponent(apiKey), {
-                method: 'PUT',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ state: state }),
-            });
-            if (!res.ok) throw new Error('PUT failed: ' + res.status);
-            lastSyncedState = state;
-            status.textContent = 'Synced to cloud.';
-            status.style.color = '#2a7d2a';
-        } else {
-            const res = await fetch(JSONSTORAGE_BASE + '?apiKey=' + encodeURIComponent(apiKey), {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ state: state }),
-            });
-            if (!res.ok) throw new Error('POST failed: ' + res.status);
-            const data = await res.json();
-            localStorage.setItem(JSONSTORAGE_BLOB_URI_LS, data.uri);
-            document.getElementById('load-btn').disabled = false;
-            lastSyncedState = state;
-            status.textContent = 'Synced to cloud.';
-            status.style.color = '#2a7d2a';
-        }
+        const res = await fetch(pantryBasketUrl(pantryId), {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ state: state }),
+        });
+        if (!res.ok) throw new Error('POST failed: ' + res.status);
+        lastSyncedState = state;
+        status.textContent = 'Synced to cloud.';
+        status.style.color = '#2a7d2a';
     } catch (err) {
         status.textContent = 'Sync failed: ' + err.message;
         status.style.color = '#d71920';
@@ -409,12 +391,12 @@ async function cloudSync() {
 }
 
 async function cloudLoad() {
-    const blobUri = localStorage.getItem(JSONSTORAGE_BLOB_URI_LS);
+    const pantryId = localStorage.getItem(PANTRY_ID_LS);
     const status = document.getElementById('cloud-status');
     const loadBtn = document.getElementById('load-btn');
 
-    if (!blobUri) {
-        status.textContent = 'No cloud data found. Sync first.';
+    if (!pantryId) {
+        status.textContent = 'No Pantry ID set.';
         status.style.color = '#d71920';
         return;
     }
@@ -424,7 +406,7 @@ async function cloudLoad() {
     status.textContent = '';
 
     try {
-        const res = await fetch(blobUri);
+        const res = await fetch(pantryBasketUrl(pantryId));
         if (!res.ok) throw new Error('GET failed: ' + res.status);
         const data = await res.json();
         decodeState(data.state);
@@ -536,7 +518,7 @@ function attachEventListeners() {
     });
 
     // Cloud sync buttons
-    document.getElementById('save-api-key-btn').addEventListener('click', saveApiKey);
+    document.getElementById('save-api-key-btn').addEventListener('click', savePantryId);
     document.getElementById('clear-cloud-btn').addEventListener('click', clearCloudSettings);
     document.getElementById('sync-btn').addEventListener('click', cloudSync);
     document.getElementById('banner-sync-btn').addEventListener('click', cloudSync);
@@ -579,16 +561,12 @@ function attachEventListeners() {
 
 async function init() {
     const setName = window.location.pathname.split('/').pop().replace(/\.html$/, '');
-    JSONSTORAGE_BLOB_URI_LS = 'jsonstorage_blob_uri_' + setName;
+    PANTRY_BASKET_NAME = setName;
 
-    // Migrate legacy unscoped blob URI
-    if (!localStorage.getItem(JSONSTORAGE_BLOB_URI_LS)) {
-        const legacy = localStorage.getItem('jsonstorage_blob_uri');
-        if (legacy) {
-            localStorage.setItem(JSONSTORAGE_BLOB_URI_LS, legacy);
-            localStorage.removeItem('jsonstorage_blob_uri');
-        }
-    }
+    // Clean up old jsonstorage localStorage keys
+    localStorage.removeItem('jsonstorage_api_key');
+    localStorage.removeItem('jsonstorage_blob_uri');
+    localStorage.removeItem('jsonstorage_blob_uri_' + setName);
 
     const response = await fetch('data/' + setName + '.json');
     if (!response.ok) {
