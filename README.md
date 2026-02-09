@@ -6,7 +6,7 @@ Scripts, pages, and tools for tracking my Tim Hortons hockey card collection.
 
 ## 2026 Olympics Checklist
 
-[2026_olympics.html](static/2026_olympics.html) — An interactive single-page checklist for the 2026 Tim Hortons Team Canada Olympics set (200 cards total).
+[2026_olympics.html](docs/2026_olympics.html) — An interactive single-page checklist for the 2026 Tim Hortons Team Canada Olympics set (200 cards total).
 
 **Card categories:**
 
