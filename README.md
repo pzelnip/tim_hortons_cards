@@ -27,6 +27,14 @@ Scripts, pages, and tools for tracking my Tim Hortons hockey card collection.
 - Shareable collection link via URL encoding
 - No dependencies — just open the HTML file in a browser
 
+## Adding a new card set
+
+1. Create a new JSON data file in `data/` (e.g. `data/new_set.json`) — see existing files for the format.
+2. Run `./generate.sh` to generate the corresponding HTML file.
+3. Commit both the JSON file and the generated HTML file.
+
+The per-set HTML files (`2026_olympics.html`, `test.html`, etc.) are auto-generated from `template.html`. To change the shared page layout, edit `template.html` and re-run `./generate.sh`.
+
 This page is live at <https://tinyurl.com/timmyshockey>, or scan this QR Code:
 
 ![QR Code for page](timmyshockey-qr.png)
