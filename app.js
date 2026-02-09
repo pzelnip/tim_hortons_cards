@@ -493,6 +493,18 @@ function attachEventListeners() {
         document.getElementById('search-input').focus();
     });
 
+    // Settings panel toggle
+    document.getElementById('settings-btn').addEventListener('click', () => {
+        document.getElementById('settings-panel').classList.add('open');
+        document.getElementById('settings-backdrop').classList.add('open');
+    });
+    function closeSettings() {
+        document.getElementById('settings-panel').classList.remove('open');
+        document.getElementById('settings-backdrop').classList.remove('open');
+    }
+    document.getElementById('settings-close').addEventListener('click', closeSettings);
+    document.getElementById('settings-backdrop').addEventListener('click', closeSettings);
+
     // Help icon toggle
     document.querySelector('.help-icon').addEventListener('click', () => {
         document.getElementById('api-key-help').classList.toggle('visible');
