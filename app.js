@@ -99,38 +99,25 @@ function decodeState(hash) {
 }
 
 async function loadState() {
-    const hash = window.location.hash.slice(1);
-    if (hash) {
-        decodeState(hash);
-        // Still fetch cloud state to set lastSyncedState for dirty tracking
-        const pantryId = localStorage.getItem(PANTRY_ID_LS);
-        if (pantryId) {
-            try {
-                const res = await fetch(pantryBasketUrl(pantryId));
-                if (res.ok) {
-                    const data = await res.json();
-                    lastSyncedState = data.state;
-                }
-            } catch (err) {
-                console.warn('Cloud fetch for sync tracking failed:', err.message);
-            }
-        }
-        return;
-    }
-
-    // No hash — try cloud
     const pantryId = localStorage.getItem(PANTRY_ID_LS);
     if (pantryId) {
         try {
             const res = await fetch(pantryBasketUrl(pantryId));
-            if (!res.ok) throw new Error('GET failed: ' + res.status);
-            const data = await res.json();
-            decodeState(data.state);
-            lastSyncedState = data.state;
-            return;
+            if (res.ok) {
+                const data = await res.json();
+                decodeState(data.state);
+                lastSyncedState = data.state;
+                return;
+            }
         } catch (err) {
             console.warn('Cloud load failed:', err.message);
         }
+    }
+
+    // Fall back to URL hash
+    const hash = window.location.hash.slice(1);
+    if (hash) {
+        decodeState(hash);
     }
 }
 
