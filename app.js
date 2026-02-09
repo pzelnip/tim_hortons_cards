@@ -99,9 +99,29 @@ function decodeState(hash) {
 }
 
 async function loadState() {
+    const hash = window.location.hash.slice(1);
+    if (hash) {
+        decodeState(hash);
+        // Still fetch cloud state to set lastSyncedState for dirty tracking
+        const apiKey = localStorage.getItem(JSONSTORAGE_API_KEY_LS);
+        const blobUri = localStorage.getItem(JSONSTORAGE_BLOB_URI_LS);
+        if (apiKey && blobUri) {
+            try {
+                const res = await fetch(blobUri);
+                if (res.ok) {
+                    const data = await res.json();
+                    lastSyncedState = data.state;
+                }
+            } catch (err) {
+                console.warn('Cloud fetch for sync tracking failed:', err.message);
+            }
+        }
+        return;
+    }
+
+    // No hash — try cloud
     const apiKey = localStorage.getItem(JSONSTORAGE_API_KEY_LS);
     const blobUri = localStorage.getItem(JSONSTORAGE_BLOB_URI_LS);
-
     if (apiKey && blobUri) {
         try {
             const res = await fetch(blobUri);
@@ -111,13 +131,8 @@ async function loadState() {
             lastSyncedState = data.state;
             return;
         } catch (err) {
-            console.warn('Cloud load failed, falling back to URL hash:', err.message);
+            console.warn('Cloud load failed:', err.message);
         }
-    }
-
-    const hash = window.location.hash.slice(1);
-    if (hash) {
-        decodeState(hash);
     }
 }
 
