@@ -261,7 +261,7 @@ function updateSyncIndicator() {
 
 function initCloudUI() {
     const pantryId = localStorage.getItem(PANTRY_ID_LS);
-    const input = document.getElementById('api-key-input');
+    const input = document.getElementById('pantry-id-input');
     const syncBtn = document.getElementById('sync-btn');
     const loadBtn = document.getElementById('load-btn');
 
@@ -274,7 +274,7 @@ function initCloudUI() {
 }
 
 function savePantryId() {
-    const input = document.getElementById('api-key-input');
+    const input = document.getElementById('pantry-id-input');
     const id = input.value.trim();
     const status = document.getElementById('cloud-status');
 
@@ -343,7 +343,7 @@ async function clearCloudSettings() {
 
     localStorage.removeItem(PANTRY_ID_LS);
     lastSyncedState = null;
-    document.getElementById('api-key-input').value = '';
+    document.getElementById('pantry-id-input').value = '';
     document.getElementById('sync-btn').disabled = true;
     document.getElementById('load-btn').disabled = true;
     btn.style.display = 'none';
@@ -508,17 +508,17 @@ function attachEventListeners() {
 
     // Help icon toggle
     document.querySelector('.help-icon').addEventListener('click', () => {
-        document.getElementById('api-key-help').classList.toggle('visible');
+        document.getElementById('pantry-id-help').classList.toggle('visible');
     });
     document.querySelector('.help-icon').addEventListener('keydown', (e) => {
         if (e.key === 'Enter' || e.key === ' ') {
             e.preventDefault();
-            document.getElementById('api-key-help').classList.toggle('visible');
+            document.getElementById('pantry-id-help').classList.toggle('visible');
         }
     });
 
     // Cloud sync buttons
-    document.getElementById('save-api-key-btn').addEventListener('click', savePantryId);
+    document.getElementById('save-pantry-id-btn').addEventListener('click', savePantryId);
     document.getElementById('clear-cloud-btn').addEventListener('click', clearCloudSettings);
     document.getElementById('sync-btn').addEventListener('click', cloudSync);
     document.getElementById('banner-sync-btn').addEventListener('click', cloudSync);
@@ -562,11 +562,6 @@ function attachEventListeners() {
 async function init() {
     const setName = window.location.pathname.split('/').pop().replace(/\.html$/, '');
     PANTRY_BASKET_NAME = setName;
-
-    // Clean up old jsonstorage localStorage keys
-    localStorage.removeItem('jsonstorage_api_key');
-    localStorage.removeItem('jsonstorage_blob_uri');
-    localStorage.removeItem('jsonstorage_blob_uri_' + setName);
 
     const response = await fetch('data/' + setName + '.json');
     if (!response.ok) {

@@ -429,7 +429,7 @@ li.search-hidden {
     gap: 0.5rem;
     margin-bottom: 0.75rem;
 }
-#api-key-input {
+#pantry-id-input {
     flex: 1;
     padding: 0.4rem 0.75rem;
     font-size: 0.9rem;
@@ -438,10 +438,10 @@ li.search-hidden {
     outline: none;
     box-sizing: border-box;
 }
-#api-key-input:focus {
+#pantry-id-input:focus {
     box-shadow: 0 0 0 3px rgba(215, 25, 32, 0.25);
 }
-#save-api-key-btn {
+#save-pantry-id-btn {
     padding: 0.4rem 1rem;
     background: #d71920;
     color: white;
@@ -452,7 +452,7 @@ li.search-hidden {
     cursor: pointer;
     white-space: nowrap;
 }
-#save-api-key-btn:hover {
+#save-pantry-id-btn:hover {
     background: #b5161c;
 }
 #clear-cloud-btn {
