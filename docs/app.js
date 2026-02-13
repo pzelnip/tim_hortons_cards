@@ -616,13 +616,14 @@ function attachEventListeners() {
 
 async function loadVersion() {
     try {
-        const resp = await fetch('version.json');
+        const resp = await fetch('https://api.github.com/repos/pzelnip/tim_hortons_cards/commits/main');
         if (!resp.ok) return;
         const data = await resp.json();
+        const sha = data.sha.substring(0, 7);
         const el = document.querySelector('.version-sha');
-        if (el && data.version) {
+        if (el) {
             el.innerHTML = '<a href="https://github.com/pzelnip/tim_hortons_cards/commit/' +
-                data.version + '" target="_blank" rel="noopener noreferrer">' + data.version + '</a>';
+                sha + '" target="_blank" rel="noopener noreferrer">' + sha + '</a>';
         }
     } catch (e) {
         // Silently fail — version display is non-critical

@@ -69,11 +69,13 @@ cat >> "$INDEX" <<'FOOTER'
         <span class="version-sha"></span>
     </footer>
     <script>
-    fetch('version.json').then(r => r.ok && r.json()).then(d => {
-        if (d && d.version) {
+    fetch('https://api.github.com/repos/pzelnip/tim_hortons_cards/commits/main')
+        .then(r => r.ok && r.json()).then(d => {
+        if (d && d.sha) {
+            const sha = d.sha.substring(0, 7);
             document.querySelector('.version-sha').innerHTML =
                 '<a href="https://github.com/pzelnip/tim_hortons_cards/commit/' +
-                d.version + '" target="_blank" rel="noopener noreferrer">' + d.version + '</a>';
+                sha + '" target="_blank" rel="noopener noreferrer">' + sha + '</a>';
         }
     }).catch(() => {});
     </script>
