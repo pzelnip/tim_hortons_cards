@@ -525,6 +525,53 @@ li.search-hidden {
     color: white;
 }
 
+/* Export section in settings */
+.export-body {
+    margin-top: 0;
+}
+.cloud-settings-body + h3 {
+    margin-top: 1.5rem;
+}
+.export-desc {
+    font-size: 0.8rem;
+    color: #555;
+    margin: 0 0 0.75rem;
+}
+.export-row {
+    display: flex;
+    gap: 0.5rem;
+}
+#export-format {
+    flex: 1;
+    padding: 0.4rem 0.75rem;
+    font-size: 0.9rem;
+    border: 2px solid var(--red);
+    border-radius: 8px;
+    background: #fff;
+    color: var(--red);
+    font-weight: bold;
+    cursor: pointer;
+    outline: none;
+}
+#export-format:focus {
+    box-shadow: 0 0 0 3px var(--red-focus);
+}
+#export-btn {
+    padding: 0.4rem 1rem;
+    background: var(--red);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.2s;
+    white-space: nowrap;
+}
+#export-btn:hover {
+    background: var(--red-dark);
+}
+
 /* Unsaved changes banner */
 .cloud-dirty-banner {
     max-width: 600px;

@@ -1,3 +1,6 @@
+let currentData = null;
+let currentSetName = null;
+
 // --- Rendering ---
 
 function renderSet(data) {
@@ -394,6 +397,84 @@ async function cloudLoad() {
     }
 }
 
+// --- Export ---
+
+function buildExportRows() {
+    const rows = [];
+    currentData.categories.forEach(cat => {
+        cat.cards.forEach((name, idx) => {
+            const num = idx + 1;
+            const checkboxId = cat.prefix + '-' + num;
+            const cardNumber = cat.showPrefix ? cat.prefix + '-' + num : String(num);
+            const selected = document.getElementById(checkboxId).checked ? 'Y' : 'N';
+            rows.push({ number: cardNumber, category: cat.name, name, selected });
+        });
+    });
+    return rows;
+}
+
+function csvEscape(field) {
+    if (field.includes(',') || field.includes('"') || field.includes('\n')) {
+        return '"' + field.replace(/"/g, '""') + '"';
+    }
+    return field;
+}
+
+function exportCards() {
+    const format = document.getElementById('export-format').value;
+    const rows = buildExportRows();
+    let content, filename, mimeType;
+
+    if (format === 'csv') {
+        const lines = ['Card Number,Category,Name,Selected'];
+        rows.forEach(r => {
+            lines.push([r.number, r.category, r.name, r.selected].map(csvEscape).join(','));
+        });
+        content = lines.join('\n');
+        filename = currentSetName + '_checklist.csv';
+        mimeType = 'text/csv';
+    } else if (format === 'tsv') {
+        const lines = ['Card Number\tCategory\tName\tSelected'];
+        rows.forEach(r => {
+            lines.push([r.number, r.category, r.name, r.selected].join('\t'));
+        });
+        content = lines.join('\n');
+        filename = currentSetName + '_checklist.tsv';
+        mimeType = 'text/tab-separated-values';
+    } else if (format === 'markdown') {
+        const lines = [
+            '| Card Number | Category | Name | Selected |',
+            '| --- | --- | --- | --- |'
+        ];
+        rows.forEach(r => {
+            lines.push('| ' + r.number + ' | ' + r.category + ' | ' + r.name + ' | ' + r.selected + ' |');
+        });
+        content = lines.join('\n');
+        filename = currentSetName + '_checklist.md';
+        mimeType = 'text/markdown';
+    } else if (format === 'json') {
+        const data = rows.map(r => ({
+            cardNumber: r.number,
+            category: r.category,
+            name: r.name,
+            selected: r.selected === 'Y'
+        }));
+        content = JSON.stringify(data, null, 2);
+        filename = currentSetName + '_checklist.json';
+        mimeType = 'application/json';
+    }
+
+    const blob = new Blob([content], { type: mimeType });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+}
+
 // --- Event listeners ---
 
 function attachEventListeners() {
@@ -488,6 +569,9 @@ function attachEventListeners() {
         }
     });
 
+    // Export button
+    document.getElementById('export-btn').addEventListener('click', exportCards);
+
     // Cloud sync buttons
     document.getElementById('save-pantry-id-btn').addEventListener('click', savePantryId);
     document.getElementById('clear-cloud-btn').addEventListener('click', clearCloudSettings);
@@ -544,6 +628,8 @@ async function init() {
         return;
     }
     const data = await response.json();
+    currentData = data;
+    currentSetName = setName;
 
     renderSet(data);
     await loadState();
