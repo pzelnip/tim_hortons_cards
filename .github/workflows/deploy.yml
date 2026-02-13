@@ -23,8 +23,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Generate VERSION file
-        run: git rev-parse HEAD > docs/VERSION
+      - name: Stamp git SHA into HTML
+        run: |
+          SHA=$(git rev-parse --short HEAD)
+          LINK="<a href=\"https://github.com/pzelnip/tim_hortons_cards/commit/${SHA}\" target=\"_blank\" rel=\"noopener noreferrer\">${SHA}</a>"
+          sed -i "s|__GIT_SHA__|${LINK}|g" docs/*.html
 
       - uses: actions/configure-pages@v5
 

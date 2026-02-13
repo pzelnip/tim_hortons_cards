@@ -28,18 +28,7 @@
     </ul>
     <footer class="site-footer">
         <a href="https://github.com/pzelnip/tim_hortons_cards/" target="_blank" rel="noopener noreferrer">View Source on GitHub</a>
-        <span class="version-sha"></span>
+        <span class="version-sha">__GIT_SHA__</span>
     </footer>
-    <script>
-    fetch('VERSION')
-        .then(r => r.ok && r.text()).then(text => {
-        const sha = text.trim().substring(0, 7);
-        if (sha) {
-            document.querySelector('.version-sha').innerHTML =
-                '<a href="https://github.com/pzelnip/tim_hortons_cards/commit/' +
-                sha + '" target="_blank" rel="noopener noreferrer">' + sha + '</a>';
-        }
-    }).catch(() => {});
-    </script>
 </body>
 </html>
