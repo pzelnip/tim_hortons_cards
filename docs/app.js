@@ -451,7 +451,8 @@ function exportCards() {
             '| --- | --- | --- | --- |'
         ];
         rows.forEach(r => {
-            lines.push('| ' + r.number + ' | ' + r.category + ' | ' + r.name + ' | ' + r.selected + ' |');
+            const esc = s => s.replace(/\|/g, '\\|');
+            lines.push('| ' + esc(r.number) + ' | ' + esc(r.category) + ' | ' + esc(r.name) + ' | ' + esc(r.selected) + ' |');
         });
         content = lines.join('\n');
         filename = currentSetName + '_checklist.md';
