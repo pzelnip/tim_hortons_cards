@@ -290,15 +290,19 @@ function showConfirmModal() {
             yes.removeEventListener('click', onYes);
             no.removeEventListener('click', onNo);
             overlay.removeEventListener('click', onOverlay);
+            document.removeEventListener('keydown', onKey);
             resolve(result);
         }
         function onYes() { cleanup(true); }
         function onNo() { cleanup(false); }
         function onOverlay(e) { if (e.target === overlay) cleanup(false); }
+        function onKey(e) { if (e.key === 'Escape') cleanup(false); }
 
         yes.addEventListener('click', onYes);
         no.addEventListener('click', onNo);
         overlay.addEventListener('click', onOverlay);
+        document.addEventListener('keydown', onKey);
+        no.focus();
     });
 }
 
