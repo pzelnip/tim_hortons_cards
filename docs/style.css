@@ -686,6 +686,13 @@ ul.fade-in {
 .site-footer a:hover {
     text-decoration: underline;
 }
+.version-sha {
+    display: block;
+    margin-top: 0.25rem;
+    font-size: 0.75rem;
+    color: #999;
+    font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+}
 
 /* Confirmation modal */
 .modal-overlay {

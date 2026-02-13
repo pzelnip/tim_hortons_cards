@@ -612,6 +612,23 @@ function attachEventListeners() {
     });
 }
 
+// --- Version ---
+
+async function loadVersion() {
+    try {
+        const resp = await fetch('version.json');
+        if (!resp.ok) return;
+        const data = await resp.json();
+        const el = document.querySelector('.version-sha');
+        if (el && data.version) {
+            el.innerHTML = '<a href="https://github.com/pzelnip/tim_hortons_cards/commit/' +
+                data.version + '" target="_blank" rel="noopener noreferrer">' + data.version + '</a>';
+        }
+    } catch (e) {
+        // Silently fail — version display is non-critical
+    }
+}
+
 // --- Init ---
 
 async function init() {
@@ -637,6 +654,7 @@ async function init() {
     updateCounts();
     attachEventListeners();
     initCloudUI();
+    loadVersion();
 }
 
 init();

@@ -28,6 +28,16 @@
     </ul>
     <footer class="site-footer">
         <a href="https://github.com/pzelnip/tim_hortons_cards/" target="_blank" rel="noopener noreferrer">View Source on GitHub</a>
+        <span class="version-sha"></span>
     </footer>
+    <script>
+    fetch('version.json').then(r => r.ok && r.json()).then(d => {
+        if (d && d.version) {
+            document.querySelector('.version-sha').innerHTML =
+                '<a href="https://github.com/pzelnip/tim_hortons_cards/commit/' +
+                d.version + '" target="_blank" rel="noopener noreferrer">' + d.version + '</a>';
+        }
+    }).catch(() => {});
+    </script>
 </body>
 </html>
