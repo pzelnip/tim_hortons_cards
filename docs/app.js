@@ -509,6 +509,7 @@ function attachEventListeners() {
             decodeState(previousHash);
             updateHash();
             updateCounts();
+            updateSyncIndicator();
             previousHash = null;
             clearBtn.textContent = "Clear Selections";
         } else {
@@ -518,6 +519,7 @@ function attachEventListeners() {
             });
             updateHash();
             updateCounts();
+            updateSyncIndicator();
             clearBtn.textContent = "Undo";
         }
     });
