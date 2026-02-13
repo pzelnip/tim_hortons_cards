@@ -24,7 +24,7 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Generate VERSION file
-        run: date -u > docs/VERSION
+        run: git rev-parse HEAD > docs/VERSION
 
       - uses: actions/configure-pages@v5
 
