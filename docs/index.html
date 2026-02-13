@@ -31,10 +31,10 @@
         <span class="version-sha"></span>
     </footer>
     <script>
-    fetch('https://api.github.com/repos/pzelnip/tim_hortons_cards/commits/main')
-        .then(r => r.ok && r.json()).then(d => {
-        if (d && d.sha) {
-            const sha = d.sha.substring(0, 7);
+    fetch('VERSION')
+        .then(r => r.ok && r.text()).then(text => {
+        const sha = text.trim().substring(0, 7);
+        if (sha) {
             document.querySelector('.version-sha').innerHTML =
                 '<a href="https://github.com/pzelnip/tim_hortons_cards/commit/' +
                 sha + '" target="_blank" rel="noopener noreferrer">' + sha + '</a>';

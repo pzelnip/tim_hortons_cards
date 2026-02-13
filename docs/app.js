@@ -616,10 +616,10 @@ function attachEventListeners() {
 
 async function loadVersion() {
     try {
-        const resp = await fetch('https://api.github.com/repos/pzelnip/tim_hortons_cards/commits/main');
+        const resp = await fetch('VERSION');
         if (!resp.ok) return;
-        const data = await resp.json();
-        const sha = data.sha.substring(0, 7);
+        const text = await resp.text();
+        const sha = text.trim().substring(0, 7);
         const el = document.querySelector('.version-sha');
         if (el) {
             el.innerHTML = '<a href="https://github.com/pzelnip/tim_hortons_cards/commit/' +
