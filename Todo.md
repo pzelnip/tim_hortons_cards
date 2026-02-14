@@ -4,7 +4,7 @@
 - [x] Fix: Clear/undo handler doesn't call `updateSyncIndicator()`, so dirty banner won't show (app.js:503-519)
 - [x] Fix: Markdown export doesn't escape pipe characters in card names (app.js:449-451)
 - [x] Announcement banner that appears on all pages (close button to cancel it, can contain links)
-- [ ] Fix: TSV export doesn't escape tabs/newlines in card names (app.js:437-441)
+- [x] Fix: TSV export doesn't escape tabs/newlines in card names (app.js:437-441)
 - [ ] Add tests for different export formats
 - [ ] Fix: `hashchange` listener doesn't await async `loadState()`, so `updateCounts()` runs before state is loaded (app.js:590-593)
 - [ ] Add test to CI that tests the Git SHA version ref is in the page and clickable
