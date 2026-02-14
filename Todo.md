@@ -7,4 +7,6 @@
 - [ ] Fix: TSV export doesn't escape tabs/newlines in card names (app.js:437-441)
 - [ ] Fix: `hashchange` listener doesn't await async `loadState()`, so `updateCounts()` runs before state is loaded (app.js:590-593)
 - [ ] Add test to CI that tests the Git SHA version ref is in the page and clickable
+- [ ] Add "cards I want" feature (being able to tag specific cards as desirable, and add a "want" filter to the all/need/have filter)
 - [ ] Move templatized HTML from out of generate.sh into a proper templating system (maybe Jinja?)
+- [ ] Announcement banner that appears on all pages (close button to cancel it, can contain links)
