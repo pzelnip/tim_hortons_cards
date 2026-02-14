@@ -3,10 +3,10 @@
 - [x] Fix: Confirm modal has no Escape key handler for accessibility (app.js:277-303)
 - [x] Fix: Clear/undo handler doesn't call `updateSyncIndicator()`, so dirty banner won't show (app.js:503-519)
 - [x] Fix: Markdown export doesn't escape pipe characters in card names (app.js:449-451)
-- [ ] Add tests for different export formats
+- [ ] Announcement banner that appears on all pages (close button to cancel it, can contain links)
 - [ ] Fix: TSV export doesn't escape tabs/newlines in card names (app.js:437-441)
+- [ ] Add tests for different export formats
 - [ ] Fix: `hashchange` listener doesn't await async `loadState()`, so `updateCounts()` runs before state is loaded (app.js:590-593)
 - [ ] Add test to CI that tests the Git SHA version ref is in the page and clickable
 - [ ] Add "cards I want" feature (being able to tag specific cards as desirable, and add a "want" filter to the all/need/have filter)
 - [ ] Move templatized HTML from out of generate.sh into a proper templating system (maybe Jinja?)
-- [ ] Announcement banner that appears on all pages (close button to cancel it, can contain links)
