@@ -10,3 +10,4 @@
 - [ ] Add test to CI that tests the Git SHA version ref is in the page and clickable
 - [ ] Add "cards I want" feature (being able to tag specific cards as desirable, and add a "want" filter to the all/need/have filter)
 - [ ] Move templatized HTML from out of generate.sh into a proper templating system (maybe Jinja?)
+- [ ] Add link back to index.html from each generated page
