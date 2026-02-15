@@ -403,14 +403,24 @@ async function cloudLoad() {
 
 // --- Export ---
 
+function getActiveFilter() {
+    if (document.body.classList.contains('show-unchecked')) return 'unchecked';
+    if (document.body.classList.contains('show-checked')) return 'checked';
+    return 'all';
+}
+
 function buildExportRows() {
+    const filter = getActiveFilter();
     const rows = [];
     currentData.categories.forEach(cat => {
         cat.cards.forEach((name, idx) => {
             const num = idx + 1;
             const checkboxId = cat.prefix + '-' + num;
             const cardNumber = cat.showPrefix ? cat.prefix + '-' + num : String(num);
-            const selected = document.getElementById(checkboxId).checked ? 'Y' : 'N';
+            const isChecked = document.getElementById(checkboxId).checked;
+            if (filter === 'checked' && !isChecked) return;
+            if (filter === 'unchecked' && isChecked) return;
+            const selected = isChecked ? 'Y' : 'N';
             rows.push({ number: cardNumber, category: cat.name, name, selected });
         });
     });
