@@ -18,6 +18,21 @@ body {
     color: #1a1a1a;
 }
 
+/* Back navigation */
+.back-nav {
+    text-align: center;
+    margin-bottom: 0.5rem;
+}
+.back-nav a {
+    color: var(--red);
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 0.9rem;
+}
+.back-nav a:hover {
+    text-decoration: underline;
+}
+
 /* Page title */
 h1 {
     text-align: center;
