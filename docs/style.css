@@ -506,6 +506,25 @@ li.search-hidden {
 #clear-cloud-btn:disabled {
     border-color: #ccc;
 }
+.spinner {
+    display: inline-block;
+    width: 0.8em;
+    height: 0.8em;
+    margin-right: 0.4em;
+    vertical-align: -0.1em;
+    border: 2px solid currentColor;
+    border-right-color: transparent;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+.cloud-dirty-banner button:disabled {
+    background: #ccc;
+    color: #888;
+    cursor: not-allowed;
+}
 #cloud-status {
     font-size: 0.85rem;
     margin: 0 0 0.75rem;

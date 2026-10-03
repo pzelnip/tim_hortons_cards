@@ -338,34 +338,82 @@ async function clearCloudSettings() {
     setCloudStatus('Cloud settings cleared.');
 }
 
+const SYNC_RETRY_DELAY_SECONDS = 5;
+const SYNC_MAX_RETRIES = 3;
+const SPINNER_HTML = '<span class="spinner" aria-hidden="true"></span>';
+let syncInProgress = false;
+
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+// Updates both the settings panel and the unsaved-changes banner sync buttons
+function setSyncButtons(label, busy) {
+    ['sync-btn', 'banner-sync-btn'].forEach(id => {
+        const btn = document.getElementById(id);
+        btn.disabled = busy;
+        if (busy) {
+            btn.innerHTML = SPINNER_HTML;
+            btn.appendChild(document.createTextNode(label));
+        } else {
+            btn.textContent = label;
+        }
+    });
+}
+
 async function cloudSync() {
     const pantryId = localStorage.getItem(PANTRY_ID_LS);
-    const syncBtn = document.getElementById('sync-btn');
 
     if (!pantryId) {
         setCloudStatus('No Pantry ID set.', true);
         return;
     }
+    if (syncInProgress) return;
 
-    syncBtn.disabled = true;
-    syncBtn.textContent = 'Syncing...';
+    syncInProgress = true;
+    setSyncButtons('Syncing...', true);
     setCloudStatus('');
 
-    const state = encodeState();
-
     try {
-        const res = await fetch(pantryBasketUrl(pantryId), {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ state: state }),
-        });
-        if (!res.ok) throw new Error('POST failed: ' + res.status);
-        lastSyncedState = state;
-        setCloudStatus('Synced to cloud.');
+        for (let attempt = 0; ; attempt++) {
+            // Re-encode each attempt so changes made while waiting are included
+            const state = encodeState();
+            let res = null;
+            try {
+                res = await fetch(pantryBasketUrl(pantryId), {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ state: state }),
+                });
+            } catch (err) {
+                // Pantry's 429 responses lack CORS headers, so a rate limit
+                // surfaces here as a network error rather than a readable status
+                console.warn('Sync attempt failed:', err.message);
+            }
+            if (res && res.ok) {
+                lastSyncedState = state;
+                setCloudStatus('Synced to cloud.');
+                return;
+            }
+            const retryable = !res || res.status === 429;
+            if (!retryable || attempt >= SYNC_MAX_RETRIES) {
+                throw new Error(res ? 'POST failed: ' + res.status : 'Pantry is unreachable or rate limiting requests.');
+            }
+            for (let s = SYNC_RETRY_DELAY_SECONDS; s > 0; s--) {
+                setSyncButtons('Retrying in ' + s + 's...', true);
+                setCloudStatus('Pantry is busy, retrying in ' + s + 's...');
+                await sleep(1000);
+            }
+            setSyncButtons('Syncing...', true);
+            setCloudStatus('');
+        }
     } catch (err) {
         setCloudStatus('Sync failed: ' + err.message, true);
     } finally {
-        syncBtn.disabled = false;
+        syncInProgress = false;
+        setSyncButtons('Sync to Cloud', false);
+        // Clear Cloud Settings may have been used while retrying
+        document.getElementById('sync-btn').disabled = !localStorage.getItem(PANTRY_ID_LS);
         updateSyncIndicator();
     }
 }
@@ -596,9 +644,9 @@ function attachEventListeners() {
     document.getElementById('banner-sync-btn').addEventListener('click', cloudSync);
     document.getElementById('load-btn').addEventListener('click', cloudLoad);
 
-    // Warn before leaving with unsynced cloud changes
+    // Warn before leaving with unsynced cloud changes or a sync still retrying
     window.addEventListener('beforeunload', (e) => {
-        if (isCloudDirty()) {
+        if (syncInProgress || isCloudDirty()) {
             e.preventDefault();
         }
     });
