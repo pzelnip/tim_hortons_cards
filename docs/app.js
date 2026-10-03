@@ -68,6 +68,7 @@ function renderSet(data) {
             label.appendChild(checkbox);
             label.appendChild(document.createTextNode(' ' + labelText));
             li.appendChild(label);
+            li.appendChild(buildExtrasControl(labelText));
             ul.appendChild(li);
         });
         div.appendChild(ul);
@@ -79,26 +80,113 @@ function renderSet(data) {
     });
 }
 
-// --- State encode/decode ---
+// --- Extras (duplicate copies of owned cards) ---
 
-function encodeState() {
-    const checkboxes = document.querySelectorAll('input[type="checkbox"]');
-    const bytes = new Uint8Array(Math.ceil(checkboxes.length / 8));
-    checkboxes.forEach((cb, i) => {
-        if (cb.checked) bytes[i >> 3] |= (1 << (7 - (i & 7)));
-    });
+const MAX_EXTRAS = 99;
+
+function buildExtrasControl(labelText) {
+    const wrap = document.createElement('span');
+    wrap.className = 'extras';
+    const sub = document.createElement('button');
+    sub.type = 'button';
+    sub.className = 'extras-sub';
+    sub.textContent = '−';
+    sub.setAttribute('aria-label', 'Remove an extra of ' + labelText);
+    const add = document.createElement('button');
+    add.type = 'button';
+    add.className = 'extras-add';
+    add.textContent = '+';
+    add.setAttribute('aria-label', 'Add an extra of ' + labelText);
+    wrap.appendChild(sub);
+    wrap.appendChild(add);
+    return wrap;
+}
+
+function getExtras(cb) {
+    return Number(cb.closest('li').dataset.extras || 0);
+}
+
+function setExtras(cb, n) {
+    const li = cb.closest('li');
+    n = Math.max(0, Math.min(MAX_EXTRAS, n));
+    li.dataset.extras = n;
+    li.classList.toggle('has-extras', n > 0);
+    li.querySelector('.extras-add').textContent = n > 0 ? '+' + n : '+';
+}
+
+// --- State encode/decode ---
+//
+// Format: "<owned>" or "<owned>.<extras>", both URL-safe base64.
+// <owned> is 1 bit per card. <extras> is only present when some card has
+// extras, so hashes without extras keep their original format. It is a list
+// of varint pairs: (card index delta from the previous card with extras, count).
+
+function toBase64Url(bytes) {
     return btoa(String.fromCharCode(...bytes))
         .replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
 }
 
+function fromBase64Url(str) {
+    const binary = atob(str.replace(/-/g, "+").replace(/_/g, "/"));
+    return new Uint8Array([...binary].map(c => c.charCodeAt(0)));
+}
+
+function pushVarint(out, n) {
+    while (n >= 0x80) {
+        out.push((n & 0x7f) | 0x80);
+        n >>>= 7;
+    }
+    out.push(n);
+}
+
+function readVarints(bytes) {
+    const values = [];
+    let n = 0, shift = 0;
+    for (const b of bytes) {
+        n |= (b & 0x7f) << shift;
+        if (b & 0x80) {
+            shift += 7;
+        } else {
+            values.push(n);
+            n = 0;
+            shift = 0;
+        }
+    }
+    return values;
+}
+
+function encodeState() {
+    const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+    const bytes = new Uint8Array(Math.ceil(checkboxes.length / 8));
+    const extras = [];
+    let prevExtrasIdx = -1;
+    checkboxes.forEach((cb, i) => {
+        if (cb.checked) bytes[i >> 3] |= (1 << (7 - (i & 7)));
+        const n = getExtras(cb);
+        if (n > 0) {
+            pushVarint(extras, i - prevExtrasIdx);
+            pushVarint(extras, n);
+            prevExtrasIdx = i;
+        }
+    });
+    const owned = toBase64Url(bytes);
+    return extras.length ? owned + '.' + toBase64Url(extras) : owned;
+}
+
 function decodeState(hash) {
-    const b64 = hash.replace(/-/g, "+").replace(/_/g, "/");
-    const binary = atob(b64);
-    const bytes = new Uint8Array([...binary].map(c => c.charCodeAt(0)));
+    const [owned, extras = ''] = hash.split('.');
+    const bytes = fromBase64Url(owned);
     const checkboxes = document.querySelectorAll('input[type="checkbox"]');
     checkboxes.forEach((cb, i) => {
         cb.checked = !!(bytes[i >> 3] & (1 << (7 - (i & 7))));
+        setExtras(cb, 0);
     });
+    const values = readVarints(fromBase64Url(extras));
+    let idx = -1;
+    for (let i = 0; i + 1 < values.length; i += 2) {
+        idx += values[i];
+        if (checkboxes[idx]) setExtras(checkboxes[idx], values[i + 1]);
+    }
 }
 
 async function loadState() {
@@ -465,11 +553,12 @@ function buildExportRows() {
             const num = idx + 1;
             const checkboxId = cat.prefix + '-' + num;
             const cardNumber = cat.showPrefix ? cat.prefix + '-' + num : String(num);
-            const isChecked = document.getElementById(checkboxId).checked;
+            const cb = document.getElementById(checkboxId);
+            const isChecked = cb.checked;
             if (filter === 'checked' && !isChecked) return;
             if (filter === 'unchecked' && isChecked) return;
             const selected = isChecked ? 'Y' : 'N';
-            rows.push({ number: cardNumber, category: cat.name, name, selected });
+            rows.push({ number: cardNumber, category: cat.name, name, selected, extras: String(getExtras(cb)) });
         });
     });
     return rows;
@@ -488,29 +577,29 @@ function exportCards() {
     let content, filename, mimeType;
 
     if (format === 'csv') {
-        const lines = ['Card Number,Category,Name,Selected'];
+        const lines = ['Card Number,Category,Name,Selected,Extras'];
         rows.forEach(r => {
-            lines.push([r.number, r.category, r.name, r.selected].map(csvEscape).join(','));
+            lines.push([r.number, r.category, r.name, r.selected, r.extras].map(csvEscape).join(','));
         });
         content = lines.join('\n');
         filename = currentSetName + '_checklist.csv';
         mimeType = 'text/csv';
     } else if (format === 'tsv') {
-        const lines = ['Card Number\tCategory\tName\tSelected'];
+        const lines = ['Card Number\tCategory\tName\tSelected\tExtras'];
         rows.forEach(r => {
-            lines.push([r.number, r.category, r.name, r.selected].join('\t'));
+            lines.push([r.number, r.category, r.name, r.selected, r.extras].join('\t'));
         });
         content = lines.join('\n');
         filename = currentSetName + '_checklist.tsv';
         mimeType = 'text/tab-separated-values';
     } else if (format === 'markdown') {
         const lines = [
-            '| Card Number | Category | Name | Selected |',
-            '| --- | --- | --- | --- |'
+            '| Card Number | Category | Name | Selected | Extras |',
+            '| --- | --- | --- | --- | --- |'
         ];
         rows.forEach(r => {
             const esc = s => s.replace(/\|/g, '\\|');
-            lines.push('| ' + esc(r.number) + ' | ' + esc(r.category) + ' | ' + esc(r.name) + ' | ' + esc(r.selected) + ' |');
+            lines.push('| ' + esc(r.number) + ' | ' + esc(r.category) + ' | ' + esc(r.name) + ' | ' + esc(r.selected) + ' | ' + r.extras + ' |');
         });
         content = lines.join('\n');
         filename = currentSetName + '_checklist.md';
@@ -520,7 +609,8 @@ function exportCards() {
             cardNumber: r.number,
             category: r.category,
             name: r.name,
-            selected: r.selected === 'Y'
+            selected: r.selected === 'Y',
+            extras: Number(r.extras)
         }));
         content = JSON.stringify(data, null, 2);
         filename = currentSetName + '_checklist.json';
@@ -544,11 +634,23 @@ function attachEventListeners() {
     // Save state and update counts on checkbox changes
     document.addEventListener("change", e => {
         if (e.target.matches('input[type="checkbox"]')) {
+            // Extras only make sense for cards you have
+            if (!e.target.checked) setExtras(e.target, 0);
             updateHash();
             updateCounts();
             updateNoResults();
             updateSyncIndicator();
         }
+    });
+
+    // Extras +/- buttons
+    document.getElementById('card-content').addEventListener('click', e => {
+        const btn = e.target.closest('.extras-add, .extras-sub');
+        if (!btn) return;
+        const cb = btn.closest('li').querySelector('input[type="checkbox"]');
+        setExtras(cb, getExtras(cb) + (btn.classList.contains('extras-add') ? 1 : -1));
+        updateHash();
+        updateSyncIndicator();
     });
 
     // Copy share link button
@@ -575,6 +677,7 @@ function attachEventListeners() {
             previousHash = encodeState();
             document.querySelectorAll('input[type="checkbox"]').forEach(cb => {
                 cb.checked = false;
+                setExtras(cb, 0);
             });
             updateHash();
             updateCounts();

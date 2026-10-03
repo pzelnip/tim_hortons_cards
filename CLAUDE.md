@@ -53,6 +53,7 @@ dev_server.sh          # Starts local server on port 9214
 ### State Management
 - Checkbox states are bit-packed into a URL-safe base64 hash (1 bit per card)
 - URL hash is the shareable state (e.g. `#VnTU0RV0sulk0VEVwASAC0xM3znJ_-A`)
+- Extras (duplicate copies of owned cards) are appended after a `.` as base64 varint pairs (index delta, count), e.g. `#<owned>.<extras>`. The `.<extras>` part is omitted when there are none, so hashes without extras keep the original format
 - `encodeState()` / `decodeState()` handle the bit packing
 - Priority on load: cloud sync > URL hash > empty state
 
@@ -65,7 +66,8 @@ dev_server.sh          # Starts local server on port 9214
 
 ### Key Functions in docs/app.js
 - `renderSet(data)` — builds DOM from JSON (tabs, card lists, badges)
-- `encodeState()` / `decodeState(hash)` — bit-pack checkbox states to/from base64
+- `encodeState()` / `decodeState(hash)` — bit-pack checkbox states (plus extras) to/from base64
+- `getExtras(cb)` / `setExtras(cb, n)` — per-card extras count, stored on the card's `<li>` (`data-extras`)
 - `loadState()` — async, loads from cloud or hash
 - `updateCounts()` — recalculates progress for each category + overall bar
 - `applySearch()` — filters cards by name (CSS class toggling)
