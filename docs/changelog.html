@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Changelog - Tim Hortons Hockey Cards Checklists</title>
+    <link rel="stylesheet" id="skin-css" href="skins/classic.css">
+    <script src="skins.js"></script>
+</head>
+<body>
+    <header class="topbar">
+        <a class="back-link" id="back-link" href="index.html"><span aria-hidden="true">&larr;</span> Back</a>
+        <span class="topbar-puck" aria-hidden="true"></span>
+        <button id="settings-btn" aria-label="Settings"><span aria-hidden="true">&#9881;</span></button>
+    </header>
+    <div id="settings-backdrop" class="settings-backdrop"></div>
+    <aside id="settings-panel" class="settings-panel" aria-label="Settings">
+        <div class="settings-header">
+            <h2>Settings</h2>
+            <button id="settings-close" aria-label="Close settings">&times;</button>
+        </div>
+        <!-- Only the skin picker: cloud sync and export need a card set. -->
+        <section class="settings-section">
+            <h3>Skin</h3>
+            <div class="skin-body">
+                <p class="export-desc">Pick a look for the site.</p>
+                <select id="skin-select" aria-label="Skin"></select>
+            </div>
+        </section>
+    </aside>
+    <main class="page">
+        <section class="hero">
+            <h1>Changelog</h1>
+        </section>
+        <!-- Newest first. Add a new <h2> date section (or a <li> under today's) for each feature. -->
+        <h2>2026-10-03</h2>
+        <ul>
+            <li>Added this changelog, linked from the settings panel.</li>
+        </ul>
+        <h2>2026-10-02</h2>
+        <ul>
+            <li>Selectable skins: Classic, Rink Night, Vintage Cardboard, Oil Country and GeoCities '98. Your choice is saved with cloud sync.</li>
+            <li>Track extras (duplicate copies) of owned cards.</li>
+            <li>Cloud sync retries with a visible countdown when Pantry rate-limits.</li>
+        </ul>
+        <h2>2026-09-30</h2>
+        <ul>
+            <li>Added the 2026-27 Tim Hortons NHL card set.</li>
+        </ul>
+    </main>
+    <script>
+        // Go back to the previous page; the href (index.html) is the fallback for direct visits.
+        document.getElementById('back-link').addEventListener('click', (e) => {
+            if (document.referrer.startsWith(location.origin) && history.length > 1) {
+                e.preventDefault();
+                history.back();
+            }
+        });
+
+        const select = document.getElementById('skin-select');
+        Object.entries(SKINS).forEach(([id, skin]) => select.add(new Option(skin.name, id)));
+        select.value = getLocalSkin();
+        select.addEventListener('change', () => {
+            saveLocalSkin(select.value, Date.now());
+            applySkin(select.value);
+        });
+
+        const setSettingsOpen = (open) => {
+            document.getElementById('settings-panel').classList.toggle('open', open);
+            document.getElementById('settings-backdrop').classList.toggle('open', open);
+        };
+        document.getElementById('settings-btn').addEventListener('click', () => setSettingsOpen(true));
+        document.getElementById('settings-close').addEventListener('click', () => setSettingsOpen(false));
+        document.getElementById('settings-backdrop').addEventListener('click', () => setSettingsOpen(false));
+    </script>
+</body>
+</html>

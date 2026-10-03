@@ -757,12 +757,14 @@ ul.fade-in {
     padding: 1.5rem 1rem;
     font-size: 0.85rem;
 }
-.site-footer a {
+.site-footer a,
+.settings-section a {
     color: var(--red);
     text-decoration: none;
     font-weight: bold;
 }
-.site-footer a:hover {
+.site-footer a:hover,
+.settings-section a:hover {
     text-decoration: underline;
 }
 .version-sha {

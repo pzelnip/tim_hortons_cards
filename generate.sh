@@ -57,6 +57,7 @@ cat >> "$INDEX" <<'FOOTER'
     </main>
     <footer class="site-footer">
         <a href="https://github.com/pzelnip/tim_hortons_cards/" target="_blank" rel="noopener noreferrer">View Source on GitHub</a>
+        <a href="changelog.html">Changelog</a>
         <span class="version-sha">__GIT_SHA__</span>
     </footer>
 </body>

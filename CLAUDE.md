@@ -7,6 +7,7 @@ A static single-page app for tracking hockey card collections. Hosted on GitHub 
 ```
 docs/
   template.html        # Source of truth for all card set pages
+  changelog.html       # Hand-edited changelog page (NOT generated); linked from settings panel + index footer
   app.js               # All application logic (rendering, state, sync, events)
   skins.js             # Skin registry; loaded in <head> to apply the saved skin before first paint
   skins/
@@ -87,6 +88,9 @@ dev_server.sh          # Starts local server on port 9214
 - `cloudSync()` / `cloudLoad()` / `clearCloudSettings()` — Pantry API operations
 - `attachEventListeners()` — all UI event wiring
 - `init()` — entry point, determines set name, fetches JSON, orchestrates setup
+
+## Changelog
+`docs/changelog.html` is a hand-edited static page (newest first). **Whenever you commit a user-facing feature or fix, add a one-line entry under the current date in the same commit.** Don't duplicate entries elsewhere (git log is not the changelog).
 
 ## Development
 

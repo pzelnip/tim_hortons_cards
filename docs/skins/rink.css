@@ -1041,7 +1041,8 @@ body.show-checked #card-content li:has(input[type="checkbox"]:not(:checked)),
     font-size: 0.85rem;
     border-top: 1px solid var(--line);
 }
-.site-footer a {
+.site-footer a,
+.settings-section a {
     font-family: var(--font-display);
     font-weight: 700;
     letter-spacing: 0.1em;
@@ -1049,7 +1050,8 @@ body.show-checked #card-content li:has(input[type="checkbox"]:not(:checked)),
     color: var(--ice-dim);
     text-decoration: none;
 }
-.site-footer a:hover {
+.site-footer a:hover,
+.settings-section a:hover {
     color: var(--ice);
 }
 .version-sha {
