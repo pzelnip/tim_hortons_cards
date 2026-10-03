@@ -66,7 +66,15 @@ function renderSet(data) {
             checkbox.type = 'checkbox';
             checkbox.id = checkboxId;
             label.appendChild(checkbox);
-            label.appendChild(document.createTextNode(' ' + labelText));
+            const numSpan = document.createElement('span');
+            // Skins decorate "plain" (unprefixed) numbers, e.g. "#14" or "14 -"
+            numSpan.className = cat.showPrefix ? 'card-num' : 'card-num plain';
+            numSpan.textContent = cat.showPrefix ? cat.prefix + '-' + num : String(num);
+            const nameSpan = document.createElement('span');
+            nameSpan.className = 'card-name';
+            nameSpan.textContent = name;
+            label.appendChild(numSpan);
+            label.appendChild(nameSpan);
             li.appendChild(label);
             li.appendChild(buildExtrasControl(labelText));
             ul.appendChild(li);
@@ -198,6 +206,7 @@ async function loadState() {
                 const data = await res.json();
                 decodeState(data.state);
                 lastSyncedState = data.state;
+                applyCloudSkin(data);
                 return;
             }
         } catch (err) {
@@ -308,6 +317,7 @@ const PANTRY_ID_LS = 'pantry_id';
 const PANTRY_BASE = 'https://getpantry.cloud/apiv1/pantry';
 let PANTRY_BASKET_NAME = null;
 let lastSyncedState = null;
+let lastSyncedSkin = null;
 
 function pantryBasketUrl(pantryId) {
     return PANTRY_BASE + '/' + pantryId + '/basket/' + PANTRY_BASKET_NAME;
@@ -321,7 +331,45 @@ function setCloudStatus(message, isError = false) {
 
 function isCloudDirty() {
     if (lastSyncedState === null) return false;
-    return encodeState() !== lastSyncedState;
+    return encodeState() !== lastSyncedState || getLocalSkin() !== lastSyncedSkin;
+}
+
+// --- Skins ---
+//
+// The skin is stored in localStorage (so it applies before first paint, see
+// skins.js) and saved to each set's Pantry basket alongside the card state.
+// Baskets are per set, so each saved skin carries the time it was chosen and
+// the most recent choice wins.
+
+function initSkinUI() {
+    const select = document.getElementById('skin-select');
+    Object.entries(SKINS).forEach(([id, skin]) => {
+        const option = document.createElement('option');
+        option.value = id;
+        option.textContent = skin.name;
+        select.appendChild(option);
+    });
+    select.value = getLocalSkin();
+}
+
+function setSkin(skin) {
+    saveLocalSkin(skin, Date.now());
+    applySkin(skin);
+    document.getElementById('skin-select').value = skin;
+    updateSyncIndicator();
+}
+
+// Baskets saved before skins existed have no skin and count as the default.
+// `force` (Load from Cloud) takes the basket's skin even if it is older.
+function applyCloudSkin(data, force = false) {
+    const cloudSkin = SKINS[data.skin] ? data.skin : DEFAULT_SKIN;
+    const cloudChangedAt = Number(data.skinChangedAt) || 0;
+    if (SKINS[data.skin] && (force || cloudChangedAt > getLocalSkinChangedAt())) {
+        saveLocalSkin(cloudSkin, cloudChangedAt);
+        applySkin(cloudSkin);
+        document.getElementById('skin-select').value = cloudSkin;
+    }
+    lastSyncedSkin = cloudSkin;
 }
 
 function updateSyncIndicator() {
@@ -416,6 +464,7 @@ async function clearCloudSettings() {
 
     localStorage.removeItem(PANTRY_ID_LS);
     lastSyncedState = null;
+    lastSyncedSkin = null;
     document.getElementById('pantry-id-input').value = '';
     document.getElementById('sync-btn').disabled = true;
     document.getElementById('load-btn').disabled = true;
@@ -466,12 +515,13 @@ async function cloudSync() {
         for (let attempt = 0; ; attempt++) {
             // Re-encode each attempt so changes made while waiting are included
             const state = encodeState();
+            const skin = getLocalSkin();
             let res = null;
             try {
                 res = await fetch(pantryBasketUrl(pantryId), {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ state: state }),
+                    body: JSON.stringify({ state: state, skin: skin, skinChangedAt: getLocalSkinChangedAt() }),
                 });
             } catch (err) {
                 // Pantry's 429 responses lack CORS headers, so a rate limit
@@ -480,6 +530,7 @@ async function cloudSync() {
             }
             if (res && res.ok) {
                 lastSyncedState = state;
+                lastSyncedSkin = skin;
                 setCloudStatus('Synced to cloud.');
                 return;
             }
@@ -525,6 +576,7 @@ async function cloudLoad() {
         const data = await res.json();
         decodeState(data.state);
         lastSyncedState = data.state;
+        applyCloudSkin(data, true);
         updateHash();
         updateCounts();
         updateSyncIndicator();
@@ -652,6 +704,9 @@ function attachEventListeners() {
         updateHash();
         updateSyncIndicator();
     });
+
+    // Skin picker
+    document.getElementById('skin-select').addEventListener('change', e => setSkin(e.target.value));
 
     // Copy share link button
     const shareBtn = document.getElementById("share-btn");
@@ -800,11 +855,14 @@ async function init() {
     currentSetName = setName;
 
     renderSet(data);
+    initSkinUI();
     await loadState();
     updateHash();
     updateCounts();
     attachEventListeners();
     initCloudUI();
+    // e.g. this set's basket was saved with a different skin
+    updateSyncIndicator();
 }
 
 init();

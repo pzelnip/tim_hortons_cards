@@ -8,7 +8,10 @@ A static single-page app for tracking hockey card collections. Hosted on GitHub 
 docs/
   template.html        # Source of truth for all card set pages
   app.js               # All application logic (rendering, state, sync, events)
-  style.css            # All styles (Canadian red theme, progress bar, filters)
+  skins.js             # Skin registry; loaded in <head> to apply the saved skin before first paint
+  skins/
+    classic.css        # Original Canadian red theme (the default skin)
+    rink.css           # "Rink Night" dark arena theme
   data/
     2026_olympics.json # Card set: 2026 Olympics (200 cards, 7 categories)
     test.json          # Card set: test/demo (41 cards, 3 categories)
@@ -61,8 +64,14 @@ dev_server.sh          # Starts local server on port 9214
 - Uses [Pantry](https://getpantry.cloud) (free JSON storage API)
 - Pantry ID stored in `localStorage` (key: `pantry_id`)
 - Basket name is domain+path specific (prevents collisions between local dev and prod)
-- Stores `{ "state": "<encoded-hash>" }` in the basket
+- Stores `{ "state": "<encoded-hash>", "skin": "<skin id>", "skinChangedAt": <ms timestamp> }` in the basket (older baskets have only `state`)
 - Dirty indicator shows unsaved banner + warns on beforeunload
+
+### Skins
+- Each skin is a complete stylesheet in `docs/skins/`, registered in `SKINS` in `docs/skins.js`. All skins style the same markup from `template.html`.
+- Default is `classic`. The chosen skin is kept in `localStorage` (`skin`, `skin_changed_at`) and also saved to each set's Pantry basket on sync.
+- Baskets are per set, so on load a basket's skin is only applied if its `skinChangedAt` is newer than the local one (Load from Cloud always applies it). A skin that differs from the basket's marks the page as having unsaved changes.
+- To add a skin: add `docs/skins/<id>.css` and an entry in `SKINS`.
 
 ### Key Functions in docs/app.js
 - `renderSet(data)` — builds DOM from JSON (tabs, card lists, badges)

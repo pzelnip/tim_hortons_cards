@@ -1,3 +1,5 @@
+/* Classic skin — the original Canadian red theme */
+
 /* Theme colors */
 :root {
     --red: #d71920;
@@ -606,7 +608,7 @@ li.search-hidden {
 .export-body {
     margin-top: 0;
 }
-.cloud-settings-body + h3 {
+.settings-section + .settings-section {
     margin-top: 1.5rem;
 }
 .export-desc {
@@ -618,7 +620,7 @@ li.search-hidden {
     display: flex;
     gap: 0.5rem;
 }
-#export-format {
+#export-format, #skin-select {
     flex: 1;
     padding: 0.4rem 0.75rem;
     font-size: 0.9rem;
@@ -630,7 +632,7 @@ li.search-hidden {
     cursor: pointer;
     outline: none;
 }
-#export-format:focus {
+#export-format:focus, #skin-select:focus {
     box-shadow: 0 0 0 3px var(--red-focus);
 }
 #export-btn {
@@ -678,7 +680,7 @@ li.search-hidden {
 }
 
 /* Filter bar */
-.filter-bar {
+.controls {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
@@ -695,7 +697,7 @@ li.search-hidden {
     opacity: 0.85;
     margin-left: 0.15rem;
 }
-.filter-bar #search-container {
+.controls #search-container {
     flex-basis: 100%;
     max-width: 400px;
 }
@@ -828,4 +830,91 @@ ul.fade-in {
 .modal-btn-cancel:hover {
     background: var(--red);
     color: #fff;
+}
+
+/* Index page */
+.set-list { list-style: none; max-width: 600px; margin: 0 auto 2rem; }
+.set-list li { padding: 0; margin-bottom: 0.75rem; text-decoration: none; }
+.set-list li:hover { background-color: #ffe6e6; }
+.set-list a {
+    display: block;
+    padding: 0.75rem 1rem;
+    color: var(--red);
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 1.1rem;
+}
+.set-list a:hover { text-decoration: underline; }
+
+/* --- Mapping the shared page markup onto the classic layout --- */
+
+/* Back link sits centred above the title; the gear stays fixed top-left */
+.topbar {
+    text-align: center;
+    margin-bottom: 0.5rem;
+}
+.back-link {
+    color: var(--red);
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 0.9rem;
+}
+.back-link:hover {
+    text-decoration: underline;
+}
+.topbar-puck,
+.hero-kicker,
+.scoreboard-label {
+    display: none;
+}
+
+/* Progress bar first, then its label */
+.scoreboard {
+    display: flex;
+    flex-direction: column;
+    max-width: 600px;
+    margin: 0 auto 2rem;
+}
+.scoreboard .progress-wrapper {
+    order: 1;
+    width: 100%;
+    margin: 0;
+}
+.scoreboard #progress-label {
+    order: 2;
+}
+.button-row {
+    margin-bottom: 2rem;
+}
+
+/* Category tabs, status filter and search flow as one wrapping row */
+.controls-row {
+    display: contents;
+}
+
+/* Card labels: "1 - Player" for base cards, "XX-1 Player" for inserts */
+#card-content label {
+    gap: 0;
+}
+#card-content label input[type="checkbox"] {
+    margin-right: calc(0.5rem + 3px);
+}
+.card-num {
+    margin-right: 0.3em;
+}
+.card-num.plain::after {
+    content: " -";
+}
+
+/* "Unsaved changes — [Sync to Cloud]" */
+.cloud-dirty-text::after {
+    content: " \2014 ";
+}
+
+.settings-section {
+    margin: 0;
+}
+.skin-body {
+    display: flex;
+    flex-direction: column;
 }

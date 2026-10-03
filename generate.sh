@@ -29,25 +29,15 @@ cat > "$INDEX" <<'HEADER'
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tim Hortons Hockey Cards Checklists</title>
-    <link rel="stylesheet" href="style.css">
-    <style>
-        .set-list { list-style: none; max-width: 600px; margin: 0 auto 2rem; }
-        .set-list li { padding: 0; margin-bottom: 0.75rem; text-decoration: none; }
-        .set-list li:hover { background-color: #ffe6e6; }
-        .set-list a {
-            display: block;
-            padding: 0.75rem 1rem;
-            color: var(--red);
-            text-decoration: none;
-            font-weight: bold;
-            font-size: 1.1rem;
-        }
-        .set-list a:hover { text-decoration: underline; }
-    </style>
+    <link rel="stylesheet" id="skin-css" href="skins/classic.css">
+    <script src="skins.js"></script>
 </head>
 <body>
-    <h1>Tim Hortons Hockey Cards Checklists</h1>
-    <ul class="set-list">
+    <main class="page">
+        <section class="hero">
+            <h1>Tim Hortons Hockey Cards Checklists</h1>
+        </section>
+        <ul class="set-list">
 HEADER
 
 for json_file in "$SCRIPT_DIR"/docs/data/*.json; do
@@ -58,12 +48,13 @@ for json_file in "$SCRIPT_DIR"/docs/data/*.json; do
     esac
     title=$(python3 -c "import json,sys; print(json.load(open(sys.argv[1]))['title'])" "$json_file")
     cat >> "$INDEX" <<ENTRY
-        <li><a href="${set_name}.html">${title}</a></li>
+            <li><a href="${set_name}.html">${title}</a></li>
 ENTRY
 done
 
 cat >> "$INDEX" <<'FOOTER'
-    </ul>
+        </ul>
+    </main>
     <footer class="site-footer">
         <a href="https://github.com/pzelnip/tim_hortons_cards/" target="_blank" rel="noopener noreferrer">View Source on GitHub</a>
         <span class="version-sha">__GIT_SHA__</span>
