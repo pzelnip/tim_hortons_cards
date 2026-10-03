@@ -6,6 +6,7 @@ const SKINS = {
     rink: { name: 'Rink Night', href: 'skins/rink.css' },
     cardboard: { name: 'Vintage Cardboard', href: 'skins/cardboard.css' },
     oilcountry: { name: 'Oil Country', href: 'skins/oilcountry.css' },
+    geocities: { name: "GeoCities '98", href: 'skins/geocities.css' },
 };
 const DEFAULT_SKIN = 'classic';
 const SKIN_LS = 'skin';

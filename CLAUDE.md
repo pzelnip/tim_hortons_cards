@@ -14,6 +14,7 @@ docs/
     rink.css           # "Rink Night" dark arena theme
     cardboard.css      # "Vintage Cardboard" retro cream-stock card theme
     oilcountry.css     # "Oil Country" Edmonton Oilers theme (blue/orange, oil-drop emblem, McDavid #97)
+    geocities.css      # "GeoCities '98" deliberately hideous theme (blinking text, marquee, neon clashes)
   data/
     2026_olympics.json # Card set: 2026 Olympics (200 cards, 7 categories)
     test.json          # Card set: test/demo (41 cards, 3 categories)
