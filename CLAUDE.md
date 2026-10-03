@@ -12,6 +12,7 @@ docs/
   skins/
     classic.css        # Original Canadian red theme (the default skin)
     rink.css           # "Rink Night" dark arena theme
+    cardboard.css      # "Vintage Cardboard" retro cream-stock card theme
   data/
     2026_olympics.json # Card set: 2026 Olympics (200 cards, 7 categories)
     test.json          # Card set: test/demo (41 cards, 3 categories)
