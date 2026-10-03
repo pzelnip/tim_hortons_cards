@@ -68,13 +68,12 @@ dev_server.sh          # Starts local server on port 9214
 - Uses [Pantry](https://getpantry.cloud) (free JSON storage API)
 - Pantry ID stored in `localStorage` (key: `pantry_id`)
 - Basket name is domain+path specific (prevents collisions between local dev and prod)
-- Stores `{ "state": "<encoded-hash>", "skin": "<skin id>", "skinChangedAt": <ms timestamp> }` in the basket (older baskets have only `state`)
+- Stores `{ "state": "<encoded-hash>" }` in the basket (baskets synced while skins were briefly saved to Pantry may also have `skin`/`skinChangedAt`; these are ignored and dropped on the next sync)
 - Dirty indicator shows unsaved banner + warns on beforeunload
 
 ### Skins
 - Each skin is a complete stylesheet in `docs/skins/`, registered in `SKINS` in `docs/skins.js`. All skins style the same markup from `template.html`.
-- Default is `classic`. The chosen skin is kept in `localStorage` (`skin`, `skin_changed_at`) and also saved to each set's Pantry basket on sync.
-- Baskets are per set, so on load a basket's skin is only applied if its `skinChangedAt` is newer than the local one (Load from Cloud always applies it). A skin that differs from the basket's marks the page as having unsaved changes.
+- Default is `classic`. The chosen skin is a per-browser preference kept only in `localStorage` (key: `skin`); it is not synced to Pantry and does not affect the unsaved-changes indicator.
 - To add a skin: add `docs/skins/<id>.css` and an entry in `SKINS`.
 
 ### Key Functions in docs/app.js

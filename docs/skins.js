@@ -10,7 +10,6 @@ const SKINS = {
 };
 const DEFAULT_SKIN = 'classic';
 const SKIN_LS = 'skin';
-const SKIN_CHANGED_AT_LS = 'skin_changed_at';
 
 function getLocalSkin() {
     try {
@@ -21,18 +20,9 @@ function getLocalSkin() {
     }
 }
 
-function getLocalSkinChangedAt() {
-    try {
-        return Number(localStorage.getItem(SKIN_CHANGED_AT_LS)) || 0;
-    } catch (e) {
-        return 0;
-    }
-}
-
-function saveLocalSkin(skin, changedAt) {
+function saveLocalSkin(skin) {
     try {
         localStorage.setItem(SKIN_LS, skin);
-        localStorage.setItem(SKIN_CHANGED_AT_LS, String(changedAt));
     } catch (e) {
         // Storage unavailable; the skin still applies for this page view
     }
