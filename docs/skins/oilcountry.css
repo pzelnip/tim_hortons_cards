@@ -255,12 +255,6 @@ h1 {
     text-transform: uppercase;
     color: var(--orange-hot);
 }
-.scoreboard-label::after {
-    content: " \00B7  Connor\00A0McDavid\00A0\00B7\00A097";
-    color: var(--ice-faint);
-    letter-spacing: 0.2em;
-}
-
 #progress-label {
     margin: 0.1rem 0 0.8rem;
     font-family: var(--font-display);
@@ -1255,9 +1249,6 @@ body.show-checked #card-content li:has(input[type="checkbox"]:not(:checked)),
     }
     .button-row > button {
         flex: 1;
-    }
-    .scoreboard-label::after {
-        content: " \00B7  97";
     }
 }
 
