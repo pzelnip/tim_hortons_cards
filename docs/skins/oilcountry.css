@@ -800,6 +800,7 @@ li.has-extras .extras-sub {
 
 body.show-unchecked #card-content li:has(input[type="checkbox"]:checked),
 body.show-checked #card-content li:has(input[type="checkbox"]:not(:checked)),
+body.show-extras #card-content li:not(.has-extras),
 #card-content li.search-hidden {
     display: none;
 }

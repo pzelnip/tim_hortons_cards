@@ -346,6 +346,9 @@ body.show-unchecked li:has(input[type="checkbox"]:checked) {
 body.show-checked li:has(input[type="checkbox"]:not(:checked)) {
     display: none;
 }
+body.show-extras li:not(.has-extras) {
+    display: none;
+}
 li.search-hidden {
     display: none;
 }
@@ -691,6 +694,9 @@ li.search-hidden {
 }
 #category-nav .filter-seg {
     font-size: 0.85rem;
+}
+#status-filter .filter-seg {
+    padding: 0.4rem 0.7rem;
 }
 #category-nav .badge {
     font-size: 0.7rem;

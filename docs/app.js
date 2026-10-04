@@ -284,7 +284,8 @@ function applySearch() {
 
 function updateNoResults() {
     const filterState = document.body.classList.contains('show-unchecked') ? 'unchecked'
-        : document.body.classList.contains('show-checked') ? 'checked' : 'all';
+        : document.body.classList.contains('show-checked') ? 'checked'
+        : document.body.classList.contains('show-extras') ? 'extras' : 'all';
 
     document.querySelectorAll('.tab-content').forEach(tab => {
         const items = tab.querySelectorAll('li');
@@ -292,6 +293,7 @@ function updateNoResults() {
             if (li.classList.contains('search-hidden')) return false;
             if (filterState === 'unchecked' && li.querySelector('input[type="checkbox"]:checked')) return false;
             if (filterState === 'checked' && li.querySelector('input[type="checkbox"]:not(:checked)')) return false;
+            if (filterState === 'extras' && !li.classList.contains('has-extras')) return false;
             return true;
         });
         tab.querySelector('ul').style.display = hasVisible ? '' : 'none';
@@ -571,6 +573,7 @@ async function cloudLoad() {
 function getActiveFilter() {
     if (document.body.classList.contains('show-unchecked')) return 'unchecked';
     if (document.body.classList.contains('show-checked')) return 'checked';
+    if (document.body.classList.contains('show-extras')) return 'extras';
     return 'all';
 }
 
@@ -586,6 +589,7 @@ function buildExportRows() {
             const isChecked = cb.checked;
             if (filter === 'checked' && !isChecked) return;
             if (filter === 'unchecked' && isChecked) return;
+            if (filter === 'extras' && getExtras(cb) === 0) return;
             const selected = isChecked ? 'Y' : 'N';
             rows.push({ number: cardNumber, category: cat.name, name, selected, extras: String(getExtras(cb)) });
         });
@@ -678,6 +682,7 @@ function attachEventListeners() {
         if (!btn) return;
         const cb = btn.closest('li').querySelector('input[type="checkbox"]');
         setExtras(cb, getExtras(cb) + (btn.classList.contains('extras-add') ? 1 : -1));
+        updateNoResults();
         updateHash();
         updateSyncIndicator();
     });
@@ -723,7 +728,7 @@ function attachEventListeners() {
         btn.addEventListener('click', () => {
             document.querySelectorAll('#status-filter .filter-seg').forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
-            document.body.classList.remove('show-unchecked', 'show-checked');
+            document.body.classList.remove('show-unchecked', 'show-checked', 'show-extras');
             const filter = btn.dataset.filter;
             if (filter !== 'all') document.body.classList.add('show-' + filter);
             updateNoResults();
