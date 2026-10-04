@@ -567,8 +567,7 @@ button:disabled,
     letter-spacing: 0.02em;
     text-transform: uppercase;
     color: var(--ice);
-    border-bottom: 2px solid transparent;
-    border-image: linear-gradient(90deg, var(--red) 0 20%, var(--blue) 20% 40%, var(--line) 40%) 1;
+    border-bottom: 1px solid var(--line-strong);
 }
 .tab-content h2 .count {
     margin-left: auto;
