@@ -1180,6 +1180,16 @@ body.show-checked #card-content li:has(input[type="checkbox"]:not(:checked)),
     #category-nav .filter-seg {
         scroll-snap-align: start;
     }
+    /* Fade the rail's edges while more categories are scrolled out of view (class set by app.js) */
+    #category-nav.fade-left,
+    #category-nav.fade-right {
+        --fade-l: 0px;
+        --fade-r: 0px;
+        -webkit-mask-image: linear-gradient(to right, transparent 0, #000 var(--fade-l), #000 calc(100% - var(--fade-r)), transparent 100%);
+        mask-image: linear-gradient(to right, transparent 0, #000 var(--fade-l), #000 calc(100% - var(--fade-r)), transparent 100%);
+    }
+    #category-nav.fade-left { --fade-l: 2.5rem; }
+    #category-nav.fade-right { --fade-r: 2.5rem; }
     #status-filter {
         width: 100%;
     }

@@ -792,6 +792,19 @@ function attachEventListeners() {
         updateCounts();
     });
 
+    // Edge fades on the category rail when it overflows (the skins style .fade-left/.fade-right)
+    const catNav = document.getElementById('category-nav');
+    const updateNavFades = () => {
+        const max = catNav.scrollWidth - catNav.clientWidth;
+        catNav.classList.toggle('fade-left', catNav.scrollLeft > 4);
+        catNav.classList.toggle('fade-right', max - catNav.scrollLeft > 4);
+    };
+    catNav.addEventListener('scroll', updateNavFades, { passive: true });
+    window.addEventListener('resize', updateNavFades);
+    window.addEventListener('load', updateNavFades);
+    if (window.ResizeObserver) new ResizeObserver(updateNavFades).observe(catNav);
+    updateNavFades();
+
     // Category navigation tabs
     document.getElementById('category-nav').addEventListener('click', (e) => {
         const btn = e.target.closest('button[data-target]');
