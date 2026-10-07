@@ -227,13 +227,23 @@ h1 {
 }
 
 #progress-label {
-    margin: 0.15rem 0 0.9rem;
+    margin: 0.15rem 0 0.15rem;
     font-family: var(--font-mono);
     font-weight: 700;
     font-size: clamp(1.6rem, 6vw, 2.4rem);
     letter-spacing: 0.04em;
     color: #ff6170;
     text-shadow: 0 0 6px var(--red-glow), 0 0 22px var(--red-glow);
+}
+
+#progress-total-copies {
+    margin: 0 0 0.9rem;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gold);
+    text-shadow: 0 0 8px rgba(255, 197, 61, 0.5);
 }
 
 /* Ice track with a puck riding the leading edge */

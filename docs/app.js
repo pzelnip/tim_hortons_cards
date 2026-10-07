@@ -228,6 +228,7 @@ function updateHash() {
 function updateCounts() {
     let grandTotal = 0;
     let grandChecked = 0;
+    let grandExtras = 0;
 
     document.querySelectorAll('.tab-content').forEach(tab => {
         const list = tab.querySelector('ul');
@@ -243,6 +244,7 @@ function updateCounts() {
 
         grandTotal += total;
         grandChecked += checkedCount;
+        checked.forEach(cb => { grandExtras += getExtras(cb); });
 
         const countSpan = h2.querySelector(".count");
         if (countSpan) {
@@ -263,6 +265,8 @@ function updateCounts() {
     if (progressBar) progressBar.style.width = overallPercent + "%";
     const progressLabel = document.getElementById("progress-label");
     if (progressLabel) progressLabel.textContent = `${grandChecked}/${grandTotal} (${overallPercent}%)`;
+    const copiesLabel = document.getElementById("progress-total-copies");
+    if (copiesLabel) copiesLabel.textContent = `${grandChecked + grandExtras} cards incl. duplicates`;
 }
 
 // --- Search ---
@@ -682,6 +686,7 @@ function attachEventListeners() {
         if (!btn) return;
         const cb = btn.closest('li').querySelector('input[type="checkbox"]');
         setExtras(cb, getExtras(cb) + (btn.classList.contains('extras-add') ? 1 : -1));
+        updateCounts();
         updateNoResults();
         updateHash();
         updateSyncIndicator();

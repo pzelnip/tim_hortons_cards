@@ -891,6 +891,14 @@ ul.fade-in {
 .scoreboard #progress-label {
     order: 2;
 }
+.scoreboard #progress-total-copies {
+    order: 3;
+    text-align: center;
+    color: var(--red);
+    font-weight: bold;
+    font-size: 0.9rem;
+    margin-top: 0.1rem;
+}
 .button-row {
     margin-bottom: 2rem;
 }
@@ -926,3 +934,4 @@ ul.fade-in {
     display: flex;
     flex-direction: column;
 }
+

@@ -272,6 +272,15 @@ h1::after {
     text-shadow: 0 0 6px var(--lime), 2px 2px 0 #ff0000;
 }
 
+#progress-total-copies {
+    order: 3;
+    font-family: var(--font-comic);
+    font-weight: bold;
+    font-size: 1.1rem;
+    color: #ffd700;
+    text-shadow: 1px 1px 0 #ff0000;
+}
+
 .button-row {
     display: flex;
     flex-wrap: wrap;

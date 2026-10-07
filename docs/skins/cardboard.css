@@ -203,10 +203,20 @@ h1 {
 }
 
 #progress-label {
-    margin: 0.1rem 0 0.8rem;
+    margin: 0.1rem 0 0.15rem;
     font-family: var(--font-display);
     font-size: clamp(1.7rem, 6vw, 2.5rem);
     color: var(--ink);
+}
+
+#progress-total-copies {
+    margin: 0 0 0.8rem;
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 0.75rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
 }
 
 #progress-container {
